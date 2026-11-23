@@ -1,0 +1,54 @@
+# Hourly: fetch all feeds and append new headlines to the branch "daten"
+# (titel/JJJJ/MM/TT.jsonl). The main branch gets no data commits.
+name: Abruf
+run-name: "Abruf"
+
+on:
+  schedule:
+    - cron: "17 * * * *"  # not on the full hour, GitHub delays scheduled runs there
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: abruf
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Branch daten nach daten/ holen (beim ersten Lauf neu anlegen)
+        run: |
+          if git ls-remote --exit-code --heads origin daten >/dev/null; then
+            git fetch --depth 1 origin daten
+            git worktree add daten FETCH_HEAD
+            git -C daten switch -c daten
+          else
+            git worktree add --orphan -b daten daten
+          fi
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Python-Umgebung
+        run: uv sync --frozen --no-dev
+
+      - name: Feeds abrufen
+        run: uv run scripts/run_hourly.py --data-dir daten
+
+      - name: Neue Schlagzeilen committen
+        working-directory: daten
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Keine neuen Schlagzeilen."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Abruf $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin HEAD:daten

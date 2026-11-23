@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.env
+# local copy of the data branch (git worktree)
+daten/
+ausgabe/

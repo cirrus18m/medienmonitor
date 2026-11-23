@@ -1,0 +1,294 @@
+# Quellenliste für den Medienscanner
+#
+# Felder:
+#   name      Anzeigename
+#   domain    Startseite (für automatische Feed-Suche, falls der Feed nicht geht)
+#   land      DE / AT / CH / RU
+#   feed      RSS/Atom-Adresse
+#   pruefen   true = Adresse noch nicht getestet (scripts/check_feeds.py)
+#   aktiv     false = wird nicht abgerufen (Grund als Kommentar)
+#   lager     grobe Gruppe für den Podcast: links | mitte | rechts | alternativ
+#   spektrum  feinere Einordnung: links | mitte-links | mitte | mitte-rechts | rechts | unklar
+#
+# WICHTIG: "lager" und "spektrum" sind ein VORSCHLAG zum Start und bewusst
+# anpassbar. Regel dafür:
+#   - Etablierte Medien (Verlage, öffentlich-rechtliche Sender) -> lager nach spektrum
+#     (mitte-links -> links, mitte-rechts -> rechts)
+#   - Medien, die sich ausdrücklich gegen die etablierten Medien positionieren
+#     -> lager "alternativ", die politische Richtung steht dann in "spektrum".
+#     So kann der Podcast später auch "alternativ links" und "alternativ rechts" trennen.
+
+quellen:
+
+  # ---------- etabliert: links / mitte-links ----------
+  - name: Spiegel
+    domain: https://www.spiegel.de
+    land: DE
+    feed: https://www.spiegel.de/schlagzeilen/index.rss
+    lager: links
+    spektrum: mitte-links
+
+  - name: Zeit
+    domain: https://www.zeit.de
+    land: DE
+    feed: https://newsfeed.zeit.de/index
+    lager: links
+    spektrum: mitte-links
+
+  - name: Süddeutsche Zeitung
+    domain: https://www.sueddeutsche.de
+    land: DE
+    feed: https://rss.sueddeutsche.de/alles
+    lager: links
+    spektrum: mitte-links
+
+  - name: taz
+    domain: https://taz.de
+    land: DE
+    feed: https://taz.de/!p4608;rss/
+    lager: links
+    spektrum: links
+
+  - name: nd
+    domain: https://www.nd-aktuell.de
+    land: DE
+    feed: https://www.nd-aktuell.de/rss/aktuell.php
+    lager: links
+    spektrum: links
+
+  - name: Berliner Zeitung
+    domain: https://www.berliner-zeitung.de
+    land: DE
+    feed: https://www.berliner-zeitung.de/feed.xml
+    lager: links
+    spektrum: mitte-links
+
+  - name: Der Standard
+    domain: https://www.derstandard.at
+    land: AT
+    feed: https://www.derstandard.at/rss
+    lager: links
+    spektrum: mitte-links
+
+  - name: Tages-Anzeiger
+    domain: https://www.tagesanzeiger.ch
+    land: CH
+    feed: https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/ticker
+    lager: links
+    spektrum: mitte-links
+
+  # ---------- etabliert: mitte (inkl. öffentlich-rechtlich) ----------
+  - name: Tagesschau
+    domain: https://www.tagesschau.de
+    land: DE
+    feed: https://www.tagesschau.de/index~rss2.xml
+    lager: mitte
+    spektrum: mitte
+
+  - name: Deutschlandfunk
+    domain: https://www.deutschlandfunk.de
+    land: DE
+    feed: https://www.deutschlandfunk.de/nachrichten-100.rss
+    lager: mitte
+    spektrum: mitte
+
+  - name: Deutsche Welle
+    domain: https://www.dw.com/de
+    land: DE
+    feed: https://rss.dw.com/rdf/rss-de-all   # im Scanner war die englische Version (rss-en-all)
+    lager: mitte
+    spektrum: mitte
+
+  - name: n-tv
+    domain: https://www.n-tv.de
+    land: DE
+    feed: https://www.n-tv.de/rss
+    lager: mitte
+    spektrum: mitte
+
+  - name: Focus
+    domain: https://www.focus.de
+    land: DE
+    feed: https://www.focus.de/rss
+    lager: mitte
+    spektrum: mitte
+
+  - name: ORF
+    domain: https://orf.at
+    land: AT
+    feed: https://rss.orf.at/news.xml
+    lager: mitte
+    spektrum: mitte
+
+  - name: Kurier
+    domain: https://kurier.at
+    land: AT
+    feed: https://kurier.at/xml/rss
+    lager: mitte
+    spektrum: mitte
+
+  - name: SRF
+    domain: https://www.srf.ch
+    land: CH
+    feed: https://www.srf.ch/news/bnf/rss/1646
+    lager: mitte
+    spektrum: mitte
+
+  - name: Blick
+    domain: https://www.blick.ch
+    land: CH
+    feed: https://www.blick.ch/news/rss.xml
+    lager: mitte
+    spektrum: mitte
+
+  # ---------- etabliert: rechts / mitte-rechts ----------
+  - name: Welt
+    domain: https://www.welt.de
+    land: DE
+    feed: https://www.welt.de/feeds/latest.rss
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: Bild
+    domain: https://www.bild.de
+    land: DE
+    feed: https://www.bild.de/feed/alles.xml
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: FAZ
+    domain: https://www.faz.net
+    land: DE
+    feed: https://www.faz.net/rss/aktuell/
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: NZZ
+    domain: https://www.nzz.ch
+    land: CH
+    feed: https://www.nzz.ch/recent.rss
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: Kronen Zeitung
+    domain: https://www.krone.at
+    land: AT
+    feed: https://api.krone.at/v1/rss/rssfeed-google.xml
+    lager: rechts
+    spektrum: mitte-rechts
+
+  # ---------- alternativ: links / unklar ----------
+  - name: NachDenkSeiten
+    domain: https://www.nachdenkseiten.de
+    land: DE
+    feed: https://www.nachdenkseiten.de/?feed=rss2
+    lager: alternativ
+    spektrum: links
+
+  - name: Overton Magazin
+    domain: https://overton-magazin.de
+    land: DE
+    feed: https://overton-magazin.de/feed/
+    lager: alternativ
+    spektrum: links
+
+  - name: Telepolis
+    domain: https://www.telepolis.de
+    land: DE
+    feed: https://www.telepolis.de/news-atom.xml
+    lager: alternativ
+    spektrum: mitte-links
+
+  - name: Multipolar
+    domain: https://multipolar-magazin.de
+    land: DE
+    feed: https://multipolar-magazin.de/atom.xml
+    aktiv: false   # 23.11.2026: Feed liefert 404, obwohl die Startseite ihn nennt
+    lager: alternativ
+    spektrum: unklar
+
+  - name: apolut
+    domain: https://apolut.net
+    land: DE
+    feed: https://apolut.net/feed/
+    lager: alternativ
+    spektrum: unklar
+
+  - name: Anti-Spiegel
+    domain: https://anti-spiegel.ru
+    land: RU
+    feed: https://anti-spiegel.ru/feed/
+    lager: alternativ
+    spektrum: unklar
+
+  - name: TKP
+    domain: https://tkp.at
+    land: AT
+    feed: https://tkp.at/feed/
+    aktiv: false   # 23.11.2026: Server sperrt automatischen Abruf (403)
+    lager: alternativ
+    spektrum: unklar
+
+  # ---------- alternativ: rechts ----------
+  - name: Tichys Einblick
+    domain: https://www.tichyseinblick.de
+    land: DE
+    feed: https://www.tichyseinblick.de/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Junge Freiheit
+    domain: https://jungefreiheit.de
+    land: DE
+    feed: https://jungefreiheit.de/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: NIUS
+    domain: https://www.nius.de
+    land: DE
+    feed: https://www.nius.de/rss
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Apollo News
+    domain: https://apollo-news.net
+    land: DE
+    feed: https://apollo-news.net/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Reitschuster
+    domain: https://reitschuster.de
+    land: DE
+    feed: https://reitschuster.de/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: PI-News
+    domain: https://www.pi-news.net
+    land: DE
+    feed: https://www.pi-news.net/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Compact
+    domain: https://www.compact-online.de
+    land: DE
+    feed: https://www.compact-online.de/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Report24
+    domain: https://report24.news
+    land: AT
+    feed: https://report24.news/feed/
+    lager: alternativ
+    spektrum: rechts
+
+  - name: AUF1
+    domain: https://auf1.tv
+    land: AT
+    feed: https://auf1.tv/feed
+    lager: alternativ
+    spektrum: rechts
