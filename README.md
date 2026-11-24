@@ -41,7 +41,10 @@ sich direkt verlinken: `medienmonitor.html#thema=T5`.
 - [x] Workflow „Abruf“ mit Branch `daten`
 - [x] Themenzuordnung per KI (Claude Code mit Abo, Modell Sonnet)
 - [x] `daten.json` (24 Stunden, Themen × Mediengruppen, mit Artikellinks)
-- [x] Seite als Prototyp (`seite/`)
+- [x] Seite als Prototyp (`seite/`), Ansichten je Medium, nach Lager, nach Spektrum
 - [ ] Seite ins deutschlandmonitor-Repo übernehmen
 - [ ] Upload per SFTP
+- [ ] YouTube-Trends: Top 30 der letzten 10 Tage, Aufrufe über Tage online
 - [ ] Podcast (Option)
+
+Ausbauplan: [PLAN.md](PLAN.md).
