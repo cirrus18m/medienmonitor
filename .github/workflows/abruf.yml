@@ -55,7 +55,7 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           MM_LABELER: claude_cli
           MM_MODEL: sonnet
-        run: uv run scripts/run_hourly.py --data-dir daten
+        run: uv run --no-dev scripts/run_hourly.py --data-dir daten
 
       - name: Neue Schlagzeilen und Themen committen
         if: ${{ !cancelled() }}
