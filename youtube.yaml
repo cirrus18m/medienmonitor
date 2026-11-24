@@ -550,9 +550,9 @@ kanaele:
     lager: mitte
     spektrum: unklar
 
-  - name: 'Lex Clips (Lex Fridman)'
-    kanal_id: UCJIfeSCssxSC_Dhc5s7woww
-    handle: "@LexClips"
+  - name: 'Lex Fridman'
+    kanal_id: UCSHZKyawb77ixDdsGog4iWA
+    handle: "@lexfridman"
     sprache: en
     land: US
     art: unabhaengig
