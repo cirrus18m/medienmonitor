@@ -27,6 +27,18 @@
   .artikel a { color: #0077BB; }
   .grau { color: #767676; }
   .fehler { color: #B2182B; }
+  .ytick text { pointer-events: all; cursor: pointer; }
+  .fenster { position: absolute; z-index: 10; width: min(30rem, calc(100vw - 1.5rem));
+    max-height: 22rem; overflow-y: auto; background: #fff; border: 1px solid #c7ccd4;
+    border-radius: 0.3rem; box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0.8rem; font-size: 0.9rem; }
+  .fenster h3 { font-size: 1rem; margin: 0 1.6rem 0.3rem 0; }
+  .fenster ul { padding-left: 1.1rem; margin: 0.3rem 0; }
+  .fenster li { margin: 0.2rem 0; }
+  .fenster a { color: #0077BB; }
+  .fenster .zu { position: absolute; top: 0.3rem; right: 0.4rem; font: inherit;
+    font-size: 1.2rem; line-height: 1; background: none; border: 0; cursor: pointer;
+    color: #555; }
 </style>
 </head>
 <body>
@@ -40,6 +52,7 @@
 zu sehen.</p>
 <ul class="themen" id="themen"></ul>
 <div class="artikel" id="artikel" aria-live="polite"></div>
+<div class="fenster" id="fenster" role="dialog" aria-live="polite" hidden></div>
 <script src="{{PLOTLY_SRC}}"></script>
 <script>
 // Data: Plotly figures made in Python (render.py) and the headlines per topic.
@@ -49,6 +62,7 @@ const DATA = {{DATA}};
   const chart = document.getElementById("grafik");
   const note = document.getElementById("hinweis");
   const list = document.getElementById("artikel");
+  const popup = document.getElementById("fenster");
   const buttons = [...document.querySelectorAll(".schalter button")];
   const time = new Intl.DateTimeFormat("de-DE", {
     weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
@@ -73,12 +87,83 @@ const DATA = {{DATA}};
     }
   };
 
-  // Tell the embedding page (same domain) how tall the content is.
-  function reportHeight() {
-    if (window.parent !== window) {
-      window.parent.postMessage(
-        {medienmonitorHoehe: document.documentElement.scrollHeight}, location.origin);
+  const link = (url, text) => {
+    const safe = safeUrl(url);
+    return safe
+      ? el("a", {href: safe, target: "_blank", rel: "noopener nofollow noreferrer", text})
+      : el("span", {text});
+  };
+
+  // Window at the click: headlines of a cell, or the latest headlines of a medium.
+  function closePopup() {
+    if (!popup.hidden) {
+      popup.hidden = true;
+      popup.replaceChildren();
+      reportHeight();
     }
+  }
+  function openPopup(x, y, heading, intro, rows) {
+    const close = el("button", {type: "button", class: "zu", "aria-label": "schließen",
+      text: "×"});
+    close.addEventListener("click", closePopup);
+    const items = el("ul");
+    for (const [title, url, moment, note] of rows) {
+      items.append(el("li", {},
+        el("span", {class: "grau", text: `${time.format(new Date(moment))} · `}),
+        link(url, title),
+        note ? el("span", {class: "grau", text: ` (${note})`}) : null));
+    }
+    popup.replaceChildren(close, heading, intro, items);
+    popup.hidden = false;
+    Plotly.Fx.unhover(chart);
+    const width = popup.offsetWidth;
+    const left = Math.min(Math.max(x + 12, 8), document.documentElement.clientWidth - width - 8);
+    popup.style.left = `${Math.max(left, 8)}px`;
+    popup.style.top = `${y + 12}px`;
+    reportHeight();
+  }
+  function mediumHeading(name) {
+    const medium = DATA.medien[name] || {};
+    const heading = el("h3", {text: name});
+    if (medium.domain) {
+      heading.append(" ", link(medium.domain, new URL(medium.domain).host.replace(/^www\./, "")
+        + " ↗"));
+    }
+    return heading;
+  }
+  function showLatest(name, x, y) {
+    const latest = (DATA.medien[name] || {}).neueste || [];
+    openPopup(x, y, mediumHeading(name),
+      el("p", {class: "klein", text: latest.length
+        ? `Die letzten ${latest.length} Schlagzeilen (alle Themen):`
+        : "Keine Schlagzeilen in den letzten 24 Stunden."}),
+      latest.map(([title, url, moment, topic]) => [title, url, moment, topic]));
+  }
+  function showCell(topicId, name, x, y) {
+    const topic = DATA.themen[topicId];
+    const rows = topic.artikel.filter(a => a[0] === name).map(a => [a[3], a[4], a[5], null]);
+    if (!rows.length) {
+      showLatest(name, x, y);
+      return;
+    }
+    openPopup(x, y, mediumHeading(name),
+      el("p", {class: "klein", text: `${topic.name}: ${rows.length} Schlagzeile`
+        + (rows.length === 1 ? "" : "n")}), rows);
+  }
+
+  // Tell the embedding page (same domain) how tall the content is. Measured from the
+  // content, not scrollHeight: that is never below the frame's own height, so every
+  // report would make the frame taller and the page would grow without end.
+  let reported = 0;
+  function reportHeight() {
+    if (window.parent === window) return;
+    const bottom = rect => rect.bottom + window.scrollY;
+    let height = bottom(document.body.getBoundingClientRect());
+    if (!popup.hidden) height = Math.max(height, bottom(popup.getBoundingClientRect()) + 8);
+    height = Math.ceil(height);
+    if (Math.abs(height - reported) < 2) return;
+    reported = height;
+    window.parent.postMessage({medienmonitorHoehe: height}, location.origin);
   }
 
   function draw() {
@@ -106,6 +191,11 @@ const DATA = {{DATA}};
     chart.removeAllListeners?.("plotly_click");
     chart.on("plotly_click", event => {
       const custom = event.points[0].customdata;
+      if (state.view === "medium") {
+        const mouse = event.event;
+        showCell(custom[4], custom[5], mouse.pageX, mouse.pageY);
+        return;
+      }
       state.topic = custom[4];
       state.group = custom[5];
       showArticles(true);
@@ -154,6 +244,24 @@ const DATA = {{DATA}};
       text: "Die Grafik konnte nicht geladen werden. Bitte später erneut versuchen."}));
     return;
   }
+  // Click on a medium's name (y axis label); its ↗ link opens the website instead.
+  chart.addEventListener("click", event => {
+    if (state.view !== "medium" || event.target.closest("a")) return;
+    const tick = event.target.closest(".ytick");
+    const row = tick?.querySelector("text")?.__data__?.x;
+    const names = DATA.figures.medium.layout.meta.medien;
+    if (row === undefined || !names[row]) return;
+    event.stopPropagation();
+    showLatest(names[row], event.pageX, event.pageY);
+  });
+  document.addEventListener("click", event => {
+    if (!popup.hidden && !popup.contains(event.target) && !chart.contains(event.target)) {
+      closePopup();
+    }
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closePopup();
+  });
   const nav = document.getElementById("themen");
   for (const id of DATA.reihenfolge) {
     const topic = DATA.themen[id];
@@ -170,6 +278,7 @@ const DATA = {{DATA}};
     button.addEventListener("click", () => {
       state.view = button.dataset.view;
       state.group = null;
+      closePopup();
       draw();
       showArticles(false);
     });
@@ -179,10 +288,16 @@ const DATA = {{DATA}};
   if (wanted && DATA.themen[wanted]) state.topic = wanted;
   draw();
   showArticles(false);
+  // Redraw only when the width changes; a new frame height needs no redraw.
   let timer;
+  let width = document.body.clientWidth;
   window.addEventListener("resize", () => {
     clearTimeout(timer);
-    timer = setTimeout(draw, 150);
+    timer = setTimeout(() => {
+      if (document.body.clientWidth === width) return;
+      width = document.body.clientWidth;
+      draw();
+    }, 150);
   });
 })();
 </script>

@@ -94,7 +94,8 @@ def main() -> int:
                 for line in merged["fehler"]:
                     print(f"  Fehler – {line}")
 
-    payload = publish.build_payload(args.data_dir, now)
+    domains = {f.name: f.domain for f in feeds.load_feeds(args.feeds, only_active=False)}
+    payload = publish.build_payload(args.data_dir, now, domains)
     payload_path = args.payload or args.data_dir / "daten.json"
     publish.write_payload(payload, payload_path)
     render.write_html(payload, payload_path.with_name("grafik.html"))

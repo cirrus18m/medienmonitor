@@ -25,12 +25,28 @@ def payload():
         "artikel_zugeordnet": 6,
         "quellen_gesamt": 3,
         "medien": [
-            {"name": "taz", "lager": "links", "spektrum": "links", "land": "DE", "artikel": 4},
+            {
+                "name": "taz",
+                "lager": "links",
+                "spektrum": "links",
+                "land": "DE",
+                "domain": "https://taz.de",
+                "artikel": 4,
+                "neueste": [
+                    {
+                        "titel": "Wetter",
+                        "url": "https://taz.de/w",
+                        "zeit": NOW.isoformat(),
+                        "thema": None,
+                    }
+                ],
+            },
             {
                 "name": "NIUS",
                 "lager": "alternativ",
                 "spektrum": "rechts",
                 "land": "DE",
+                "domain": "javascript:alert(1)",
                 "artikel": 2,
             },
             {
@@ -60,9 +76,15 @@ def payload():
     }
 
 
-def test_media_order_new_media_on_top_left_to_right():
+def test_media_order_new_media_on_top_alphabetical():
     names = [m["name"] for m in render.media_order(payload()["medien"])]
     assert names == ["NIUS", "taz", "Welt"]
+    media = [{"name": name, "lager": "mitte"} for name in ("Zeit", "Überblick", "ORF", "Bild")] + [
+        {"name": "apolut", "lager": "alternativ"},
+        {"name": "AUF1", "lager": "alternativ"},
+    ]
+    ordered = [m["name"] for m in render.media_order(media)]
+    assert ordered == ["apolut", "AUF1", "Bild", "ORF", "Überblick", "Zeit"]
 
 
 def test_figure_by_medium_counts_and_rows():
@@ -74,7 +96,28 @@ def test_figure_by_medium_counts_and_rows():
     assert trace.z[rows.index("NIUS")][0] == 1
     assert trace.z[rows.index("Welt")][0] == 0
     assert trace.text[rows.index("Welt")][0] == ""
-    assert trace.customdata[rows.index("taz")][0][4:] == ["T1", "taz"]
+    assert trace.customdata[rows.index("taz")][0][4:6] == ["T1", "taz"]
+    assert figure.layout.meta["medien"] == ["Welt", "taz", "NIUS"]
+
+
+def test_figure_by_medium_hover_titles_and_links():
+    figure = render.figure_by_medium(payload())
+    trace = figure.data[0]
+    rows = figure.layout.meta["medien"]
+    hover = trace.customdata[rows.index("taz")][0][6]
+    assert "&lt;/script&gt;" in hover and "<script>" not in hover  # escaped headline
+    assert "Klick" in trace.customdata[rows.index("Welt")][0][6]  # empty cell
+    labels = figure.layout.yaxis.ticktext
+    assert '<a href="https://taz.de" target="_blank"' in labels[rows.index("taz")]
+    assert "<a " not in labels[rows.index("NIUS")]  # no javascript: link
+    assert {a["text"] for a in figure.layout.annotations} == {"Alte Medien", "Neue Medien"}
+
+
+def test_hover_titles_are_limited():
+    articles = [{"titel": f"T{i}", "zeit": NOW.isoformat()} for i in range(15)]
+    text = render.hover_titles(articles)
+    assert text.count("<br>") == render.MAX_HOVER_TITLES
+    assert text.startswith("Di 13:17 T0") and text.endswith("… und 3 weitere")
 
 
 def test_figure_by_group_counts():
@@ -91,3 +134,8 @@ def test_render_html_escapes_foreign_text():
     assert parsed["themen"]["T1"]["artikel"][0][3].startswith("Haushalt </script>")
     assert set(parsed["figures"]) == {"medium", "lager", "spektrum"}
     assert render.PLOTLY_SRC in html and "cdn" not in html
+    assert parsed["medien"]["taz"] == {
+        "domain": "https://taz.de",
+        "neueste": [["Wetter", "https://taz.de/w", NOW.isoformat(), None]],
+    }
+    assert parsed["medien"]["NIUS"]["domain"] is None

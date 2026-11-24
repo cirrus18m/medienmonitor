@@ -63,6 +63,15 @@ quellen:
     lager: links
     spektrum: mitte-links
 
+  # Ostdeutsche Allgemeine (OAZ), Ostdeutscher Verlag GmbH, Dresden; Mediadaten beim
+  # Berliner Verlag. Einordnung vorläufig wie die Berliner Zeitung.
+  - name: OAZ
+    domain: https://oaz.de
+    land: DE
+    feed: https://ostdeutscheallgemeine.com/feed.xml
+    lager: links
+    spektrum: mitte-links
+
   - name: Der Standard
     domain: https://www.derstandard.at
     land: AT
