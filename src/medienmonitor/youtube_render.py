@@ -23,6 +23,7 @@ GROUPS = (
     ("neu", "Neue Medien", "#EE7733", "diamond"),
     ("politik", "Parteien und Politiker", "#555555", "square"),
 )
+TICKS = [m * 10**e for e in range(1, 9) for m in (1, 2, 5)]
 SOURCE = (
     "Quelle: YouTube Data API (Aufrufe zum Stand); Auswahl der Kanäle und Einordnung: eigene "
     "Einschätzung"
@@ -101,7 +102,9 @@ def figure(payload: dict) -> go.Figure:
             yaxis={
                 "title": {"text": "Aufrufe (logarithmisch)"},
                 "type": "log",
-                "dtick": 1,  # only powers of ten: 10.000, 100.000, 1.000.000
+                # 1-2-5 steps, labels in German format (10.000, 20.000, 50.000 …)
+                "tickvals": TICKS,
+                "ticktext": [number(t) for t in TICKS],
                 "fixedrange": True,
                 "automargin": True,
                 "exponentformat": "none",
