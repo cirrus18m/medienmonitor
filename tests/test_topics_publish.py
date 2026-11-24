@@ -81,6 +81,10 @@ def test_assign_new_and_payload(tmp_path):
     assert topic["anteil_pct"]["lager"]["links"] == 100.0
     assert topic["anteil_pct"]["lager"]["rechts"] == 50.0  # 1 of 2 right-camp articles
     assert topic["artikel"][0]["url"].startswith("https://")
+    assert topic["anzahl_medium"] == {"Quelle0": 2, "Quelle1": 1, "Quelle2": 1, "Welt": 1}
+    media = {m["name"]: m for m in payload["medien"]}
+    assert media["Bild"]["artikel"] == 1 and media["Bild"]["lager"] == "rechts"
+    assert payload["quellen_gesamt"] == len(media) == 5
 
 
 def test_second_run_reuses_topic(tmp_path):

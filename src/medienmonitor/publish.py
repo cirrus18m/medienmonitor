@@ -1,7 +1,8 @@
 """Build daten.json for the page "Medienmonitor": topics of the last 24 hours by group.
 
 Shares are per group: articles of the group on the topic / all articles of the group in
-the window (in percent), so groups with many feeds do not dominate.
+the window (in percent), so groups with many feeds do not dominate. The same holds per
+medium ("medien", "anzahl_medium"): articles of the medium on the topic / all its articles.
 """
 
 from __future__ import annotations
@@ -49,6 +50,19 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
     rows = window_rows(data_dir, now)
     per_camp = Counter(row["lager"] for row in rows)
     per_spectrum = Counter(row["spektrum"] for row in rows)
+    media: dict[str, dict] = {}
+    for row in rows:
+        medium = media.setdefault(
+            row["quelle"],
+            {
+                "name": row["quelle"],
+                "lager": row["lager"],
+                "spektrum": row["spektrum"],
+                "land": row["land"],
+                "artikel": 0,
+            },
+        )
+        medium["artikel"] += 1
 
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
@@ -71,6 +85,7 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
                 "anzahl_gesamt": len(items),
                 "quellen": len({r["quelle"] for r in items}),
                 "anzahl": {"lager": dict(camps), "spektrum": dict(spectra)},
+                "anzahl_medium": dict(Counter(r["quelle"] for r in items)),
                 "anteil_pct": {
                     "lager": _shares(camps, per_camp, CAMPS),
                     "spektrum": _shares(spectra, per_spectrum, SPECTRA),
@@ -98,7 +113,8 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
         "artikel_je_gruppe": {"lager": dict(per_camp), "spektrum": dict(per_spectrum)},
         "artikel_gesamt": len(rows),
         "artikel_zugeordnet": assigned,
-        "quellen_gesamt": len({r["quelle"] for r in rows}),
+        "quellen_gesamt": len(media),
+        "medien": sorted(media.values(), key=lambda m: m["name"]),
         "themen": entries[:MAX_TOPICS],
     }
 

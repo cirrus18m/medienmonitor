@@ -100,10 +100,13 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
           which lftp >/dev/null || { sudo apt-get update -q && sudo apt-get install -y -q lftp; }
+          # lftp's error text (login, host key, missing file) goes to the log; it never
+          # contains the password.
           read_marker() {
             lftp -u "$HE_SSH_USER" --env-password sftp://ssh.server-he.de -e "
               set sftp:auto-confirm false; set net:max-retries 2;
-              cat $1; bye" 2>/dev/null | tr -d '\r\n'
+              cat $1; bye" 2>lftp-fehler.txt | tr -d '\r\n'
+            if [ -s lftp-fehler.txt ]; then echo "lftp: $(head -c 300 lftp-fehler.txt)" >&2; fi
           }
           if [[ "$(read_marker "$TARGET_DIR/upload-ziel.txt")" != "deutschlandmonitor.info" ]]; then
             echo "Marke $TARGET_DIR/upload-ziel.txt fehlt oder stimmt nicht. Nichts geändert."; exit 1
