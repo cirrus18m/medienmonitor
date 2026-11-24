@@ -37,7 +37,7 @@ jobs:
             git worktree add --orphan -b daten daten
           fi
 
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.4.0  # no major-version tag v10
 
       - name: Python-Umgebung
         run: uv sync --frozen --no-dev
