@@ -14,6 +14,8 @@ import json
 from datetime import datetime
 from html import escape
 from pathlib import Path
+from urllib.parse import urlsplit
+from zoneinfo import ZoneInfo
 
 import plotly.graph_objects as go
 
@@ -27,7 +29,11 @@ PLOTLY_SRC = "/assets/plotly.min.js"
 
 MAX_TOPIC_ROWS = 20  # views by group: topics as rows
 MAX_TOPIC_COLUMNS = 15  # view by medium: topics as columns
+MAX_HOVER_TITLES = 12  # headlines listed in the hover box of a cell
 NEW_MEDIA = "alternativ"  # lager of media that position themselves against the rest
+NEW_MEDIA_LABEL = "Neue Medien"
+OLD_MEDIA_LABEL = "Alte Medien"
+BERLIN = ZoneInfo("Europe/Berlin")
 SPECTRUM_ORDER = ("links", "mitte-links", "mitte", "mitte-rechts", "rechts", "unklar")
 LABELS = {
     "lager": {"links": "links", "mitte": "Mitte", "rechts": "rechts", "alternativ": "alternativ"},
@@ -68,20 +74,61 @@ def _layout(height: int, **extra) -> dict:
     }
 
 
+def sort_key(name: str) -> str:
+    """Alphabetical order as in German lists: umlauts like their base letter."""
+    text = name.casefold()
+    for umlaut, base in (("ä", "a"), ("ö", "o"), ("ü", "u"), ("ß", "ss")):
+        text = text.replace(umlaut, base)
+    return text
+
+
 def media_order(media: list[dict]) -> list[dict]:
-    """New media first, then established media; each from left to right, then by name."""
+    """New media first, then old media; each group alphabetical."""
+    return sorted(media, key=lambda m: (m["lager"] != NEW_MEDIA, sort_key(m["name"])))
 
-    def key(medium: dict) -> tuple:
-        spectrum = medium["spektrum"]
-        rank = SPECTRUM_ORDER.index(spectrum) if spectrum in SPECTRUM_ORDER else 99
-        return (medium["lager"] != NEW_MEDIA, rank, medium["name"].casefold())
 
-    return sorted(media, key=key)
+def safe_url(url: str | None) -> str | None:
+    """Only http(s) addresses become links."""
+    if not url:
+        return None
+    parts = urlsplit(url)
+    return url if parts.scheme in ("http", "https") and parts.netloc else None
+
+
+WEEKDAYS = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+
+
+def _clock(moment: str) -> str:
+    """Weekday and time in Berlin, as in the headline list of the page ("Di 13:17")."""
+    local = datetime.fromisoformat(moment).astimezone(BERLIN)
+    return f"{WEEKDAYS[local.weekday()]} {local:%H:%M}"
+
+
+def hover_titles(articles: list[dict]) -> str:
+    """Headlines of a cell for the hover box (escaped, newest first)."""
+    lines = [
+        f"{_clock(a['zeit'])} {escape(shorten(a['titel'], 90))}"
+        for a in articles[:MAX_HOVER_TITLES]
+    ]
+    if len(articles) > MAX_HOVER_TITLES:
+        lines.append(f"… und {len(articles) - MAX_HOVER_TITLES} weitere")
+    return "<br>".join(lines)
+
+
+def medium_label(medium: dict) -> str:
+    """Tick label: name, a link to the home page, spectrum and number of headlines."""
+    spectrum = LABELS["spektrum"].get(medium["spektrum"], medium["spektrum"])
+    url = safe_url(medium.get("domain"))
+    link = f' <a href="{escape(url)}" target="_blank" style="color:{BLUE}">↗</a>' if url else ""
+    return (
+        f"{escape(medium['name'])}{link} <span style='color:{GREY}'>· "
+        f"{spectrum} · {medium['artikel']}</span>"
+    )
 
 
 def figure_by_medium(payload: dict) -> go.Figure:
     """Rows = media (new media on top), columns = topics; value = number of the medium's
-    headlines on the topic."""
+    headlines on the topic. The hover box lists these headlines."""
     columns = payload["themen"][:MAX_TOPIC_COLUMNS]
     media = list(reversed(media_order(payload["medien"])))  # Plotly draws rows bottom-up
     z, text, custom = [], [], []
@@ -89,22 +136,33 @@ def figure_by_medium(payload: dict) -> go.Figure:
         row_z, row_text, row_custom = [], [], []
         for topic in columns:
             count = topic.get("anzahl_medium", {}).get(medium["name"], 0)
+            articles = [a for a in topic["artikel"] if a["quelle"] == medium["name"]]
             row_z.append(count)
             row_text.append(_number(count))
             spectrum = LABELS["spektrum"].get(medium["spektrum"], medium["spektrum"])
+            titles = (
+                hover_titles(articles)
+                if articles
+                else "Keine Schlagzeile zum Thema.<br>Klick: die letzten 10 Schlagzeilen "
+                "des Mediums"
+            )
             row_custom.append(
-                [count, medium["artikel"], topic["name"], spectrum, topic["id"], medium["name"]]
+                [
+                    count,
+                    medium["artikel"],
+                    escape(topic["name"]),
+                    spectrum,
+                    topic["id"],
+                    medium["name"],
+                    titles,
+                    escape(medium["name"]),
+                ]
             )
         z.append(row_z)
         text.append(row_text)
         custom.append(row_custom)
 
-    established = sum(1 for m in media if m["lager"] != NEW_MEDIA)
-    ticktext = [
-        f"{escape(m['name'])} <span style='color:{GREY}'>· "
-        f"{LABELS['spektrum'].get(m['spektrum'], m['spektrum'])} · {m['artikel']}</span>"
-        for m in media
-    ]
+    old = sum(1 for m in media if m["lager"] != NEW_MEDIA)
     figure = go.Figure(
         go.Heatmap(
             x=list(range(len(columns))),
@@ -120,25 +178,24 @@ def figure_by_medium(payload: dict) -> go.Figure:
             ygap=1,
             showscale=False,
             hoverongaps=False,
+            hoverlabel={"bgcolor": "#FFFFFF", "bordercolor": GREY, "align": "left"},
             hovertemplate=(
-                "<b>%{customdata[5]}</b>: %{customdata[2]}<br>"
-                "%{z} Schlagzeilen (von %{customdata[1]} des Mediums)<br>"
-                "Spektrum: %{customdata[3]}<extra></extra>"
+                "<b>%{customdata[7]}</b>: %{customdata[2]} · %{z} Schlagzeilen "
+                "(von %{customdata[1]} des Mediums)<br>"
+                "<span style='color:" + GREY + "'>%{customdata[6]}</span><extra></extra>"
             ),
         )
     )
     band = {"xref": "paper", "x": 1, "xanchor": "left", "textangle": 90, "showarrow": False}
     annotations = []
-    if established:
+    if old:
+        annotations.append({**band, "y": (old - 1) / 2, "text": OLD_MEDIA_LABEL, "yref": "y"})
+    if old < len(media):
         annotations.append(
-            {**band, "y": (established - 1) / 2, "text": "Etablierte Medien", "yref": "y"}
-        )
-    if established < len(media):
-        annotations.append(
-            {**band, "y": (established + len(media) - 1) / 2, "text": "Neue Medien", "yref": "y"}
+            {**band, "y": (old + len(media) - 1) / 2, "text": NEW_MEDIA_LABEL, "yref": "y"}
         )
     shapes = []
-    if 0 < established < len(media):
+    if 0 < old < len(media):
         shapes.append(
             {
                 "type": "line",
@@ -146,8 +203,8 @@ def figure_by_medium(payload: dict) -> go.Figure:
                 "x0": 0,
                 "x1": 1,
                 "yref": "y",
-                "y0": established - 0.5,
-                "y1": established - 0.5,
+                "y0": old - 0.5,
+                "y1": old - 0.5,
                 "line": {"color": NEUTRAL, "width": 2},
             }
         )
@@ -157,8 +214,12 @@ def figure_by_medium(payload: dict) -> go.Figure:
             margin={"l": 10, "r": 28, "t": 10, "b": 10},
             annotations=annotations,
             shapes=shapes,
-            # names without spectrum and count, used by the page on narrow screens
-            meta={"kurz": [escape(shorten(m["name"], 18)) for m in media]},
+            meta={
+                # names without link, spectrum and count, for narrow screens
+                "kurz": [escape(shorten(m["name"], 18)) for m in media],
+                # row -> medium, for clicks on the name
+                "medien": [m["name"] for m in media],
+            },
             xaxis={
                 "side": "top",
                 "fixedrange": True,
@@ -171,7 +232,7 @@ def figure_by_medium(payload: dict) -> go.Figure:
                 "fixedrange": True,
                 "automargin": True,
                 "tickvals": list(range(len(media))),
-                "ticktext": ticktext,
+                "ticktext": [medium_label(m) for m in media],
             },
         )
     )
@@ -245,9 +306,10 @@ VIEWS = (
 NOTES = {
     "medium": (
         "Zahl der Schlagzeilen je Medium und Thema in den letzten 24 Stunden. Oben neue "
-        "Medien, unten etablierte, jeweils von links nach rechts; hinter dem Namen Spektrum "
+        "Medien, unten alte, jeweils alphabetisch; hinter dem Namen ↗ (Website), Spektrum "
         "und Zahl aller Schlagzeilen des Mediums. Medien mit vielen Meldungen fallen stärker "
-        "ins Gewicht."
+        "ins Gewicht. Ein Feld mit Zahl anklicken: die Schlagzeilen mit Links; ein leeres "
+        "Feld oder den Namen anklicken: die letzten 10 Schlagzeilen des Mediums."
     ),
     "lager": "Zahl der Schlagzeilen je Lager und Thema in den letzten 24 Stunden.",
     "spektrum": "Zahl der Schlagzeilen je Spektrum und Thema in den letzten 24 Stunden.",
@@ -266,6 +328,19 @@ def _articles(payload: dict) -> dict:
             ],
         }
         for t in payload["themen"]
+    }
+
+
+def _media(payload: dict) -> dict:
+    """Medium name -> home page and latest headlines (for clicks on name or empty cell)."""
+    return {
+        m["name"]: {
+            "domain": safe_url(m.get("domain")),
+            "neueste": [
+                [a["titel"], a["url"], a["zeit"], a.get("thema")] for a in m.get("neueste", [])
+            ],
+        }
+        for m in payload.get("medien", [])
     }
 
 
@@ -297,6 +372,8 @@ def render_html(payload: dict) -> str:
         "notes": {k: NOTES[k] for k in figures},
         "labels": LABELS,
         "themen": _articles(payload),
+        "medien": _media(payload),
+        "kategorien": payload.get("kategorien"),
         "reihenfolge": [t["id"] for t in payload["themen"][:MAX_TOPIC_ROWS]],
     }
     template = (Path(__file__).parent / "chart_template.html").read_text(encoding="utf-8")

@@ -16,6 +16,21 @@ doppelte Themen zusammengelegt. Die Themenliste steht in `themen.json` im Branch
 `daten.json` zeigt Themen mit mindestens 5 Artikeln aus 2 Quellen; der Anteil je
 Mediengruppe bezieht sich auf alle Artikel dieser Gruppe in den letzten 24 Stunden.
 
+## TOP-Themen und Blasen-Themen
+
+Jedes Thema hat ein Ressort (politik, wirtschaft, gesellschaft, wissenschaft, sport,
+kultur, panorama), das die KI beim Anlegen vergibt (ältere Themen: `classify_missing`).
+`bubbles.py` teilt die Medien in neue (Lager „alternativ“) und alte (alle anderen):
+
+* **TOP-Themen:** in den letzten 24 Stunden mindestens 2 neue und 4 alte Medien.
+* **Blasen-Themen:** in den letzten 72 Stunden nur eine Seite (mindestens 2 neue bzw.
+  4 alte Medien und 3 Schlagzeilen), nur Ressorts Politik, Wirtschaft, Gesellschaft.
+
+Weil die KI dasselbe Ereignis bei anderer Sichtweise als eigenes Thema anlegen kann,
+fragt `cross_check` für jeden Blasen-Kandidaten (höchstens alle 6 Stunden), ob ein Thema
+der anderen Seite dasselbe Ereignis beschreibt, und legt beide dann zusammen. Die Frage
+nennt keine Seite. Ergebnis: `kategorien` in `daten.json`, Abschnitt unter der Grafik.
+
 ## Befehle
 
 ```bash
@@ -32,7 +47,11 @@ uv run pytest && uv run ruff check .
 Jeder Lauf schreibt neben `daten.json` die Datei `grafik.html`: die Heatmaps (je Medium,
 nach Lager, nach Spektrum) als Plotly-Grafik aus Python (`src/medienmonitor/render.py`)
 mit Umschalter und den Schlagzeilen samt Links. Die Felder zeigen die Zahl der
-Schlagzeilen (keine Anteile). Der Workflow lädt beide nach
+Schlagzeilen (keine Anteile). In der Ansicht „je Medium“ stehen oben die neuen, unten die
+alten Medien, jeweils alphabetisch; der Hover eines Feldes listet seine Schlagzeilen, ein
+Klick öffnet sie mit Links, ein Klick auf den Namen oder ein leeres Feld die letzten 10
+Schlagzeilen des Mediums (`neueste` in `daten.json`); ↗ hinter dem Namen verlinkt die
+Website (`domain` aus `feeds.yaml`). Der Workflow lädt beide nach
 `deutschlandmonitor.info/medienmonitor/`. Die Seite „Medienmonitor“ des deutschlandmonitor
 bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
 `plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich

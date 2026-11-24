@@ -73,7 +73,7 @@ def test_assign_new_and_payload(tmp_path):
     assert rows["h0"]["thema_id"] == "T1" and rows["h11"]["thema_id"] == topics.OTHER
     assert topics.assign_new(tmp_path, fake, NOW)["offen"] == 0
 
-    payload = publish.build_payload(tmp_path, NOW)
+    payload = publish.build_payload(tmp_path, NOW, {"Welt": "https://www.welt.de"})
     assert payload["artikel_gesamt"] == 6  # h12 is older than 24 h
     [topic] = payload["themen"]
     assert topic["name"] == "Bundeshaushalt 2027" and topic["anzahl_gesamt"] == 5
@@ -85,6 +85,11 @@ def test_assign_new_and_payload(tmp_path):
     media = {m["name"]: m for m in payload["medien"]}
     assert media["Bild"]["artikel"] == 1 and media["Bild"]["lager"] == "rechts"
     assert payload["quellen_gesamt"] == len(media) == 5
+    assert media["Welt"]["domain"] == "https://www.welt.de" and media["Bild"]["domain"] is None
+    # latest headlines of a medium, any topic, newest first; h12 is outside the window
+    assert [a["titel"] for a in media["Welt"]["neueste"]] == ["Haushalt: Union lehnt ab"]
+    assert media["Welt"]["neueste"][0]["thema"] == "Bundeshaushalt 2027"
+    assert media["Bild"]["neueste"][0]["thema"] is None  # sonstiges
 
 
 def test_second_run_reuses_topic(tmp_path):

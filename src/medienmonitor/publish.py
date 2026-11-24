@@ -3,6 +3,9 @@
 Shares are per group: articles of the group on the topic / all articles of the group in
 the window (in percent), so groups with many feeds do not dominate. The same holds per
 medium ("medien", "anzahl_medium"): articles of the medium on the topic / all its articles.
+Each medium also carries its home page (``domain`` from feeds.yaml) and its latest
+headlines of the window (``neueste``, any topic). ``kategorien`` holds the TOP-Themen
+and Blasen-Themen (see bubbles.py).
 """
 
 from __future__ import annotations
@@ -13,7 +16,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from medienmonitor import store
+from medienmonitor import bubbles, store
 from medienmonitor.topics import OTHER, TopicList
 
 SCHEMA = 1
@@ -21,17 +24,13 @@ WINDOW_HOURS = 24
 MIN_ARTICLES = 5
 MIN_SOURCES = 2
 MAX_TOPICS = 40
+LATEST_PER_MEDIUM = 10
 CAMPS = ("links", "mitte", "rechts", "alternativ")
 SPECTRA = ("links", "mitte-links", "mitte", "mitte-rechts", "rechts", "unklar")
 BERLIN = ZoneInfo("Europe/Berlin")
 
 
-def _time(row: dict) -> str:
-    """Publication time if known and not in the future, else time of fetching."""
-    published = row.get("veroeffentlicht")
-    if published and published <= row["abgerufen"]:
-        return published
-    return row["abgerufen"]
+_time = store.row_time
 
 
 def window_rows(data_dir: Path, now: datetime, hours: int = WINDOW_HOURS) -> list[dict]:
@@ -44,8 +43,19 @@ def _shares(counts: Counter, totals: Counter, keys: tuple[str, ...]) -> dict[str
     return {k: round(100 * counts[k] / totals[k], 1) if totals[k] else 0.0 for k in keys}
 
 
-def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
+def _topic_name(topics: TopicList, topic_id: str | None) -> str | None:
+    topic_id = topics.resolve(topic_id)
+    if not topic_id or topic_id == OTHER or topic_id not in topics.themen:
+        return None
+    return topics.themen[topic_id]["name"]
+
+
+def build_payload(
+    data_dir: Path, now: datetime | None = None, domains: dict[str, str] | None = None
+) -> dict:
+    """``domains``: medium name -> home page (feeds.yaml), shown as link in the chart."""
     now = now or datetime.now(UTC)
+    domains = domains or {}
     topics = TopicList.load(data_dir)
     rows = window_rows(data_dir, now)
     per_camp = Counter(row["lager"] for row in rows)
@@ -59,10 +69,24 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
                 "lager": row["lager"],
                 "spektrum": row["spektrum"],
                 "land": row["land"],
+                "domain": domains.get(row["quelle"]),
                 "artikel": 0,
+                "neueste": [],
             },
         )
         medium["artikel"] += 1
+        medium["neueste"].append(row)
+    for medium in media.values():
+        latest = sorted(medium["neueste"], key=_time, reverse=True)[:LATEST_PER_MEDIUM]
+        medium["neueste"] = [
+            {
+                "titel": r["titel"],
+                "url": r["url"],
+                "zeit": _time(r),
+                "thema": _topic_name(topics, r.get("thema_id")),
+            }
+            for r in latest
+        ]
 
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
@@ -121,6 +145,9 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
         "quellen_gesamt": len(media),
         "medien": sorted(media.values(), key=lambda m: m["name"]),
         "themen": entries[:MAX_TOPICS],
+        "kategorien": bubbles.categories(
+            window_rows(data_dir, now, bubbles.BUBBLE_HOURS), topics, now
+        ),
     }
 
 

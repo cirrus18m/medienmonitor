@@ -8,8 +8,10 @@ sie per SFTP hoch; diese Seite bettet sie nur ein. -->
 
 Welche Themen bestimmen die Schlagzeilen der letzten 24 Stunden – und welche Medien
 greifen sie auf? Die Grafik zeigt für jedes Medium, wie viele seiner Schlagzeilen zu einem
-Thema gehören. Oben stehen neue Medien, unten etablierte, jeweils von links nach rechts
-geordnet. Die Grafik wird stündlich erneuert.
+Thema gehören. Oben stehen neue Medien, unten alte Medien, jeweils alphabetisch. Fährt
+man über ein Feld, erscheinen die Schlagzeilen; ein Klick zeigt sie mit Links. Ein Klick
+auf den Namen oder auf ein leeres Feld zeigt die letzten 10 Schlagzeilen des Mediums, ↗
+hinter dem Namen führt zu seiner Website. Die Grafik wird stündlich erneuert.
 
 ```{=html}
 <iframe id="medienmonitor" src="medienmonitor/grafik.html" title="Medienmonitor: Themen der Schlagzeilen je Medium" loading="lazy" style="width:100%;height:1400px;border:0;display:block"></iframe>
@@ -59,10 +61,14 @@ führen zu den Videos.
   mindestens 5 Schlagzeilen aus 2 Medien. Die Zuordnung ist automatisch und kann im
   Einzelfall danebenliegen.
 * **Einordnung der Medien:** Lager (links, Mitte, rechts, alternativ) und das feinere
-  Spektrum sind eine eigene, grobe Einschätzung. „Neue Medien“ (Lager „alternativ“)
-  positionieren sich ausdrücklich gegen etablierte Medien. Die Liste der Medien mit ihrer
-  Einordnung steht im öffentlichen Repository
-  [cirrus18m/medienmonitor](https://github.com/cirrus18m/medienmonitor/blob/main/feeds.yaml).
+  Spektrum sind eine eigene, grobe Einschätzung der KI. „Neue Medien“ (Lager
+  „alternativ“) positionieren sich ausdrücklich gegen „Alte Medien“.
+* **TOP- und Blasen-Themen:** TOP-Themen greifen in den letzten 24 Stunden neue wie
+  alte Medien auf. Blasen-Themen aus Politik, Wirtschaft und Gesellschaft behandelt in
+  den letzten 72 Stunden nur eine Seite. Bevor ein Thema als Blasen-Thema erscheint,
+  prüft die KI, ob die andere Seite dasselbe Ereignis unter anderem Namen behandelt.
+  Dass alte Medien mehr Blasen-Themen haben, liegt auch daran, dass sie viel mehr
+  Meldungen veröffentlichen und mehr Medien aus Österreich und der Schweiz umfassen.
 * **Zahlen:** Gezeigt wird die Zahl der Schlagzeilen, nicht ein Anteil. Medien, die
   viele Meldungen veröffentlichen, fallen deshalb stärker ins Gewicht.
 * **Links** führen zu den Artikeln auf den Seiten der Medien.
