@@ -57,6 +57,28 @@ bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
 `plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich
 direkt verlinken: `medienmonitor.html#thema=T5`.
 
+## YouTube-Trends
+
+`scripts/run_youtube.py` fragt über die YouTube Data API (Schlüssel `YOUTUBE_API_KEY` in
+der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` und deren
+Abonnenten ab und schreibt:
+
+* `youtube.json` – je Sprachauswahl (`de`, `en`, `alle`) die 30 meistgesehenen Videos der
+  letzten 10 Tage, die länger als 10 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
+  und Nachrichtensendungen (Titelmuster in `youtube.py` und je Kanal im Feld
+  `ausschliessen`), dazu die Kanalliste.
+* `youtube.html` – Aufrufe (logarithmisch) über „Tage online“ und die Top-Liste, mit
+  Umschalter Deutsch / Englisch / Deutsch & Englisch.
+* `kanaele.html` – Kanalübersicht nach Sprache mit Abonnenten und Zahl der Videos.
+
+Die Sprache kommt aus `youtube.yaml` (`sprache`: de, en, mehrsprachig); nur bei
+mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert wird nur der aktuelle
+Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Der Workflow „Abruf“
+führt das alle 3 Stunden aus (Secret `YOUTUBE_API_KEY`) und lädt `youtube.html` und
+`kanaele.html` mit hoch. Vorlagen für die deutschlandmonitor-Seiten (Menü „Medienmonitor“:
+Text-Medien, Video-Medien, YouTube-Kanäle): `seite/medienmonitor.qmd`,
+`seite/medienmonitor-video.qmd` und `seite/youtube-kanaele.qmd`.
+
 ## Stand
 
 - [x] Feeds abrufen und speichern (Duplikate über normalisierte URL)
@@ -65,7 +87,7 @@ direkt verlinken: `medienmonitor.html#thema=T5`.
 - [x] `daten.json` (24 Stunden, Themen × Mediengruppen, mit Artikellinks)
 - [x] Grafik `grafik.html` (je Medium, nach Lager, nach Spektrum)
 - [x] Upload per SFTP
-- [ ] Seite ins deutschlandmonitor-Repo übernehmen
-- [ ] YouTube-Trends (eigener Branch)
+- [x] Seite ins deutschlandmonitor-Repo übernehmen
+- [x] YouTube-Trends (alle 3 Stunden)
 - [ ] Podcast (Option)
 

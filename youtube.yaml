@@ -1,0 +1,922 @@
+# YouTube-Kanäle für die YouTube-Trends (PLAN.md, Abschnitt 2)
+#
+# Felder:
+#   name      Anzeigename
+#   kanal_id  YouTube-Kanal-ID (UC…); Feed: https://www.youtube.com/feeds/videos.xml?channel_id=<kanal_id>
+#   handle    @-Name des Kanals (nur zur Orientierung)
+#   sprache   de | en | mehrsprachig (Auswahl der Grafik; je Video zählt die Tonspur-Sprache, falls angegeben)
+#   land      Land laut Kanal bzw. Sitz
+#   art       medienhaus | unabhaengig | organisation
+#   lager     wie in feeds.yaml: links | mitte | rechts | alternativ
+#   spektrum  links | mitte-links | mitte | mitte-rechts | rechts | unklar
+#   aktiv     false = wird nicht abgerufen (Grund als Kommentar)
+#
+#   ausschliessen  reguläre Ausdrücke auf den Titel (Groß-/Kleinschreibung egal) für
+#             regelmäßige Nachrichtensendungen dieses Kanals; allgemeine Muster in youtube.py
+#
+# Kanal-IDs am 24.11.2026 über die YouTube-Suche ermittelt (Name und Abonnentenzahl
+# geprüft). Einordnung: VORSCHLAG nach derselben Regel wie feeds.yaml (etablierte
+# Medienhäuser nach Spektrum, Kanäle mit Haltung gegen etablierte Medien "alternativ").
+
+kanaele:
+
+  # ---------- Medienhäuser ----------
+  - name: tagesschau
+    kanal_id: UC5NOEUbkLheQcaaRldYW5GA
+    handle: "@tagesschau"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+    ausschliessen:
+      - '^[^|]+ / [^|]+ / '
+
+  - name: ZDFheute Nachrichten
+    kanal_id: UCeqKIgPQfNInOswGRWt48kQ
+    handle: "@ZDFheute"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+
+  - name: phoenix
+    kanal_id: UCwyiPnNlT8UABRmGmU0T9jg
+    handle: "@phoenix"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+
+  - name: DER SPIEGEL
+    kanal_id: UC1w6pNGiiLdZgyNpXUnA4Zw
+    handle: "@DERSPIEGEL"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: links
+    spektrum: mitte-links
+
+  - name: WELT Nachrichtensender
+    kanal_id: UCZMsvbAhhRblVGXmEXW8TSA
+    handle: "@WELTVideoTV"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: BILD
+    kanal_id: UC4zcMHyrT_xyWlgy5WGpFFQ
+    handle: "@bild"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: Ronzheimer
+    kanal_id: UC4QT_F-kQYGcxccNzU2jUMw
+    handle: "@Ronzheimer"
+    sprache: de
+    land: DE
+    art: medienhaus   # Podcast von Paul Ronzheimer (BILD)
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: Markus Lanz
+    kanal_id: ""
+    handle: ""
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+    aktiv: false   # 24.11.2026: kein offizieller eigener Kanal gefunden; Ausschnitte laufen über ZDFheute
+
+  - name: Lanz & Precht
+    kanal_id: ""
+    handle: ""
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+    aktiv: false   # 24.11.2026: Podcast des ZDF, kein offizieller YouTube-Kanal gefunden (nur Fan-Archive wie @PRECHTARCHIV)
+
+  # ---------- unabhängig: Mitte / links ----------
+  - name: MrWissen2go
+    kanal_id: UCZHpIFMfoJJ_1QxNGLJTzyA
+    handle: "@MrWissen2go"
+    sprache: de
+    land: DE
+    art: unabhaengig   # funk (öffentlich-rechtlich finanziert)
+    lager: mitte
+    spektrum: mitte
+
+  - name: Die Da Oben!
+    kanal_id: UCfb7LAYCeJJiT3gyquv7V5Q
+    handle: "@DieDaOben"
+    sprache: de
+    land: DE
+    art: unabhaengig   # funk (öffentlich-rechtlich finanziert)
+    lager: links
+    spektrum: mitte-links
+
+  - name: Simplicissimus
+    kanal_id: UCKGMHVipEvuZudhHD05FOYA
+    handle: "@Simplicissimus"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: mitte
+
+  - name: Rezo
+    kanal_id: UCvU1c8D5n1Rue3NFRu0pJSw
+    handle: ""   # Kanal "Rezo ja lol ey" (1,6 Mio.); der Kanal "rezo" (@rezomusik) ist seit 2019 still
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: links
+    spektrum: mitte-links
+    aktiv: false   # 24.11.2026: neuestes Video vom 04.01.2024
+
+  - name: Jung & Naiv
+    kanal_id: UCv1WDP5EiipMQ__C4Cg6aow
+    handle: "@tilojung"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: links
+    spektrum: links
+
+  - name: Wohlstand für Alle
+    kanal_id: UCRprqV4FxwrWQJbZ0VLFS_g
+    handle: "@WohlstandfürAlle"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: links
+    spektrum: links
+
+  - name: '{ungeskriptet} by Ben'
+    kanal_id: UCjkSqbf8E4MybdYmfhlW10A
+    handle: "@ben_ungeskriptet"
+    sprache: de
+    land: DE
+    art: unabhaengig   # Interview-Podcast von Ben Berndt; Gäste aus allen Lagern
+    lager: mitte
+    spektrum: unklar
+
+  # ---------- neue Medien: links ----------
+  - name: NachDenkSeiten
+    kanal_id: UCE7b8qctaEGmST38-sfdOsA
+    handle: "@nachdenkseiten745"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: acTVism Munich
+    kanal_id: UCe5hl70Es-VQ4OWvxssFH4A
+    handle: "@acTVismMunich"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  # ---------- neue Medien: rechts ----------
+  - name: NIUS
+    kanal_id: UCQGqiGhMjc_p4lZEhSTb12g
+    handle: "@niusde"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Tichys Einblick
+    kanal_id: UCB37CFICVTUlewYdbMSChIA
+    handle: "@TichysEinblick"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+    ausschliessen:
+      - 'TE Wecker'
+
+  - name: Apollo News
+    kanal_id: UCR_iFmLcHBFxc3x3CA71xvw
+    handle: "@apollonewsnet"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Boris Reitschuster
+    kanal_id: UCkSEq4JuI5VxqWIrRY2-pew
+    handle: "@BorisReitschuster"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Punkt.PRERADOVIC
+    kanal_id: UC-q8URCNmX5Wg4R9kXtW4tg
+    handle: "@punkt.preradovic3208"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Hallo Meinung
+    kanal_id: UCbanHTRuGv2Fi7flpO735yw
+    handle: "@HalloMeinung"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Clownswelt
+    kanal_id: UCB0H51gtgcpgYGI7LgflNJw
+    handle: "@Clownswelt"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Die Weltwoche
+    kanal_id: UCq-b0dwW97YRZWgSCikWQRA
+    handle: "@die.weltwoche"
+    sprache: de
+    land: CH
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+    ausschliessen:
+      - 'Weltwoche Daily'
+
+  - name: Horst Lüning (UnterBlog)
+    kanal_id: UC5i6nCpwmDVKo98sZD2AAcQ
+    handle: "@UnterBlog"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: AUF1
+    kanal_id: UChkELlk5GBaUCVx8-94IK_Q
+    handle: "@auf1tv"
+    sprache: de
+    land: AT
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: COMPACT-TV
+    kanal_id: UCgvFsn6bRKqND1cW3HpzDrA
+    handle: "@COMPACTTV"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  # ---------- Grenzfälle (Wirtschaft/Finanzen mit viel Politik) ----------
+  - name: Kettner Edelmetalle
+    kanal_id: UCICWTMc7Jni_u5ORVXBOnLQ
+    handle: "@KettnerEdelmetalle"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: rechts
+
+  - name: Hoss & Hopf
+    kanal_id: UC8PeBxhbnTqKQ6P161s3_Jw
+    handle: "@hoss_und_hopf"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+    aktiv: false   # 24.11.2026: neuestes Video vom 05.12.2025
+
+  - name: Daniele Ganser
+    kanal_id: UCgrHgV7atBftQk8dXwIDktg
+    handle: "@DanieleGanserOffiziell"
+    sprache: de
+    land: CH
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: apolut
+    kanal_id: UCDEgEWPYLGJjFleQCsm7M_A
+    handle: "@apolut_official"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  # ---------- ergänzt am 24.11.2026 (Einordnung: VORSCHLAG, bitte prüfen) ----------
+
+  - name: 'Military Summary'
+    kanal_id: UCUnc496-PPmFZVKlYxUnToA
+    handle: "@militarysummary"
+    sprache: en
+    land: BY
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Jasmin Kosubek'
+    kanal_id: UCuXKxMi1MAxPVZVT0bc976Q
+    handle: "@JasminKosubekOriginal"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Syriana Analysis'
+    kanal_id: UClvD6c1VI75QZWJjA_yiWhg
+    handle: "@SyrianaAnalysis"
+    sprache: en
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Prof. Dr. Christian Rieck'
+    kanal_id: UCSExr_QUT6h-4sGW5hGjrCA
+    handle: "@ProfRieck"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Vermietertagebuch (Alexander Raue)'
+    kanal_id: UCiTJladOHCMkKndVBsn23VQ
+    handle: "@Vermietertagebuch"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Salim Samatou'
+    kanal_id: UCs05VH8MBAaX_cNXlrYIZkA
+    handle: "@SalimSamatou1"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Hania'
+    kanal_id: UC0tDu72Mbzs7t3kAeSC-PLA
+    handle: "@Hania-thoughts"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'John Mearsheimer'
+    kanal_id: UCEaoODAZJF5w20lzcX1v03w
+    handle: "@JohnMearsheimer"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'India Global Review'
+    kanal_id: UC83iGbaOhZR8AWNYYNzSNjg
+    handle: "@IndiaGlobalReview"
+    sprache: en
+    land: IN
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'The Peacemonger (Ian Proud)'
+    kanal_id: UCItXrWfhxRmaQuOunGfm-7w
+    handle: "@IanProud"
+    sprache: en
+    land: GB
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'The Diary Of A CEO'
+    kanal_id: UCGq-a57w-aPwyi3pW7XLiHw
+    handle: "@TheDiaryOfACEO"
+    sprache: en
+    land: GB
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'INDUSTRIEMAGAZIN'
+    kanal_id: UCO7kohVnA8VzILzsnagXDHw
+    handle: "@INDUSTRIEMAGAZIN"
+    sprache: de
+    land: AT
+    art: medienhaus
+    lager: mitte
+    spektrum: mitte
+
+  - name: 'Michael Lüders'
+    kanal_id: UCOpHmpW57dYcY8-4pj5-Zpw
+    handle: "@michaelluders1787"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Moove (auto motor und sport)'
+    kanal_id: UC3sFnml7fpaVkaVp1G6aOlg
+    handle: "@amsMoove"
+    sprache: de
+    land: DE
+    art: medienhaus
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Breaking Points'
+    kanal_id: UCDRIjKy6eZOvKtOELtTdeUA
+    handle: "@breakingpoints"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'nextmove'
+    kanal_id: UCgmB8S3f8-9dR8alVUZuZxQ
+    handle: "@nextmovevideos"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'NuoViso'
+    kanal_id: UCgJ0yIYRJT13BPtQdagWORA
+    handle: "@nuovisotv"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Neutrality Studies'
+    kanal_id: UCHdLVKdAeG6zAeZMGZh91bg
+    handle: "@neutralitystudies"
+    sprache: en
+    land: CH
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Neutrality Studies Deutsch'
+    kanal_id: UCgvmynBTfETXqInYcss5qcQ
+    handle: "@NeutralityStudiesDE"
+    sprache: de
+    land: CH
+    art: unabhaengig   # deutsche Fassung (synchronisiert)
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Agitator live'
+    kanal_id: UCvzYj53DsZxNSJhCqd2Yr3g
+    handle: "@Agitatorlive"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Ulrike Guérot'
+    kanal_id: UCZXCfY_O6gj2trJ3EQuzlmA
+    handle: "@UlrikeGuérot-Official"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'AKTUALITUM'
+    kanal_id: UC0ju8JqCWCs9hO77SnUCmeA
+    handle: "@AKTUALITUM"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'mym by Simo'
+    kanal_id: UCxOGWb_OYoaz2V3QclJT3YA
+    handle: "@meetyourmentor"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Cashkurs.com (Dirk Müller)'
+    kanal_id: UCeKWO9gvmAyoPiEuaIwnGHQ
+    handle: "@Cashkurscom"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Lex Clips (Lex Fridman)'
+    kanal_id: UCJIfeSCssxSC_Dhc5s7woww
+    handle: "@LexClips"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Schuler! Fragen, was ist'
+    kanal_id: UC_3M2qj2haMDhrPobUBx1Fw
+    handle: "@ralf-schuler"
+    sprache: de
+    land: DE
+    art: unabhaengig   # Ralf Schuler, NIUS
+    lager: alternativ
+    spektrum: rechts
+
+  - name: 'Principles by Ray Dalio'
+    kanal_id: UCqvaXJ1K3HheTPNjH-KpwXQ
+    handle: "@principlesbyraydalio"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Glenn Diesen'
+    kanal_id: UCZFCDIHTe9HGxtIuVDpBz7g
+    handle: "@GDiesen1"
+    sprache: en
+    land: "NO"
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Glenn Diesen Deutsch'
+    kanal_id: UC4k3xTKOrVWGJ4kakK6dLuA
+    handle: "@GDiesenDE"
+    sprache: de
+    land: "NO"
+    art: unabhaengig   # deutsche Fassung (synchronisiert)
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'ServusTV On'
+    kanal_id: UC-7qscJH_SncZvCm9Ty014Q
+    handle: "@ServusTV"
+    sprache: de
+    land: AT
+    art: medienhaus
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: 'Geladen – Batteriepodcast'
+    kanal_id: UCjlQUYxw7yjLuq5wTcJE-yA
+    handle: "@GeladenBatteriepodcast"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Marc Friedrich'
+    kanal_id: UCSiFC1DCXr3p1YDzyu9rogA
+    handle: "@MarcFriedrich7"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Flavio von Witzleben'
+    kanal_id: UCOnyot4cXF5C7OmNXL_kbeA
+    handle: "@FlaviovonWitzleben"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Asian Boss'
+    kanal_id: UC2-_WWPT_124iN6jiym4fOw
+    handle: "@AsianBoss"
+    sprache: en
+    land: KR
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Overton Magazin'
+    kanal_id: UCeP57zCgmlMrEGBrYJhZUlA
+    handle: "@overtonmagazin3793"
+    sprache: de
+    land: DE
+    art: unabhaengig   # wie in feeds.yaml
+    lager: alternativ
+    spektrum: links
+
+  - name: 'The Ezra Klein Show'
+    kanal_id: UCnxuOd8obvLLtf5_-YKFbiQ
+    handle: "@EzraKleinShow"
+    sprache: en
+    land: US
+    art: medienhaus   # New York Times
+    lager: links
+    spektrum: mitte-links
+
+  - name: 'Prof. Stefan Homburg'
+    kanal_id: UCDG7fluFPCLOmFz_Rhc3cXw
+    handle: "@StHomburg"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Patrik Baab'
+    kanal_id: UCHy1O_b9DSGDrlTSg5ZnSaw
+    handle: "@PatrikBaab-Official"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Predictive History'
+    kanal_id: UC11aHtNnc5bEPLI4jf6mnYg
+    handle: "@PredictiveHistory"
+    sprache: en
+    land: CA
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Kissler Kompakt'
+    kanal_id: UC6RYT0kcxYh_u8OJoAaF1Pg
+    handle: "@Kissler-Kompakt"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: rechts
+    spektrum: mitte-rechts
+
+  - name: 'Cyrus Janssen'
+    kanal_id: UCxEQsjgRRfGWiJJu_PDygxw
+    handle: "@CyrusJanssen"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'GZT'
+    kanal_id: UClWewRX7n_IY3mBbxmttR5Q
+    handle: "@GZT"
+    sprache: tr
+    land: TR
+    art: medienhaus
+    lager: mitte
+    spektrum: unklar
+    aktiv: false   # 24.11.2026: türkisch, passt in keine Sprachauswahl
+
+  - name: 'Anti-Spiegel (Thomas Röper)'
+    kanal_id: UC93mqUPbNmHZhl4fAVvZWpQ
+    handle: "@AntiSpiegel"
+    sprache: de
+    land: RU
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Reason2Resist (Dimitri Lascaris)'
+    kanal_id: UCcLnmCiZ691HyvB6UvZq69A
+    handle: "@reason2resist"
+    sprache: en
+    land: CA
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: 'Apolut Mirror'
+    kanal_id: UCZx1PN9lK5-8wWGfL3PsGCQ
+    handle: "@ApolutMirror"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+    aktiv: false   # 24.11.2026: Spiegel von apolut, doppelte Videos
+
+  - name: 'TEDx Talks'
+    kanal_id: UCsT0YIqwnpJCM-mx7-gSA4Q
+    handle: "@TEDx"
+    sprache: mehrsprachig
+    land: US
+    art: organisation
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Hotel Matze'
+    kanal_id: UCjRo7YkneL44wPDUW-aQoww
+    handle: "@HotelMatze"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'HKCM'
+    kanal_id: UC3AdN1bEmEonuSwXNS8LixQ
+    handle: "@hkcm"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Mario Lochner'
+    kanal_id: UCWFnsgnkOAc0D7OweruB3hA
+    handle: "@mario.lochner"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'The Duran'
+    kanal_id: UCdeMVChrumySxV9N1w0Au-w
+    handle: "@TheDuran"
+    sprache: en
+    land: CY
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Geld für die Welt (Maurice Höfgen)'
+    kanal_id: UCqLv2nTsMB_FXtQRFNXjWhA
+    handle: "@Maurice_Hoefgen"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: links
+    spektrum: links
+
+  - name: 'The Grayzone Deutsch'
+    kanal_id: UCO5rJweBuv70ZFmnGDb8_OA
+    handle: "@GrayzoneDE"
+    sprache: de
+    land: US
+    art: unabhaengig   # deutsche Fassung (synchronisiert)
+    lager: alternativ
+    spektrum: links
+
+  - name: 'Wall Street Truthbombs'
+    kanal_id: UCTK_cv-y88CScoudcXnS1Ew
+    handle: "@wstruthbombs"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Geopolitical Economy Report'
+    kanal_id: UCwlvSJdcMc7iGdR-aducSog
+    handle: "@GeopoliticalEconomyReport"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: 'Ärzte ohne Grenzen'
+    kanal_id: UCATiQARrE7ft2iI0wMafVjw
+    handle: "@AerzteOhneGrenzen"
+    sprache: de
+    land: DE
+    art: organisation
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'The Grayzone'
+    kanal_id: UCEXR8pRTkE2vFeJePNe9UcQ
+    handle: "@thegrayzone7996"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: 'The Cradle'
+    kanal_id: UC2liaNc5y50YBVjgXiQxdHQ
+    handle: "@thecradlemedia"
+    sprache: en
+    land: LB
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'Double Down News'
+    kanal_id: UCeRYN0tYBQVrC2cKsxJjdow
+    handle: "@DoubleDownNews"
+    sprache: en
+    land: GB
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: 'Asianometry'
+    kanal_id: UC1LpsuAUaKoMzzJSEt5WImw
+    handle: "@Asianometry"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Johnny Harris'
+    kanal_id: UCmGSJVG3mCRXVOP4yZrU1Dw
+    handle: "@johnnyharris"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Sachlich richtig (Medien-Podcast)'
+    kanal_id: UC1kcTyykNZVYE9LajEA8eLw
+    handle: "@SACHLICHRICHTIG"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'India & Global Left'
+    kanal_id: UCBqd_VSxqDngXahpcRp7daA
+    handle: "@IndiaGlobalLeft"
+    sprache: en
+    land: US
+    art: unabhaengig
+    lager: alternativ
+    spektrum: links
+
+  - name: 'RethinkX'
+    kanal_id: UCBQAC69i3HBvraOMvJEj58g
+    handle: "@RethinkX"
+    sprache: en
+    land: US
+    art: organisation
+    lager: mitte
+    spektrum: unklar
+
+  - name: 'Gabriele Krone-Schmalz'
+    kanal_id: UC9bIzo1UsNGjAIiwtAcGLYg
+    handle: "@GabrieleKroneSchmalz"
+    sprache: de
+    land: DE
+    art: unabhaengig
+    lager: alternativ
+    spektrum: unklar
+
+  - name: 'media.ccc.de (Chaos Computer Club)'
+    kanal_id: UC2TXq_t06Hjdr2g_KdKpHQg
+    handle: "@mediacccde"
+    sprache: mehrsprachig
+    land: DE
+    art: organisation
+    lager: mitte
+    spektrum: unklar

@@ -1,5 +1,5 @@
 ---
-title: "Medienmonitor"
+title: "Medienmonitor: Text-Medien"
 ---
 
 <!-- Vorlage für site/medienmonitor.qmd im deutschlandmonitor-Repo. Die Grafik
