@@ -1,0 +1,34 @@
+---
+title: "Medienmonitor"
+---
+
+<!-- Vorlage für site/medienmonitor.qmd im deutschlandmonitor-Repo. Die Daten
+(medienmonitor/daten.json) lädt das Repo medienmonitor stündlich per SFTP hoch. -->
+
+Welche Themen bestimmen die Schlagzeilen der letzten 24 Stunden – und berichten
+Medien unterschiedlicher Ausrichtung gleich stark darüber? Die Grafik zeigt je Gruppe von
+Medien, welcher Anteil ihrer Schlagzeilen auf ein Thema entfällt. Ein Wert von 5 heißt:
+5 von 100 Schlagzeilen dieser Gruppe gehören zu dem Thema.
+
+```{=html}
+<div id="medienmonitor" data-src="medienmonitor/daten.json">Daten werden geladen …</div>
+<script src="assets/medienmonitor.js" defer></script>
+```
+
+## So entsteht die Grafik
+
+* **Schlagzeilen:** Stündlich werden die RSS-Feeds von rund 40 deutschsprachigen Medien
+  abgerufen. Gespeichert werden nur Überschrift, Link, Medium und Zeit.
+* **Themen:** Eine KI (Claude von Anthropic) ordnet jede neue Schlagzeile einem Thema
+  zu, ohne zu erfahren, aus welchem Medium sie stammt. Ratgeber, Sport und Unterhaltung
+  zählen als „Sonstiges“ und erscheinen nicht in der Grafik. Gezeigt werden Themen mit
+  mindestens 5 Schlagzeilen aus 2 Medien. Die Zuordnung ist automatisch und kann im
+  Einzelfall danebenliegen.
+* **Gruppen:** Die Einordnung der Medien in Lager (links, Mitte, rechts, alternativ) und
+  das feinere Spektrum ist eine eigene, grobe Einschätzung. „Alternativ“ sind Medien, die
+  sich ausdrücklich gegen etablierte Medien positionieren. Die Liste der Medien mit ihrer
+  Einordnung steht im öffentlichen Repository
+  [cirrus18m/medienmonitor](https://github.com/cirrus18m/medienmonitor/blob/main/feeds.yaml).
+* **Anteile:** Jede Gruppe zählt für sich, damit Gruppen mit vielen oder sehr aktiven
+  Medien nicht überwiegen.
+* **Links** führen zu den Artikeln auf den Seiten der Medien.
