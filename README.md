@@ -38,6 +38,16 @@ bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
 `plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich
 direkt verlinken: `medienmonitor.html#thema=T5`.
 
+## YouTube-Trends (Branch `youtube`, in Arbeit)
+
+`scripts/run_youtube.py` fragt über die YouTube Data API (Schlüssel `YOUTUBE_API_KEY` in
+der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` ab und schreibt
+`youtube.json` und `youtube.html`: die 30 meistgesehenen Videos der letzten 10 Tage, die
+länger als 10 Minuten sind – ohne Livestreams und Nachrichtensendungen (Titelmuster in
+`youtube.py` und je Kanal im Feld `ausschliessen`). Die Grafik zeigt Aufrufe
+(logarithmisch) über „Tage online“, darunter die Liste mit Links. Gespeichert wird nur der
+aktuelle Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos).
+
 ## Stand
 
 - [x] Feeds abrufen und speichern (Duplikate über normalisierte URL)

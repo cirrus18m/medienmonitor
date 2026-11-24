@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Medienmonitor – YouTube</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; padding: 0.25rem 0.5rem; background: #fff; color: #1B1B1B;
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  p { margin: 0.4rem 0; }
+  .stand, .hinweis, .quelle { font-size: 0.85rem; color: #555; }
+  label { font-size: 0.9rem; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th, td { padding: 0.25rem 0.4rem; border-bottom: 1px solid #e3e6ea; text-align: left;
+    vertical-align: top; }
+  th { font-weight: 600; white-space: nowrap; }
+  td.zahl, th.zahl { text-align: right; white-space: nowrap; }
+  tr.markiert { background: #E6F1F8; }
+  a { color: #0077BB; }
+  .zeichen { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.3rem; }
+  .etabliert { background: #0077BB; border-radius: 50%; }
+  .neu { background: #EE7733; transform: rotate(45deg) scale(0.85); }
+  .politik { background: #555555; }
+  .fehler { color: #B2182B; }
+</style>
+</head>
+<body>
+<p class="stand">{{STAND}}</p>
+<p class="hinweis">Die 30 meistgesehenen Videos der letzten Tage, die länger als 10 Minuten
+sind – ohne Livestreams und regelmäßige Nachrichtensendungen. Ältere Videos hatten mehr Zeit,
+Aufrufe zu sammeln; vergleichbarer sind die Aufrufe je Tag.</p>
+<label><input type="checkbox" id="politik" checked> Kanäle von Parteien und Politikern
+zeigen</label>
+<div id="grafik"></div>
+<p class="quelle">{{SOURCE}}.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th class="zahl">Rang</th><th>Kanal</th><th>Titel</th><th class="zahl">Dauer</th>
+    <th class="zahl">Aufrufe</th><th class="zahl">Tage online</th>
+    <th class="zahl">Aufrufe je Tag</th></tr></thead>
+  <tbody id="liste"></tbody>
+</table>
+</div>
+<script src="{{PLOTLY_SRC}}"></script>
+<script>
+// Data: Plotly figure made in Python (youtube_render.py) and the rows of the top list.
+const DATA = {{DATA}};
+(() => {
+  "use strict";
+  const chart = document.getElementById("grafik");
+  const body = document.getElementById("liste");
+  const politics = document.getElementById("politik");
+  let marked = null;
+
+  function el(tag, props = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(props)) {
+      if (key === "text") node.textContent = value;
+      else node.setAttribute(key, value);
+    }
+    node.append(...children.filter(Boolean));
+    return node;
+  }
+  const safeUrl = url => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === "https:" && parsed.hostname === "www.youtube.com"
+        ? parsed.href : null;
+    } catch {
+      return null;
+    }
+  };
+  function reportHeight() {
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        {medienmonitorYoutubeHoehe: document.documentElement.scrollHeight}, location.origin);
+    }
+  }
+
+  function table() {
+    body.replaceChildren();
+    for (const [rank, group, channel, title, url, duration, views, days, perDay] of DATA.rows) {
+      if (group === "politik" && !politics.checked) continue;
+      const safe = safeUrl(url);
+      const row = el("tr", {id: `rang-${rank}`},
+        el("td", {class: "zahl", text: String(rank)}),
+        el("td", {}, el("span", {class: `zeichen ${group}`, title: DATA.groups[group]}),
+          el("span", {text: channel})),
+        el("td", {}, safe
+          ? el("a", {href: safe, target: "_blank", rel: "noopener nofollow noreferrer",
+            text: title})
+          : el("span", {text: title})),
+        el("td", {class: "zahl", text: duration}),
+        el("td", {class: "zahl", text: views}),
+        el("td", {class: "zahl", text: days}),
+        el("td", {class: "zahl", text: perDay}));
+      if (rank === marked) row.classList.add("markiert");
+      body.append(row);
+    }
+  }
+
+  function draw() {
+    const layout = {...DATA.figure.layout, width: document.body.clientWidth - 16};
+    const data = DATA.figure.data.map(trace => ({
+      ...trace,
+      visible: trace.meta.gruppe !== "politik" || politics.checked,
+      mode: document.body.clientWidth < 640 ? "markers" : trace.mode,
+    }));
+    Plotly.react(chart, data, layout, {displayModeBar: false, locale: "de"})
+      .then(reportHeight);
+  }
+
+  if (!window.Plotly) {
+    chart.replaceChildren(el("p", {class: "fehler",
+      text: "Die Grafik konnte nicht geladen werden. Bitte später erneut versuchen."}));
+  } else {
+    draw();
+    chart.on("plotly_click", event => {
+      marked = event.points[0].customdata[0];
+      table();
+      document.getElementById(`rang-${marked}`)
+        ?.scrollIntoView({behavior: "smooth", block: "nearest"});
+    });
+  }
+  table();
+  reportHeight();
+  politics.addEventListener("change", () => {
+    table();
+    if (window.Plotly) draw();
+    reportHeight();
+  });
+  let timer;
+  window.addEventListener("resize", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => window.Plotly && draw(), 150);
+  });
+})();
+</script>
+</body>
+</html>
