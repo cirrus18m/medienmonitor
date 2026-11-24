@@ -7,9 +7,8 @@ title: "Medienmonitor"
 sie per SFTP hoch; diese Seite bettet sie nur ein. -->
 
 Welche Themen bestimmen die Schlagzeilen der letzten 24 Stunden – und welche Medien
-greifen sie auf? Die Grafik zeigt für jedes Medium, welcher Anteil seiner Schlagzeilen auf
-ein Thema entfällt. Ein Wert von 5 heißt: 5 von 100 Schlagzeilen dieses Mediums gehören zu
-dem Thema. Oben stehen neue Medien, unten etablierte, jeweils von links nach rechts
+greifen sie auf? Die Grafik zeigt für jedes Medium, wie viele seiner Schlagzeilen zu einem
+Thema gehören. Oben stehen neue Medien, unten etablierte, jeweils von links nach rechts
 geordnet. Die Grafik wird stündlich erneuert.
 
 ```{=html}
@@ -42,6 +41,6 @@ geordnet. Die Grafik wird stündlich erneuert.
   positionieren sich ausdrücklich gegen etablierte Medien. Die Liste der Medien mit ihrer
   Einordnung steht im öffentlichen Repository
   [cirrus18m/medienmonitor](https://github.com/cirrus18m/medienmonitor/blob/main/feeds.yaml).
-* **Anteile:** Jedes Medium (bzw. jede Gruppe) zählt für sich, damit Medien mit vielen
-  Meldungen nicht überwiegen.
+* **Zahlen:** Gezeigt wird die Zahl der Schlagzeilen, nicht ein Anteil. Medien, die
+  viele Meldungen veröffentlichen, fallen deshalb stärker ins Gewicht.
 * **Links** führen zu den Artikeln auf den Seiten der Medien.

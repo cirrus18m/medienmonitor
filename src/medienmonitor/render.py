@@ -50,12 +50,9 @@ def shorten(text: str, limit: int) -> str:
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
-def _number(value: float) -> str:
-    """German number for cell labels: one decimal below 10, else whole numbers."""
-    if value <= 0:
-        return ""
-    text = f"{value:.1f}" if value < 10 else f"{value:.0f}"
-    return text.replace(".", ",")
+def _number(count: int) -> str:
+    """Cell label: the number of headlines, empty for none."""
+    return str(count) if count > 0 else ""
 
 
 def _layout(height: int, **extra) -> dict:
@@ -83,8 +80,8 @@ def media_order(media: list[dict]) -> list[dict]:
 
 
 def figure_by_medium(payload: dict) -> go.Figure:
-    """Rows = media (new media on top), columns = topics; value = share of the medium's
-    headlines on the topic in percent."""
+    """Rows = media (new media on top), columns = topics; value = number of the medium's
+    headlines on the topic."""
     columns = payload["themen"][:MAX_TOPIC_COLUMNS]
     media = list(reversed(media_order(payload["medien"])))  # Plotly draws rows bottom-up
     z, text, custom = [], [], []
@@ -92,9 +89,8 @@ def figure_by_medium(payload: dict) -> go.Figure:
         row_z, row_text, row_custom = [], [], []
         for topic in columns:
             count = topic.get("anzahl_medium", {}).get(medium["name"], 0)
-            share = 100 * count / medium["artikel"] if medium["artikel"] else 0.0
-            row_z.append(round(share, 2))
-            row_text.append(_number(share))
+            row_z.append(count)
+            row_text.append(_number(count))
             spectrum = LABELS["spektrum"].get(medium["spektrum"], medium["spektrum"])
             row_custom.append(
                 [count, medium["artikel"], topic["name"], spectrum, topic["id"], medium["name"]]
@@ -126,8 +122,8 @@ def figure_by_medium(payload: dict) -> go.Figure:
             hoverongaps=False,
             hovertemplate=(
                 "<b>%{customdata[5]}</b>: %{customdata[2]}<br>"
-                "%{z:.1f} % der Schlagzeilen des Mediums (%{customdata[0]} von "
-                "%{customdata[1]})<br>Spektrum: %{customdata[3]}<extra></extra>"
+                "%{z} Schlagzeilen (von %{customdata[1]} des Mediums)<br>"
+                "Spektrum: %{customdata[3]}<extra></extra>"
             ),
         )
     )
@@ -190,9 +186,9 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
     labels = [LABELS[grouping].get(g, g) for g in groups]
     z, text, custom = [], [], []
     for topic in rows:
-        shares = [topic["anteil_pct"][grouping].get(g, 0.0) for g in groups]
-        z.append(shares)
-        text.append([_number(v) for v in shares])
+        counts = [topic["anzahl"][grouping].get(g, 0) for g in groups]
+        z.append(counts)
+        text.append([_number(v) for v in counts])
         custom.append(
             [
                 [
@@ -221,8 +217,8 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
             showscale=False,
             hoverongaps=False,
             hovertemplate=(
-                "<b>%{customdata[2]}</b><br>%{customdata[3]}: %{z:.1f} % der Schlagzeilen "
-                "(%{customdata[0]} von %{customdata[1]})<extra></extra>"
+                "<b>%{customdata[2]}</b><br>%{customdata[3]}: %{z} Schlagzeilen "
+                "(von %{customdata[1]} der Gruppe)<extra></extra>"
             ),
         )
     )
@@ -248,13 +244,13 @@ VIEWS = (
 )
 NOTES = {
     "medium": (
-        "Anteil an allen Schlagzeilen des Mediums in den letzten 24 Stunden in %. Oben "
-        "neue Medien, unten etablierte, jeweils von links nach rechts; hinter dem Namen "
-        "Spektrum und Zahl der Schlagzeilen. Bei wenigen Schlagzeilen schwanken die Anteile "
-        "stark."
+        "Zahl der Schlagzeilen je Medium und Thema in den letzten 24 Stunden. Oben neue "
+        "Medien, unten etablierte, jeweils von links nach rechts; hinter dem Namen Spektrum "
+        "und Zahl aller Schlagzeilen des Mediums. Medien mit vielen Meldungen fallen stärker "
+        "ins Gewicht."
     ),
-    "lager": "Anteil an allen Schlagzeilen des Lagers in den letzten 24 Stunden in %.",
-    "spektrum": "Anteil an allen Schlagzeilen der Gruppe in den letzten 24 Stunden in %.",
+    "lager": "Zahl der Schlagzeilen je Lager und Thema in den letzten 24 Stunden.",
+    "spektrum": "Zahl der Schlagzeilen je Spektrum und Thema in den letzten 24 Stunden.",
 }
 
 

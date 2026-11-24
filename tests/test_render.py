@@ -65,15 +65,21 @@ def test_media_order_new_media_on_top_left_to_right():
     assert names == ["NIUS", "taz", "Welt"]
 
 
-def test_figure_by_medium_shares_and_rows():
+def test_figure_by_medium_counts_and_rows():
     figure = render.figure_by_medium(payload())
     trace = figure.data[0]
     rows = figure.layout.meta["kurz"]
     assert rows == ["Welt", "taz", "NIUS"]  # bottom-up: established first
-    assert trace.z[rows.index("taz")][0] == 50.0
-    assert trace.z[rows.index("NIUS")][0] == 50.0
-    assert trace.z[rows.index("Welt")][0] == 0.0  # no division by zero
+    assert trace.z[rows.index("taz")][0] == 2
+    assert trace.z[rows.index("NIUS")][0] == 1
+    assert trace.z[rows.index("Welt")][0] == 0
+    assert trace.text[rows.index("Welt")][0] == ""
     assert trace.customdata[rows.index("taz")][0][4:] == ["T1", "taz"]
+
+
+def test_figure_by_group_counts():
+    trace = render.figure_by_group(payload(), "lager").data[0]
+    assert list(trace.z[0]) == [2, 0, 0, 1]
 
 
 def test_render_html_escapes_foreign_text():

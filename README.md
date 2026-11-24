@@ -31,7 +31,8 @@ uv run pytest && uv run ruff check .
 
 Jeder Lauf schreibt neben `daten.json` die Datei `grafik.html`: die Heatmaps (je Medium,
 nach Lager, nach Spektrum) als Plotly-Grafik aus Python (`src/medienmonitor/render.py`)
-mit Umschalter und den Schlagzeilen samt Links. Der Workflow lädt beide nach
+mit Umschalter und den Schlagzeilen samt Links. Die Felder zeigen die Zahl der
+Schlagzeilen (keine Anteile). Der Workflow lädt beide nach
 `deutschlandmonitor.info/medienmonitor/`. Die Seite „Medienmonitor“ des deutschlandmonitor
 bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
 `plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich
