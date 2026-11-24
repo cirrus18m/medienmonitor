@@ -83,10 +83,11 @@ jobs:
 
       # Upload of daten.json to deutschlandmonitor.info/medienmonitor/ (Host Europe, SFTP).
       # Skipped while the secrets are missing. The SFTP user can write to all sites of the
-      # package, so the step checks two marker files (put there once by hand) and writes
-      # nothing but medienmonitor/daten.json: no mirror, no delete.
-      #   $HE_TARGET_DIR/upload-ziel.txt               contains "deutschlandmonitor.info"
-      #   $HE_TARGET_DIR/medienmonitor/upload-ziel.txt contains "medienmonitor"
+      # package, so the step checks the marker file of the site and then writes nothing
+      # but the folder medienmonitor/ and daten.json in it: no mirror, no delete.
+      #   $HE_TARGET_DIR/upload-ziel.txt  contains "deutschlandmonitor.info"
+      # The website workflow of deutschlandmonitor excludes medienmonitor/ from its
+      # mirror --delete.
       # Secrets HE_SSH_USER, HE_SSH_PASSWORD, HE_SSH_KNOWN_HOSTS and variable HE_TARGET_DIR
       # as in the repository deutschlandmonitor (.github/workflows/site.yml).
       - name: daten.json hochladen
@@ -121,16 +122,15 @@ jobs:
           if [[ "$(read_marker "$TARGET_DIR/upload-ziel.txt")" != "deutschlandmonitor.info" ]]; then
             echo "Marke $TARGET_DIR/upload-ziel.txt fehlt oder stimmt nicht. Nichts geändert."; exit 1
           fi
-          if [[ "$(read_marker "$TARGET_DIR/medienmonitor/upload-ziel.txt")" != "medienmonitor" ]]; then
-            echo "Marke $TARGET_DIR/medienmonitor/upload-ziel.txt fehlt oder stimmt nicht. Nichts geändert."; exit 1
-          fi
           # Upload under a temporary name, then swap (SFTP rename does not overwrite): a
           # reader never gets half a file, at most a missing one for a few milliseconds.
           lftp -u "$HE_SSH_USER" --env-password sftp://ssh.server-he.de -e "
             set sftp:auto-confirm false;
             set net:max-retries 2;
             set cmd:fail-exit yes;
-            cd $TARGET_DIR/medienmonitor;
+            cd $TARGET_DIR;
+            mkdir -f -p medienmonitor;
+            cd medienmonitor;
             put daten/daten.json -o daten.json.neu;
             rm -f daten.json;
             mv daten.json.neu daten.json;
