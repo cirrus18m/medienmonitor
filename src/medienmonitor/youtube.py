@@ -33,9 +33,14 @@ SCHEMA = 1
 DEFAULT_EXCLUDE = (
     r"\blive\b",
     r"\blivestream\b",
+    r"pressekonferenz",
+    r"bundestag, \d+\. sitzung",
     r"tagesschau \d{1,2}[:.]\d{2}",
+    r"tagesthemen \d{1,2}[:.]\d{2}",
     r"heute journal",
+    r"heute \d{1,2}([:.]\d{2})? uhr vom",
     r"nachrichten (am|vom|des tages)",
+    r"schlagzeilen des tages",
     r"news am",
 )
 

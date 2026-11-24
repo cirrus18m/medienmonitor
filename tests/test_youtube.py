@@ -69,6 +69,9 @@ def test_load_channels_only_active_with_id(tmp_path):
         ({"aufrufe": None}, "ohne Aufrufe"),
         ({"titel": "tagesschau 20:00 Uhr, 23.11.2026"}, "Nachrichten"),
         ({"titel": "Kurz: Neues"}, "Nachrichten"),
+        ({"titel": "heute 19 Uhr vom 23.11.2026: Polen"}, "Nachrichten"),
+        ({"titel": "Bundestag, 110. Sitzung: Etat | 24.11.26"}, "Nachrichten"),
+        ({"titel": "18. November 2026 - Regierungspressekonferenz | Komplette BPK"}, "Nachrichten"),
     ],
 )
 def test_exclusion_reason(changes, reason):
