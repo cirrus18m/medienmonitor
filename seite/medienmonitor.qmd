@@ -1,5 +1,5 @@
 ---
-title: "Medienmonitor"
+title: "Medienmonitor: Text-Medien"
 ---
 
 <!-- Vorlage für site/medienmonitor.qmd im deutschlandmonitor-Repo. Die Grafik
@@ -23,28 +23,6 @@ hinter dem Namen führt zu seiner Website. Die Grafik wird stündlich erneuert.
     window.addEventListener("message", event => {
       if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
       const height = Number(event.data?.medienmonitorHoehe);
-      if (height > 0) frame.style.height = Math.ceil(height + 8) + "px";
-    });
-  })();
-</script>
-```
-
-## YouTube: Interviews und Dokumentationen
-
-Welche längeren Videos werden gerade am meisten gesehen? Die Grafik zeigt die 30
-meistgesehenen Videos der letzten 10 Tage aus rund 90 [YouTube-Kanälen](youtube-kanaele.qmd),
-die länger als 10 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides. Je
-Kanal erscheinen höchstens drei Videos. Die Seite lädt nichts von YouTube; die Titel
-führen zu den Videos.
-
-```{=html}
-<iframe id="medienmonitor-youtube" src="medienmonitor/youtube.html" title="Medienmonitor: meistgesehene YouTube-Videos" loading="lazy" style="width:100%;height:1700px;border:0;display:block"></iframe>
-<script>
-  (() => {
-    const frame = document.getElementById("medienmonitor-youtube");
-    window.addEventListener("message", event => {
-      if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
-      const height = Number(event.data?.medienmonitorYoutubeHoehe);
       if (height > 0) frame.style.height = Math.ceil(height + 8) + "px";
     });
   })();

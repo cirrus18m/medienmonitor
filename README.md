@@ -57,7 +57,7 @@ bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
 `plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich
 direkt verlinken: `medienmonitor.html#thema=T5`.
 
-## YouTube-Trends (Branch `youtube`, in Arbeit)
+## YouTube-Trends
 
 `scripts/run_youtube.py` fragt über die YouTube Data API (Schlüssel `YOUTUBE_API_KEY` in
 der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` und deren
@@ -73,9 +73,11 @@ Abonnenten ab und schreibt:
 
 Die Sprache kommt aus `youtube.yaml` (`sprache`: de, en, mehrsprachig); nur bei
 mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert wird nur der aktuelle
-Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Vorlagen für die
-deutschlandmonitor-Seiten: `seite/medienmonitor.qmd` (Abschnitt YouTube) und
-`seite/youtube-kanaele.qmd`.
+Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Der Workflow „Abruf“
+führt das alle 3 Stunden aus (Secret `YOUTUBE_API_KEY`) und lädt `youtube.html` und
+`kanaele.html` mit hoch. Vorlagen für die deutschlandmonitor-Seiten (Menü „Medienmonitor“:
+Text-Medien, Video-Medien, YouTube-Kanäle): `seite/medienmonitor.qmd`,
+`seite/medienmonitor-video.qmd` und `seite/youtube-kanaele.qmd`.
 
 ## Stand
 
@@ -85,7 +87,7 @@ deutschlandmonitor-Seiten: `seite/medienmonitor.qmd` (Abschnitt YouTube) und
 - [x] `daten.json` (24 Stunden, Themen × Mediengruppen, mit Artikellinks)
 - [x] Grafik `grafik.html` (je Medium, nach Lager, nach Spektrum)
 - [x] Upload per SFTP
-- [ ] Seite ins deutschlandmonitor-Repo übernehmen
-- [ ] YouTube-Trends (eigener Branch)
+- [x] Seite ins deutschlandmonitor-Repo übernehmen
+- [x] YouTube-Trends (alle 3 Stunden)
 - [ ] Podcast (Option)
 

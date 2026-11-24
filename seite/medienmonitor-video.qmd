@@ -1,0 +1,45 @@
+---
+title: "Medienmonitor: Video-Medien"
+---
+
+<!-- Vorlage für site/medienmonitor-video.qmd im deutschlandmonitor-Repo. Die Grafik
+(medienmonitor/youtube.html) erzeugt das Repo cirrus18m/medienmonitor alle 3 Stunden und
+lädt sie per SFTP hoch; diese Seite bettet sie nur ein. -->
+
+Welche längeren Videos werden gerade am meisten gesehen? Die Grafik zeigt die 30
+meistgesehenen Videos der letzten 10 Tage aus rund 90 [YouTube-Kanälen](youtube-kanaele.qmd),
+die länger als 10 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides. Je
+Kanal erscheinen höchstens drei Videos. Fährt man über einen Punkt, erscheinen Titel,
+Kanal und Aufrufe; ein Klick markiert das Video in der Liste darunter. Die Grafik wird
+alle 3 Stunden erneuert.
+
+```{=html}
+<iframe id="medienmonitor-youtube" src="medienmonitor/youtube.html" title="Medienmonitor: meistgesehene YouTube-Videos" loading="lazy" style="width:100%;height:1700px;border:0;display:block"></iframe>
+<script>
+  (() => {
+    // Same domain: the embedded page reports its height.
+    const frame = document.getElementById("medienmonitor-youtube");
+    window.addEventListener("message", event => {
+      if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+      const height = Number(event.data?.medienmonitorYoutubeHoehe);
+      if (height > 0) frame.style.height = Math.ceil(height + 8) + "px";
+    });
+  })();
+</script>
+```
+
+## So entsteht die Grafik
+
+* **Kanäle:** rund 90 Kanäle von Medienhäusern, unabhängigen Kanälen, Organisationen und
+  neuen Medien, auf Deutsch und auf Englisch. Die Liste mit Einordnung steht unter
+  [YouTube-Kanäle](youtube-kanaele.qmd).
+* **Auswahl:** Gezählt werden Videos der letzten 10 Tage, die länger als 10 Minuten sind –
+  ohne Livestreams und regelmäßige Nachrichtensendungen. So bleiben vor allem Interviews,
+  Gespräche und Dokumentationen.
+* **Sprache:** Es zählt die Sprache des Kanals; nur bei mehrsprachigen Kanälen die
+  Sprache, die für das Video angegeben ist.
+* **Aufrufe:** Ältere Videos hatten mehr Zeit, Aufrufe zu sammeln; vergleichbarer sind die
+  Aufrufe je Tag. Aufrufe und Abonnenten kommen von YouTube (Data API); YouTube rundet die
+  Abonnenten.
+* **Datenschutz:** Die Seite lädt nichts von YouTube, keine Videos und keine Vorschaubilder.
+  Erst ein Klick auf einen Titel führt zu YouTube.

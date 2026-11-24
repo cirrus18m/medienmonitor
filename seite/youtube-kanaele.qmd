@@ -6,8 +6,8 @@ title: "YouTube-Kanäle"
 (medienmonitor/kanaele.html) erzeugt das Repo cirrus18m/medienmonitor und lädt sie per
 SFTP hoch; diese Seite bettet sie nur ein. -->
 
-Der [Medienmonitor](medienmonitor.qmd) zeigt die meistgesehenen Interviews und
-Dokumentationen dieser YouTube-Kanäle. Ziel ist, ein **breites Spektrum an Blickwinkeln
+Der Medienmonitor zeigt unter [Video-Medien](medienmonitor-video.qmd) die meistgesehenen
+Interviews und Dokumentationen dieser YouTube-Kanäle. Ziel ist, ein **breites Spektrum an Blickwinkeln
 auf komplexere Themen** zugänglich zu machen – von Medienhäusern über unabhängige
 Kanäle bis zu neuen Medien, auf Deutsch und auf Englisch. Die Aufnahme eines Kanals ist
 keine Empfehlung seiner Inhalte.
