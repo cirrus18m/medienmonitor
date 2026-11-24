@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 533,
+ "naechste_nr": 535,
  "themen": {
   "T1": {
    "name": "Angriff auf Grünen-Sitzung Schwerte",
@@ -44,8 +44,8 @@
    "name": "Nvidia-Affäre um Jensen Huang",
    "beschreibung": "Die Rückkehr von Jensen Huang an die Nvidia-Spitze, auch mit Einfluss Trumps, bewegt die Märkte.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 148,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 151,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -163,8 +163,8 @@
    "name": "Börsenentwicklung und Geldanlage",
    "beschreibung": "Anleger-Hinweise nach starken Börsenschwankungen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T08:28:30+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -652,8 +652,8 @@
    "name": "Hackerangriffe auf IT-Systeme",
    "beschreibung": "Warnung vor IT-Sicherheitslücken nach Hackerangriffen auf die USA.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 8,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -1081,8 +1081,8 @@
    "name": "Champions-League-Spieltag",
    "beschreibung": "Spiele deutscher Klubs in der Champions League.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-24T22:06:56+00:00",
-   "anzahl": 39,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 53,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -3536,8 +3536,8 @@
    "name": "Verkehrsunfälle Regionalmeldungen",
    "beschreibung": "Unfälle mit Verletzten nach Frontalcrash und Abbiegefehler.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -3618,8 +3618,8 @@
    "name": "Siemens-Chef kritisiert Regierung",
    "beschreibung": "Der Siemens-Chef übt scharfe Kritik an der Bundesregierung.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -4569,10 +4569,11 @@
    "name": "Huawei-Schuldspruch",
    "beschreibung": "Ein US-Gericht spricht Huawei wegen Betrugs schuldig.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T22:06:56+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
-   "ressort": "wirtschaft"
+   "ressort": "wirtschaft",
+   "gegengeprueft": "2026-11-24T22:49:56+00:00"
   },
   "T509": {
    "name": "Sexkaufverbot und Freier-Anmeldepflicht",
@@ -4785,10 +4786,28 @@
    "name": "Kanzler ehrt Heino",
    "beschreibung": "Der Kanzler ehrt den Volkssänger Heino.",
    "erstellt": "2026-11-24T22:06:56+00:00",
-   "zuletzt": "2026-11-24T22:06:56+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "kultur"
+  },
+  "T533": {
+   "name": "Polizeipräsenz in Berlin",
+   "beschreibung": "Eine ZDF-Doku beleuchtet den Personalbedarf der Berliner Polizei.",
+   "erstellt": "2026-11-24T22:49:56+00:00",
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T534": {
+   "name": "Misstrauensantrag Steiermark SPÖ",
+   "beschreibung": "Der Misstrauensantrag der SPÖ im steirischen Landtag fand keine Mehrheit.",
+   "erstellt": "2026-11-24T22:49:56+00:00",
+   "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
   }
  }
 }
