@@ -29,6 +29,31 @@ def read_days(data_dir: Path, end: date, days: int) -> Iterator[dict]:
         yield from read_day(data_dir, end - timedelta(days=offset))
 
 
+def write_day(data_dir: Path, day: date, rows: list[dict]) -> None:
+    path = day_file(data_dir, day)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows)
+    path.write_text(text, encoding="utf-8")
+
+
+def set_topics(data_dir: Path, end: date, days: int, topic_of: dict[str, str]) -> int:
+    """Write ``thema_id`` for the given headline ids into the day files; returns count."""
+    changed = 0
+    for offset in range(days):
+        day = end - timedelta(days=offset)
+        rows = read_day(data_dir, day)
+        dirty = False
+        for row in rows:
+            topic = topic_of.get(row["id"])
+            if topic and row.get("thema_id") != topic:
+                row["thema_id"] = topic
+                dirty = True
+                changed += 1
+        if dirty:
+            write_day(data_dir, day, rows)
+    return changed
+
+
 def known_ids(data_dir: Path, today: date, days: int = 3) -> set[str]:
     """Ids seen in the last ``days`` days; feeds rarely keep entries longer."""
     return {row["id"] for row in read_days(data_dir, today, days)}
