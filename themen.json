@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 535,
+ "naechste_nr": 539,
  "themen": {
   "T1": {
    "name": "Angriff auf Grünen-Sitzung Schwerte",
@@ -163,8 +163,8 @@
    "name": "Börsenentwicklung und Geldanlage",
    "beschreibung": "Anleger-Hinweise nach starken Börsenschwankungen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -190,8 +190,8 @@
    "name": "Krieg in der Ukraine",
    "beschreibung": "Aktuelle Entwicklungen im russischen Krieg gegen die Ukraine und seine Folgen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 125,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 126,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -199,8 +199,8 @@
    "name": "Rentenreform",
    "beschreibung": "Streit um die Rentenreform und Vorwürfe der Verschleppung.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 20,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 21,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -652,8 +652,8 @@
    "name": "Hackerangriffe auf IT-Systeme",
    "beschreibung": "Warnung vor IT-Sicherheitslücken nach Hackerangriffen auf die USA.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 9,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 10,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -670,8 +670,8 @@
    "name": "Regierungsbildung Sachsen-Anhalt",
    "beschreibung": "Minderheitsregierung, AfD-Opposition und Debatte um Zusammenarbeit.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 14,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 15,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1081,8 +1081,8 @@
    "name": "Champions-League-Spieltag",
    "beschreibung": "Spiele deutscher Klubs in der Champions League.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 53,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 54,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -1098,8 +1098,8 @@
    "name": "Gewalt gegen Frauen und Frauenhäuser",
    "beschreibung": "Zahlen und Forderungen zu Gewaltschutz und fehlenden Frauenhausplätzen.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 37,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 38,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -2735,8 +2735,8 @@
    "name": "Autobombe in Kolumbien",
    "beschreibung": "Bei einer Autobombe in Kolumbien wurden 25 Menschen verletzt.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T18:57:24+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -3536,8 +3536,8 @@
    "name": "Verkehrsunfälle Regionalmeldungen",
    "beschreibung": "Unfälle mit Verletzten nach Frontalcrash und Abbiegefehler.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -4569,8 +4569,8 @@
    "name": "Huawei-Schuldspruch",
    "beschreibung": "Ein US-Gericht spricht Huawei wegen Betrugs schuldig.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
    "gegengeprueft": "2026-11-24T22:49:56+00:00"
@@ -4805,6 +4805,42 @@
    "beschreibung": "Der Misstrauensantrag der SPÖ im steirischen Landtag fand keine Mehrheit.",
    "erstellt": "2026-11-24T22:49:56+00:00",
    "zuletzt": "2026-11-24T22:49:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T535": {
+   "name": "YouTube-Auszeichnung für Song",
+   "beschreibung": "YouTube zeichnet den viralen Song «Gut genug» doppelt aus.",
+   "erstellt": "2026-11-24T23:27:20+00:00",
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T536": {
+   "name": "Papst Franziskus und der Teufel",
+   "beschreibung": "Papst Franziskus berichtet von Begegnungen mit dem Teufel.",
+   "erstellt": "2026-11-24T23:27:20+00:00",
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T537": {
+   "name": "Cornichon-Preis 2027",
+   "beschreibung": "Der Schweizer Kabarett-Preis Cornichon 2027 geht an Michael Elsener.",
+   "erstellt": "2026-11-24T23:27:20+00:00",
+   "zuletzt": "2026-11-24T23:27:20+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T538": {
+   "name": "Satellitennetz der Bundeswehr",
+   "beschreibung": "Ein Bundeswehr-Satellitennetz nach Starlink-Vorbild soll 15 Milliarden Euro kosten.",
+   "erstellt": "2026-11-24T23:27:20+00:00",
+   "zuletzt": "2026-11-24T23:27:20+00:00",
    "anzahl": 1,
    "zusammengelegt_in": null,
    "ressort": "politik"
