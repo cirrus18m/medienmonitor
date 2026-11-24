@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Medienmonitor – YouTube-Kanäle</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; padding: 0.25rem 0.5rem; background: #fff; color: #1B1B1B;
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  p { margin: 0.4rem 0; }
+  .stand, .quelle { font-size: 0.85rem; color: #555; }
+  h2 { font-size: 1.1rem; margin: 1.2rem 0 0.3rem; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th, td { padding: 0.25rem 0.4rem; border-bottom: 1px solid #e3e6ea; text-align: left;
+    vertical-align: top; }
+  th { font-weight: 600; white-space: nowrap; }
+  td.zahl, th.zahl { text-align: right; white-space: nowrap; }
+  a { color: #0077BB; }
+  .grau { color: #767676; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<p class="stand">{{STAND}}</p>
+{{SECTIONS}}
+<p class="quelle">{{SOURCE}}.</p>
+<script>
+  // Tell the embedding page (same domain) how tall the content is.
+  if (window.parent !== window) {
+    const report = () => window.parent.postMessage(
+      {medienmonitorKanaeleHoehe: document.documentElement.scrollHeight}, location.origin);
+    window.addEventListener("load", report);
+    window.addEventListener("resize", report);
+  }
+</script>
+</body>
+</html>

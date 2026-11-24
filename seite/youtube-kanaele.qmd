@@ -1,0 +1,43 @@
+---
+title: "YouTube-Kanäle"
+---
+
+<!-- Vorlage für site/youtube-kanaele.qmd im deutschlandmonitor-Repo. Die Tabelle
+(medienmonitor/kanaele.html) erzeugt das Repo cirrus18m/medienmonitor und lädt sie per
+SFTP hoch; diese Seite bettet sie nur ein. -->
+
+Der [Medienmonitor](medienmonitor.qmd) zeigt die meistgesehenen Interviews und
+Dokumentationen dieser YouTube-Kanäle. Ziel ist, ein **breites Spektrum an Blickwinkeln
+auf komplexere Themen** zugänglich zu machen – von Medienhäusern über unabhängige
+Kanäle bis zu neuen Medien, auf Deutsch und auf Englisch. Die Aufnahme eines Kanals ist
+keine Empfehlung seiner Inhalte.
+
+**Fehlt ein Kanal?** Vorschläge nehmen wir gerne auf – über die Kontaktadresse im
+[Impressum](impressum.qmd).
+
+```{=html}
+<iframe id="kanaele" src="medienmonitor/kanaele.html" title="Liste der YouTube-Kanäle des Medienmonitors" loading="lazy" style="width:100%;height:2400px;border:0;display:block"></iframe>
+<script>
+  (() => {
+    // Same domain: the embedded page reports its height.
+    const frame = document.getElementById("kanaele");
+    window.addEventListener("message", event => {
+      if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+      const height = Number(event.data?.medienmonitorKanaeleHoehe);
+      if (height > 0) frame.style.height = Math.ceil(height + 8) + "px";
+    });
+  })();
+</script>
+```
+
+## Einordnung
+
+* **Sprache:** Deutsch, Englisch oder mehrsprachig. Bei mehrsprachigen Kanälen zählt die
+  Sprache, die für das Video angegeben ist.
+* **Art:** Medienhaus, unabhängiger Kanal oder Organisation. „Neue Medien“ positionieren
+  sich ausdrücklich gegen etablierte Medien.
+* **Spektrum:** eine eigene, grobe Einschätzung; „–“ heißt, der Kanal lässt sich nicht
+  sinnvoll einordnen.
+* **Abonnenten** und **Videos** kommen von YouTube (Data API). Gezählt werden Videos der
+  letzten 10 Tage, die länger als 10 Minuten sind – ohne Livestreams und regelmäßige
+  Nachrichtensendungen.

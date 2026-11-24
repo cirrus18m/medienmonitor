@@ -41,12 +41,22 @@ direkt verlinken: `medienmonitor.html#thema=T5`.
 ## YouTube-Trends (Branch `youtube`, in Arbeit)
 
 `scripts/run_youtube.py` fragt über die YouTube Data API (Schlüssel `YOUTUBE_API_KEY` in
-der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` ab und schreibt
-`youtube.json` und `youtube.html`: die 30 meistgesehenen Videos der letzten 10 Tage, die
-länger als 10 Minuten sind – ohne Livestreams und Nachrichtensendungen (Titelmuster in
-`youtube.py` und je Kanal im Feld `ausschliessen`). Die Grafik zeigt Aufrufe
-(logarithmisch) über „Tage online“, darunter die Liste mit Links. Gespeichert wird nur der
-aktuelle Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos).
+der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` und deren
+Abonnenten ab und schreibt:
+
+* `youtube.json` – je Sprachauswahl (`de`, `en`, `alle`) die 30 meistgesehenen Videos der
+  letzten 10 Tage, die länger als 10 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
+  und Nachrichtensendungen (Titelmuster in `youtube.py` und je Kanal im Feld
+  `ausschliessen`), dazu die Kanalliste.
+* `youtube.html` – Aufrufe (logarithmisch) über „Tage online“ und die Top-Liste, mit
+  Umschalter Deutsch / Englisch / Deutsch & Englisch.
+* `kanaele.html` – Kanalübersicht nach Sprache mit Abonnenten und Zahl der Videos.
+
+Die Sprache kommt aus `youtube.yaml` (`sprache`: de, en, mehrsprachig); nur bei
+mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert wird nur der aktuelle
+Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Vorlagen für die
+deutschlandmonitor-Seiten: `seite/medienmonitor.qmd` (Abschnitt YouTube) und
+`seite/youtube-kanaele.qmd`.
 
 ## Stand
 

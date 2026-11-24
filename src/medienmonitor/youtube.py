@@ -25,8 +25,11 @@ API = "https://www.googleapis.com/youtube/v3"
 TIMEOUT_S = 20.0
 WINDOW_DAYS = 10
 TOP_N = 30
+MAX_PER_CHANNEL = 3  # per list, so that a few busy channels do not fill it
 MIN_DURATION_S = 10 * 60  # interviews and documentaries, no news clips or Shorts
-SCHEMA = 1
+SCHEMA = 2
+LANGUAGES = ("de", "en")  # choices of the chart; "alle" = both
+LISTS = ("de", "en", "alle")
 
 # Titles of regular news programs and live broadcasts (all channels); per channel more
 # patterns in youtube.yaml (field "ausschliessen").
@@ -62,6 +65,7 @@ class Channel:
     lager: str
     spektrum: str
     handle: str = ""
+    sprache: str = "de"  # de | en | mehrsprachig
     aktiv: bool = True
     ausschliessen: tuple[str, ...] = field(default_factory=tuple)
 
@@ -69,6 +73,10 @@ class Channel:
     def uploads_playlist(self) -> str:
         """Playlist of all uploads: channel id with UU instead of UC."""
         return "UU" + self.kanal_id[2:]
+
+    @property
+    def url(self) -> str:
+        return f"https://www.youtube.com/channel/{self.kanal_id}"
 
 
 def load_channels(path: Path) -> list[Channel]:
@@ -79,6 +87,10 @@ def load_channels(path: Path) -> list[Channel]:
         entry = {k: v for k, v in entry.items() if k in Channel.__dataclass_fields__}
         entry["ausschliessen"] = tuple(entry.get("ausschliessen") or ())
         entry["lager"] = entry.get("lager") or ""
+        # YAML reads some codes as other types (land: NO -> False)
+        for key in ("land", "sprache", "art", "spektrum"):
+            if key in entry and not isinstance(entry[key], str):
+                raise ValueError(f"{entry['name']}: {key} in Anführungszeichen setzen")
         channel = Channel(**entry)
         if channel.aktiv and channel.kanal_id.startswith("UC"):
             channels.append(channel)
@@ -107,6 +119,7 @@ class Video:
     dauer_s: int
     aufrufe: int | None
     live: bool
+    sprache: str = ""  # audio (or metadata) language of the video, if the channel sets it
 
     @classmethod
     def from_api(cls, item: dict, channel: Channel) -> Video:
@@ -122,7 +135,25 @@ class Video:
             aufrufe=int(views) if views is not None else None,
             live="liveStreamingDetails" in item
             or snippet.get("liveBroadcastContent", "none") != "none",
+            sprache=snippet.get("defaultAudioLanguage") or snippet.get("defaultLanguage") or "",
         )
+
+
+def video_language(video: Video, channel: Channel) -> str | None:
+    """Language of a video: that of the channel; for multilingual channels as set for the
+    video (None if not set). Channels often set a wrong video language (German video
+    marked "en"), so it is used only where the channel has no single language."""
+    if channel.sprache in LANGUAGES:
+        return channel.sprache
+    return video.sprache.split("-")[0].lower() or None
+
+
+def in_list(language: str | None, key: str) -> bool:
+    """Whether a video of this language belongs to list "de", "en" or "alle" (both;
+    unknown language of a multilingual channel only there)."""
+    if key == "alle":
+        return language in LANGUAGES or language is None
+    return language == key
 
 
 def exclusion_reason(video: Video, channel: Channel, now: datetime) -> str | None:
@@ -165,7 +196,7 @@ class YouTubeApi:
             raise YouTubeError(f"{path}: HTTP {response.status_code} ({reason})")
         return response.json()
 
-    def recent_ids(self, channel: Channel, since: datetime, max_pages: int = 3) -> list[str]:
+    def recent_ids(self, channel: Channel, since: datetime, max_pages: int = 5) -> list[str]:
         """Ids of the uploads published after ``since`` (newest first)."""
         ids: list[str] = []
         token = None
@@ -188,6 +219,21 @@ class YouTubeApi:
                 break
         return ids
 
+    def subscribers(self, channel_ids: Iterable[str]) -> dict[str, int | None]:
+        """Channel id -> number of subscribers (None if the channel hides it). The API
+        rounds large numbers to three significant digits."""
+        ids = list(dict.fromkeys(channel_ids))
+        result: dict[str, int | None] = {}
+        for start in range(0, len(ids), 50):
+            page = self._get(
+                "channels", part="statistics", id=",".join(ids[start : start + 50]), maxResults=50
+            )
+            for item in page.get("items", []):
+                stats = item.get("statistics", {})
+                hidden = stats.get("hiddenSubscriberCount") or "subscriberCount" not in stats
+                result[item["id"]] = None if hidden else int(stats["subscriberCount"])
+        return result
+
     def videos(self, ids: Iterable[str]) -> list[dict]:
         ids = list(dict.fromkeys(ids))
         items: list[dict] = []
@@ -202,55 +248,99 @@ class YouTubeApi:
         return items
 
 
+def _entry(video: Video, channel: Channel, language, subscribers, now: datetime) -> dict:
+    days = max((now - video.veroeffentlicht).total_seconds() / 86400, 1 / 24)
+    return {
+        "video_id": video.video_id,
+        "titel": video.titel,
+        "kanal": channel.name,
+        "kanal_url": channel.url,
+        "abonnenten": subscribers.get(channel.kanal_id),
+        "sprache": language or "",
+        "art": channel.art,
+        "lager": channel.lager,
+        "spektrum": channel.spektrum,
+        "veroeffentlicht": video.veroeffentlicht.isoformat(),
+        "tage_online": round(days, 2),
+        "dauer_s": video.dauer_s,
+        "aufrufe": video.aufrufe,
+        "aufrufe_je_tag": round(video.aufrufe / days),
+        "url": f"https://www.youtube.com/watch?v={video.video_id}",
+    }
+
+
 def build_payload(
-    videos: list[tuple[Video, Channel]], now: datetime, errors: list[str] | None = None
+    videos: list[tuple[Video, Channel]],
+    now: datetime,
+    errors: list[str] | None = None,
+    channels: list[Channel] | None = None,
+    subscribers: dict[str, int | None] | None = None,
 ) -> dict:
-    """youtube.json: the TOP_N most watched counting videos of the last WINDOW_DAYS."""
+    """youtube.json: per language choice the TOP_N most watched counting videos of the
+    last WINDOW_DAYS (at most MAX_PER_CHANNEL per channel), and the list of channels."""
+    subscribers = subscribers or {}
+    channels = channels if channels is not None else list({c.name: c for _, c in videos}.values())
     counting = []
     reasons: dict[str, int] = {}
+    per_channel: dict[str, list[int]] = {}
     for video, channel in videos:
         reason = exclusion_reason(video, channel, now)
+        seen = per_channel.setdefault(channel.name, [0, 0])
+        if reason != "älter":
+            seen[0] += 1
         if reason:
             reasons[reason] = reasons.get(reason, 0) + 1
         else:
-            counting.append((video, channel))
-    counting.sort(key=lambda pair: pair[0].aufrufe or 0, reverse=True)
-    top = []
-    for rank, (video, channel) in enumerate(counting[:TOP_N], start=1):
-        days = max((now - video.veroeffentlicht).total_seconds() / 86400, 1 / 24)
-        top.append(
-            {
-                "rang": rank,
-                "video_id": video.video_id,
-                "titel": video.titel,
-                "kanal": channel.name,
-                "art": channel.art,
-                "lager": channel.lager,
-                "spektrum": channel.spektrum,
-                "veroeffentlicht": video.veroeffentlicht.isoformat(),
-                "tage_online": round(days, 2),
-                "dauer_s": video.dauer_s,
-                "aufrufe": video.aufrufe,
-                "aufrufe_je_tag": round(video.aufrufe / days),
-                "url": f"https://www.youtube.com/watch?v={video.video_id}",
-            }
-        )
+            seen[1] += 1
+            counting.append((video, channel, video_language(video, channel)))
+    counting.sort(key=lambda item: item[0].aufrufe or 0, reverse=True)
+    lists = {}
+    for key in LISTS:
+        chosen, per_list = [], {}
+        for item in counting:
+            name = item[1].name
+            if in_list(item[2], key) and per_list.get(name, 0) < MAX_PER_CHANNEL:
+                per_list[name] = per_list.get(name, 0) + 1
+                chosen.append(item)
+            if len(chosen) == TOP_N:
+                break
+        lists[key] = [
+            {"rang": rank, **_entry(video, channel, language, subscribers, now)}
+            for rank, (video, channel, language) in enumerate(chosen, start=1)
+        ]
     return {
         "schema": SCHEMA,
         "stand": now.isoformat(timespec="minutes"),
         "fenster_tage": WINDOW_DAYS,
         "mindestdauer_min": MIN_DURATION_S // 60,
-        "kanaele": len({channel.name for _, channel in videos}),
         "videos_geprueft": len(videos),
         "videos_gezaehlt": len(counting),
+        "gezaehlt_je_liste": {key: sum(in_list(i[2], key) for i in counting) for key in LISTS},
         "ausgeschlossen": dict(sorted(reasons.items())),
         "fehler": errors or [],
-        "videos": top,
+        "listen": lists,
+        "kanaele": [
+            {
+                "name": c.name,
+                "url": c.url,
+                "handle": c.handle,
+                "sprache": c.sprache,
+                "land": c.land,
+                "art": c.art,
+                "lager": c.lager,
+                "spektrum": c.spektrum,
+                "abonnenten": subscribers.get(c.kanal_id),
+                "videos": per_channel.get(c.name, [0, 0])[0],
+                "gezaehlt": per_channel.get(c.name, [0, 0])[1],
+            }
+            for c in sorted(channels, key=lambda c: c.name.casefold())
+        ],
     }
 
 
 def fetch(channels: list[Channel], api: YouTubeApi, now: datetime):
-    """All recent videos of the channels; errors per channel as German messages."""
+    """All recent videos of the channels, errors per channel as German messages and the
+    subscribers per channel id."""
     since = now - timedelta(days=WINDOW_DAYS)
     by_id: dict[str, Channel] = {}
     errors: list[str] = []
@@ -265,4 +355,9 @@ def fetch(channels: list[Channel], api: YouTubeApi, now: datetime):
         for item in api.videos(by_id)
         if item.get("id") in by_id
     ]
-    return videos, errors
+    try:
+        subscribers = api.subscribers(c.kanal_id for c in channels)
+    except (YouTubeError, httpx.HTTPError) as exc:
+        errors.append(api.redact(f"Abonnenten: {exc}"))
+        subscribers = {}
+    return videos, errors, subscribers
