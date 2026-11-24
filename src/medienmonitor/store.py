@@ -12,6 +12,14 @@ from medienmonitor.feeds import Headline
 TITLES_DIR = "titel"
 
 
+def row_time(row: dict) -> str:
+    """Publication time if known and not in the future, else time of fetching."""
+    published = row.get("veroeffentlicht")
+    if published and published <= row["abgerufen"]:
+        return published
+    return row["abgerufen"]
+
+
 def day_file(data_dir: Path, day: date) -> Path:
     return data_dir / TITLES_DIR / f"{day:%Y}" / f"{day:%m}" / f"{day:%d}.jsonl"
 

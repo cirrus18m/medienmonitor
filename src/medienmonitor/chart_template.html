@@ -27,6 +27,14 @@
   .artikel a { color: #0077BB; }
   .grau { color: #767676; }
   .fehler { color: #B2182B; }
+  .kategorien { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.4rem 1.2rem; }
+  .kategorien h3 { font-size: 1rem; margin: 0.6rem 0 0.1rem; }
+  .kategorien details { margin: 0.25rem 0; }
+  .kategorien summary { cursor: pointer; }
+  .kategorien summary .grau { font-size: 0.85rem; }
+  .kategorien ul { padding-left: 1.1rem; margin: 0.2rem 0 0.5rem; font-size: 0.9rem; }
+  .kategorien a { color: #0077BB; }
   .ytick text { pointer-events: all; cursor: pointer; }
   .fenster { position: absolute; z-index: 10; width: min(30rem, calc(100vw - 1.5rem));
     max-height: 22rem; overflow-y: auto; background: #fff; border: 1px solid #c7ccd4;
@@ -47,6 +55,11 @@
 <p class="hinweis" id="hinweis"></p>
 <div class="scroll"><div id="grafik"></div></div>
 <p class="quelle">{{SOURCE}}.</p>
+<section id="vergleich" hidden>
+<h2>TOP-Themen und Blasen-Themen</h2>
+<p class="klein" id="vergleich-hinweis"></p>
+<div class="kategorien" id="kategorien"></div>
+</section>
 <h2>Schlagzeilen zum Thema</h2>
 <p class="klein">Ein Feld der Grafik oder ein Thema anklicken, um die Schlagzeilen mit Links
 zu sehen.</p>
@@ -288,6 +301,58 @@ const DATA = {{DATA}};
   if (wanted && DATA.themen[wanted]) state.topic = wanted;
   draw();
   showArticles(false);
+  // TOP-Themen (both sides) and Blasen-Themen (one side only), each with its headlines.
+  function showCategories() {
+    const data = DATA.kategorien;
+    if (!data) return;
+    const labels = {politik: "Politik", wirtschaft: "Wirtschaft", gesellschaft: "Gesellschaft"};
+    const ressorts = data.ressorts.map(r => labels[r] ?? r).join(", ");
+    document.getElementById("vergleich-hinweis").textContent =
+      `TOP-Themen: in den letzten ${data.stunden.top} Stunden von mindestens `
+      + `${data.min_medien.neu} neuen und ${data.min_medien.alt} alten Medien aufgegriffen. `
+      + `Blasen-Themen: in den letzten ${data.stunden.blasen} Stunden nur von einer Seite `
+      + `(mindestens ${data.min_medien.neu} neue bzw. ${data.min_medien.alt} alte Medien, `
+      + `${data.min_artikel} Schlagzeilen), nur Ressorts ${ressorts}. Bevor ein Thema hier erscheint, prüft die KI, ob die `
+      + "andere Seite dasselbe Ereignis unter anderem Namen behandelt; dann werden beide "
+      + "Themen zusammengelegt. Thema anklicken: Schlagzeilen mit Links.";
+    const columns = [
+      ["top", "TOP-Themen", "von beiden Seiten aufgegriffen"],
+      ["blase_neu", "Blasen-Themen: nur neue Medien", "kein altes Medium berichtet"],
+      ["blase_alt", "Blasen-Themen: nur alte Medien", "kein neues Medium berichtet"],
+    ];
+    const grid = document.getElementById("kategorien");
+    for (const [key, title, empty] of columns) {
+      const column = el("div", {}, el("h3", {text: title}));
+      const entries = data[key] || [];
+      if (!entries.length) column.append(el("p", {class: "klein", text: `Zurzeit keine (${empty}).`}));
+      for (const entry of entries) {
+        const count = side => `${side.artikel} Schlagzeilen aus ${side.medien} Medien`;
+        const numbers = key === "top"
+          ? ` · neu ${entry.neu.artikel} (${entry.neu.medien} Medien) · alt `
+            + `${entry.alt.artikel} (${entry.alt.medien} Medien)`
+          : ` · ${count(key === "blase_neu" ? entry.neu : entry.alt)}`;
+        const summary = el("summary", {}, el("span", {text: entry.name}),
+          el("span", {class: "grau", text: numbers}));
+        const items = el("ul");
+        for (const article of entry.artikel) {
+          items.append(el("li", {},
+            el("span", {class: "grau", text: `${time.format(new Date(article.zeit))} · `}),
+            el("strong", {text: article.quelle}),
+            el("span", {class: "grau", text: ": "}),
+            link(article.url, article.titel)));
+        }
+        const details = el("details", {}, summary,
+          el("p", {class: "klein", text: entry.beschreibung}), items);
+        details.addEventListener("toggle", reportHeight);
+        column.append(details);
+      }
+      grid.append(column);
+    }
+    document.getElementById("vergleich").hidden = false;
+    reportHeight();
+  }
+  showCategories();
+
   // Redraw only when the width changes; a new frame height needs no redraw.
   let timer;
   let width = document.body.clientWidth;

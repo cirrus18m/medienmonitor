@@ -1,5 +1,6 @@
 """Stündlicher Lauf: Feeds abrufen, neue Schlagzeilen speichern, Themen zuordnen,
-daten.json und grafik.html (Grafik für deutschlandmonitor.info) schreiben.
+Ressorts und Blasen-Themen prüfen, daten.json und grafik.html (Grafik für
+deutschlandmonitor.info) schreiben.
 
     uv run scripts/run_hourly.py --data-dir daten               # alles
     uv run scripts/run_hourly.py --data-dir daten --no-topics   # nur abrufen
@@ -16,7 +17,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
 
-from medienmonitor import feeds, labeler, publish, render, store, topics
+from medienmonitor import bubbles, feeds, labeler, publish, render, store, topics
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -93,6 +94,19 @@ def main() -> int:
                 print(f"Zusammengelegt: {merged['zusammengelegt']} Themen.")
                 for line in merged["fehler"]:
                     print(f"  Fehler – {line}")
+            # Ressort of each topic, then the cross-check of the Blasen-Themen.
+            topic_list = topics.TopicList.load(args.data_dir)
+            classified = topics.classify_missing(topic_list, model, now)
+            rows = publish.window_rows(args.data_dir, now, bubbles.BUBBLE_HOURS)
+            checked = bubbles.cross_check(topic_list, rows, model, now)
+            topic_list.save(args.data_dir)
+            print(
+                f"Ressorts: {classified['eingeordnet']} von {classified['offen']}; "
+                f"Blasen-Themen geprüft: {checked['geprueft']}, "
+                f"zusammengelegt: {checked['zusammengelegt']}."
+            )
+            for line in classified["fehler"] + checked["fehler"]:
+                print(f"  Fehler – {line}")
 
     domains = {f.name: f.domain for f in feeds.load_feeds(args.feeds, only_active=False)}
     payload = publish.build_payload(args.data_dir, now, domains)

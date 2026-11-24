@@ -373,6 +373,7 @@ def render_html(payload: dict) -> str:
         "labels": LABELS,
         "themen": _articles(payload),
         "medien": _media(payload),
+        "kategorien": payload.get("kategorien"),
         "reihenfolge": [t["id"] for t in payload["themen"][:MAX_TOPIC_ROWS]],
     }
     template = (Path(__file__).parent / "chart_template.html").read_text(encoding="utf-8")

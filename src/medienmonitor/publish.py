@@ -4,7 +4,8 @@ Shares are per group: articles of the group on the topic / all articles of the g
 the window (in percent), so groups with many feeds do not dominate. The same holds per
 medium ("medien", "anzahl_medium"): articles of the medium on the topic / all its articles.
 Each medium also carries its home page (``domain`` from feeds.yaml) and its latest
-headlines of the window (``neueste``, any topic).
+headlines of the window (``neueste``, any topic). ``kategorien`` holds the TOP-Themen
+and Blasen-Themen (see bubbles.py).
 """
 
 from __future__ import annotations
@@ -15,7 +16,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from medienmonitor import store
+from medienmonitor import bubbles, store
 from medienmonitor.topics import OTHER, TopicList
 
 SCHEMA = 1
@@ -29,12 +30,7 @@ SPECTRA = ("links", "mitte-links", "mitte", "mitte-rechts", "rechts", "unklar")
 BERLIN = ZoneInfo("Europe/Berlin")
 
 
-def _time(row: dict) -> str:
-    """Publication time if known and not in the future, else time of fetching."""
-    published = row.get("veroeffentlicht")
-    if published and published <= row["abgerufen"]:
-        return published
-    return row["abgerufen"]
+_time = store.row_time
 
 
 def window_rows(data_dir: Path, now: datetime, hours: int = WINDOW_HOURS) -> list[dict]:
@@ -149,6 +145,9 @@ def build_payload(
         "quellen_gesamt": len(media),
         "medien": sorted(media.values(), key=lambda m: m["name"]),
         "themen": entries[:MAX_TOPICS],
+        "kategorien": bubbles.categories(
+            window_rows(data_dir, now, bubbles.BUBBLE_HOURS), topics, now
+        ),
     }
 
 

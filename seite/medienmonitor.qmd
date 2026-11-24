@@ -41,6 +41,12 @@ hinter dem Namen führt zu seiner Website. Die Grafik wird stündlich erneuert.
 * **Einordnung der Medien:** Lager (links, Mitte, rechts, alternativ) und das feinere
   Spektrum sind eine eigene, grobe Einschätzung der KI. „Neue Medien“ (Lager
   „alternativ“) positionieren sich ausdrücklich gegen „Alte Medien“.
+* **TOP- und Blasen-Themen:** TOP-Themen greifen in den letzten 24 Stunden neue wie
+  alte Medien auf. Blasen-Themen aus Politik, Wirtschaft und Gesellschaft behandelt in
+  den letzten 72 Stunden nur eine Seite. Bevor ein Thema als Blasen-Thema erscheint,
+  prüft die KI, ob die andere Seite dasselbe Ereignis unter anderem Namen behandelt.
+  Dass alte Medien mehr Blasen-Themen haben, liegt auch daran, dass sie viel mehr
+  Meldungen veröffentlichen und mehr Medien aus Österreich und der Schweiz umfassen.
 * **Zahlen:** Gezeigt wird die Zahl der Schlagzeilen, nicht ein Anteil. Medien, die
   viele Meldungen veröffentlichen, fallen deshalb stärker ins Gewicht.
 * **Links** führen zu den Artikeln auf den Seiten der Medien.
