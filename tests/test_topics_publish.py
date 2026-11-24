@@ -129,3 +129,22 @@ def test_labeler_failure_keeps_headlines_open(tmp_path):
     result = topics.assign_new(tmp_path, Broken(), NOW)
     assert result["zugeordnet"] == 0 and result["fehler"] == ["Limit erreicht"]
     assert all(not r.get("thema_id") for r in store.read_day(tmp_path, NOW.date()))
+
+
+def test_catch_all_topic_is_rejected_and_dissolve(tmp_path):
+    topic_list = topics.TopicList()
+    rows = [{"id": "a"}, {"id": "b"}]
+    answer = {
+        "zuordnungen": [{"thema": "neu1", "nummern": [1, 2]}],
+        "neue_themen": [
+            {"schluessel": "neu1", "name": "Weitere Einzelmeldungen", "beschreibung": "x"}
+        ],
+    }
+    assert topics.apply_assignment(topic_list, answer, rows, [], NOW) == {}
+
+    fill(tmp_path)
+    topics.assign_new(tmp_path, FakeLabeler(), NOW)
+    assert topics.dissolve(tmp_path, "T1", NOW) == 6  # incl. h12 (30 h old)
+    assert len(topics.unassigned(tmp_path, NOW)) == 6
+    assert topics.TopicList.load(tmp_path).active(NOW) == []
+    assert publish.build_payload(tmp_path, NOW)["themen"] == []

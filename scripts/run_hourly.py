@@ -51,11 +51,20 @@ def main() -> int:
     parser.add_argument("--no-topics", action="store_true", help="keine KI-Zuordnung")
     parser.add_argument("--consolidate", choices=["auto", "ja", "nein"], default="auto")
     parser.add_argument(
+        "--neu-zuordnen",
+        metavar="THEMA",
+        help="Thema (z. B. T114) auflösen; seine Schlagzeilen werden neu zugeordnet",
+    )
+    parser.add_argument(
         "--payload", type=Path, help="Pfad für daten.json (Standard: <data-dir>/daten.json)"
     )
     args = parser.parse_args()
     now = datetime.now(UTC)
     failed = False
+
+    if args.neu_zuordnen:
+        cleared = topics.dissolve(args.data_dir, args.neu_zuordnen.strip(), now)
+        print(f"Thema {args.neu_zuordnen} aufgelöst, {cleared} Schlagzeilen wieder offen.")
 
     if not args.no_fetch:
         feed_list = feeds.load_feeds(args.feeds)

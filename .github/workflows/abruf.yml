@@ -12,6 +12,11 @@ on:
   schedule:
     - cron: "17 * * * *"  # not on the full hour, GitHub delays scheduled runs there
   workflow_dispatch:
+    inputs:
+      neu_zuordnen:
+        description: "Thema auflösen und neu zuordnen (Kennung wie T114, sonst leer)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -55,7 +60,12 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           MM_LABELER: claude_cli
           MM_MODEL: sonnet
-        run: uv run --no-dev scripts/run_hourly.py --data-dir daten
+          DISSOLVE: ${{ inputs.neu_zuordnen }}
+        run: |
+          if [[ -n "$DISSOLVE" && ! "$DISSOLVE" =~ ^T[0-9]+$ ]]; then
+            echo "neu_zuordnen muss eine Kennung wie T114 sein"; exit 1
+          fi
+          uv run --no-dev scripts/run_hourly.py --data-dir daten ${DISSOLVE:+--neu-zuordnen "$DISSOLVE"}
 
       - name: Neue Schlagzeilen und Themen committen
         if: ${{ !cancelled() }}

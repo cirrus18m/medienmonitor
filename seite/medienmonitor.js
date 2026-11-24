@@ -10,6 +10,10 @@
   "use strict";
 
   const MAX_TOPICS = 20;
+  const MAX_TOPIC_COLUMNS = 15; // view "je Medium": topics as columns
+  // Order of the rows in the view "je Medium": spectrum from left to right.
+  const SPECTRUM_ORDER = ["links", "mitte-links", "mitte", "mitte-rechts", "rechts", "unklar"];
+  const NEW_MEDIA = "alternativ"; // lager of media that position themselves against the rest
   const LABELS = {
     lager: {links: "links", mitte: "Mitte", rechts: "rechts", alternativ: "alternativ"},
     spektrum: {
@@ -53,7 +57,10 @@
   };
 
   function render(root, data) {
-    const state = {grouping: "lager", topic: null, group: null};
+    // grouping: "medium" (rows = media) or "lager"/"spektrum" (rows = topics);
+    // group: selected medium name or group key, null = all.
+    const hasMedia = Array.isArray(data.medien) && data.medien.length > 0;
+    const state = {grouping: hasMedia ? "medium" : "lager", topic: null, group: null};
     const topics = data.themen.slice(0, MAX_TOPICS);
 
     const intro = el("p", {
@@ -68,7 +75,8 @@
     const buttons = {};
     const switcher = el("div", {class: "ansicht-schalter", role: "group",
       "aria-label": "Gruppierung der Medien"});
-    for (const [key, label] of [["lager", "nach Lager"], ["spektrum", "nach Spektrum"]]) {
+    const views = [["medium", "je Medium"], ["lager", "nach Lager"], ["spektrum", "nach Spektrum"]];
+    for (const [key, label] of views.filter(([key]) => hasMedia || key !== "medium")) {
       buttons[key] = el("button", {type: "button", text: label, "aria-pressed": "false"});
       buttons[key].addEventListener("click", () => {
         state.grouping = key;
@@ -80,6 +88,9 @@
     }
 
     const plot = el("div");
+    const note = el("p", {class: "small medienmonitor-hinweis"});
+    const scroller = el("div", {class: "medienmonitor-scroll"}, plot);
+    scroller.style.overflowX = "auto";
     const figure = el(
       "figure",
       {
@@ -89,9 +100,8 @@
         "data-export-filename": "medienmonitor",
         "data-export-x-label": "Thema",
         "data-export-width": "1200",
-        "data-export-height": String(160 + 28 * topics.length),
       },
-      el("div", {class: "chart-only"}, plot),
+      el("div", {class: "chart-only"}, scroller),
       el("figcaption", {class: "figure-caption", text: SOURCE + "."}),
       el("div", {class: "export-buttons"}, "Herunterladen: ",
         ...["png", "svg", "csv", "html"].map(kind =>
@@ -112,7 +122,7 @@
     }
 
     root.replaceChildren(
-      intro, switcher, figure,
+      intro, switcher, note, figure,
       el("h3", {text: "Artikel zum Thema"}),
       el("p", {class: "small", text:
         "Ein Feld im Diagramm oder ein Thema anklicken, um die Schlagzeilen mit Links zu sehen."}),
@@ -122,10 +132,111 @@
     const shorten = (text, max) => (text.length > max ? text.slice(0, max - 1) + "…" : text);
 
     function draw() {
-      const narrow = root.clientWidth < 640;
       for (const [key, button] of Object.entries(buttons)) {
         button.setAttribute("aria-pressed", String(key === state.grouping));
       }
+      if (state.grouping === "medium") drawMedia();
+      else drawGroups();
+    }
+
+    function setExport(title, height) {
+      figure.dataset.exportTitle = title;
+      figure.dataset.exportHeight = String(height);
+    }
+
+    // Rows = media (new media on top, established media below, each from left to right),
+    // columns = topics, value = share of the medium's headlines on the topic.
+    function drawMedia() {
+      const narrow = root.clientWidth < 640;
+      const columns = topics.slice(0, MAX_TOPIC_COLUMNS);
+      const rank = m => [
+        m.lager === NEW_MEDIA ? 0 : 1,
+        SPECTRUM_ORDER.indexOf(m.spektrum),
+        m.name.toLocaleLowerCase("de"),
+      ];
+      const compare = (a, b) => {
+        const [x, y] = [rank(a), rank(b)];
+        for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return x[i] < y[i] ? -1 : 1;
+        return 0;
+      };
+      const media = [...data.medien].sort(compare).reverse(); // Plotly draws rows bottom-up
+      const z = media.map(m => columns.map(t =>
+        m.artikel ? (100 * ((t.anzahl_medium ?? {})[m.name] ?? 0)) / m.artikel : 0));
+      const text = z.map(row => row.map(v => (v > 0 ? number.format(v < 10 ? v : Math.round(v)) : "")));
+      const customdata = media.map(m => columns.map(t =>
+        [(t.anzahl_medium ?? {})[m.name] ?? 0, m.artikel, t.name, LABELS.spektrum[m.spektrum] ?? m.spektrum]));
+      const established = media.filter(m => m.lager !== NEW_MEDIA).length;
+      const rowHeight = narrow ? 20 : 22;
+      const width = Math.max(root.clientWidth, narrow ? 120 + 30 * columns.length : 0);
+      const height = 230 + rowHeight * media.length;
+      const trace = {
+        type: "heatmap",
+        x: columns.map((_, i) => i),
+        y: media.map(m => m.name), // category axis; hover shows the name via %{y}
+        z,
+        text,
+        customdata,
+        texttemplate: narrow ? "" : "%{text}",
+        textfont: {size: 10},
+        colorscale: SCALE,
+        zmin: 0,
+        xgap: 1,
+        ygap: 1,
+        hovertemplate:
+          "<b>%{y}</b>: %{customdata[2]}<br>%{z:.1f} % der Schlagzeilen des Mediums " +
+          "(%{customdata[0]} von %{customdata[1]})<br>Spektrum: %{customdata[3]}<extra></extra>",
+        showscale: false,
+      };
+      // Labels of the two blocks right of the chart; y = row index on the category axis.
+      const band = (text, from, to) => ({
+        xref: "paper", yref: "y", x: 1, y: (from + to) / 2, xanchor: "left",
+        text, textangle: 90, showarrow: false, font: {size: 12, color: "#555"},
+      });
+      const layout = {
+        template: "plotly_white",
+        height,
+        width,
+        margin: {l: 10, r: 28, t: 10, b: 10}, // no Plotly title: it collides with the
+        separators: ",.", //                       slanted topic names; see the note above
+        font: {family: "system-ui, sans-serif", size: narrow ? 11 : 12, color: "#1B1B1B"},
+        xaxis: {
+          side: "top", fixedrange: true, automargin: true, tickangle: -40,
+          tickvals: columns.map((_, i) => i),
+          ticktext: columns.map(t => shorten(t.name, narrow ? 18 : 28)),
+        },
+        yaxis: {
+          automargin: true, fixedrange: true, type: "category",
+          tickvals: media.map(m => m.name),
+          ticktext: media.map(m => (narrow ? shorten(m.name, 16)
+            : `${m.name} <span style="color:#777">· ${LABELS.spektrum[m.spektrum] ?? m.spektrum}` +
+              ` · ${m.artikel}</span>`)),
+        },
+        shapes: established && established < media.length ? [{
+          type: "line", xref: "paper", x0: 0, x1: 1, yref: "y",
+          y0: established - 0.5, y1: established - 0.5, line: {color: "#1B1B1B", width: 2},
+        }] : [],
+        annotations: [
+          established ? band("Etablierte Medien", 0, established - 1) : null,
+          established < media.length ? band("Neue Medien", established, media.length - 1) : null,
+        ].filter(Boolean),
+      };
+      note.textContent =
+        "Anteil an allen Schlagzeilen des Mediums in den letzten 24 Stunden in %; hinter dem " +
+        "Namen Spektrum und Zahl der Schlagzeilen. Bei Medien mit wenigen Schlagzeilen " +
+        "schwanken die Anteile stark.";
+      setExport("Welche Themen beschäftigen welche Medien? Anteil an den Schlagzeilen in %", height);
+      Plotly.react(plot, [trace], layout, {displayModeBar: false, locale: "de"});
+      plot.removeAllListeners?.("plotly_click");
+      plot.on("plotly_click", event => {
+        const point = event.points[0];
+        state.topic = columns[point.pointNumber[1]];
+        state.group = media[point.pointNumber[0]].name;
+        showArticles();
+      });
+    }
+
+    function drawGroups() {
+      const narrow = root.clientWidth < 640;
       const groups = data.gruppen[state.grouping];
       const labels = LABELS[state.grouping];
       const rows = [...topics].reverse(); // largest topic at the top
@@ -167,9 +278,9 @@
           ticktext: rows.map(t => (narrow ? shorten(t.name, 20) : t.name)),
         },
       };
-      Plotly.react(plot, [trace], layout, {
-        displayModeBar: false, responsive: true, locale: "de",
-      });
+      note.textContent = "";
+      setExport("Welche Medien berichten worüber? Anteil an den Schlagzeilen in %", layout.height);
+      Plotly.react(plot, [trace], layout, {displayModeBar: false, locale: "de"});
       plot.removeAllListeners?.("plotly_click");
       plot.on("plotly_click", event => {
         const point = event.points[0];
@@ -186,9 +297,13 @@
       }
       history.replaceState(null, "", "#thema=" + encodeURIComponent(state.topic.id));
       const {topic, group, grouping} = state;
-      const labels = LABELS[grouping];
-      const articles = topic.artikel.filter(a => !group || a[grouping] === group);
-      const heading = el("h4", {text: topic.name + (group ? ` – ${labels[group] ?? group}` : "")});
+      // In the view "je Medium" articles are filtered by medium and labelled by spectrum.
+      const field = grouping === "medium" ? "quelle" : grouping;
+      const labels = LABELS[grouping === "medium" ? "spektrum" : grouping];
+      const labelField = grouping === "medium" ? "spektrum" : grouping;
+      const articles = topic.artikel.filter(a => !group || a[field] === group);
+      const groupName = grouping === "medium" ? group : labels[group] ?? group;
+      const heading = el("h4", {text: topic.name + (group ? ` – ${groupName}` : "")});
       const description = el("p", {class: "small", text: topic.beschreibung});
       const items = el("ul");
       for (const article of articles) {
@@ -200,11 +315,12 @@
         items.append(el("li", {},
           el("span", {class: "text-muted", text: `${time.format(new Date(article.zeit))} · `}),
           el("strong", {text: article.quelle}),
-          el("span", {class: "text-muted", text: ` (${labels[article[grouping]] ?? ""}): `}),
+          el("span", {class: "text-muted", text: ` (${labels[article[labelField]] ?? ""}): `}),
           title));
       }
       const all = group
-        ? el("button", {type: "button", class: "btn btn-link p-0", text: "alle Gruppen zeigen",
+        ? el("button", {type: "button", class: "btn btn-link p-0",
+          text: grouping === "medium" ? "alle Medien zeigen" : "alle Gruppen zeigen",
           onclick: () => { state.group = null; showArticles(); }})
         : null;
       list.replaceChildren(...[heading, description, all, items].filter(Boolean));

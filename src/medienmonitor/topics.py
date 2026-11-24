@@ -13,6 +13,7 @@ Headlines are untrusted text: they go into the prompt as data, the model has no 
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
@@ -47,6 +48,9 @@ Regeln:
   Promi-Klatsch.
 - Jede Nachricht bekommt ein Thema, auch wenn bisher nur diese eine Schlagzeile dazu
   vorliegt (z. B. eine Meldung zur Pflegereform → neues Thema „Pflegereform“).
+- Keine Sammelthemen wie „Weitere Einzelmeldungen“, „Vermischtes“, „Politik allgemein“
+  oder „Sonstige Nachrichten“: Passt eine Nachricht zu keinem vorhandenen Thema, bekommt
+  sie ein eigenes neues Thema mit konkretem Namen.
 - Lege ein neues Thema nur an, wenn kein vorhandenes passt. Mehrere neue Schlagzeilen zum
   selben Ereignis bekommen denselben neuen Schlüssel.
 - Themennamen: deutsch, neutral, sachlich, 2–6 Wörter, ohne Wertung und ohne die
@@ -118,6 +122,15 @@ CONSOLIDATE_SCHEMA = {
 }
 
 
+# Names of catch-all topics the model must not create (see ASSIGN_SYSTEM); headlines it
+# puts there stay without topic and are assigned again in the next run.
+CATCH_ALL = re.compile(
+    r"einzelmeldung|vermischt|sonstige|diverse|verschiedene|übrige|weitere (meldung|nachricht)"
+    r"|allgemein",
+    re.IGNORECASE,
+)
+
+
 def _iso(moment: datetime) -> str:
     return moment.astimezone(UTC).isoformat(timespec="seconds")
 
@@ -178,7 +191,7 @@ class TopicList:
         ids = [
             tid
             for tid, t in self.themen.items()
-            if not t["zusammengelegt_in"] and t["zuletzt"] >= limit
+            if not t["zusammengelegt_in"] and not t.get("aufgeloest") and t["zuletzt"] >= limit
         ]
         ids.sort(
             key=lambda tid: (self.themen[tid].get("anzahl", 0) > 1, self.themen[tid]["zuletzt"]),
@@ -232,6 +245,8 @@ def apply_assignment(
     for entry in answer.get("neue_themen", []):
         key = entry["schluessel"].strip()
         if key and key not in new_keys and entry["name"].strip():
+            if CATCH_ALL.search(entry["name"]):
+                continue  # its headlines stay open
             new_keys[key] = topics.add(entry["name"], entry["beschreibung"], now)
     allowed = set(active)
     result: dict[str, str] = {}
@@ -285,6 +300,30 @@ def assign_new(data_dir: Path, labeler: Labeler, now: datetime | None = None) ->
     topics.save(data_dir)
     store.set_topics(data_dir, now.date(), LOOKBACK_DAYS, assigned)
     return {"offen": len(rows), "zugeordnet": len(assigned), "fehler": errors}
+
+
+def dissolve(data_dir: Path, topic_id: str, now: datetime | None = None) -> int:
+    """Dissolve a topic (e.g. a catch-all): its headlines of the last days lose their
+    topic and are assigned again in the next run. Returns the number of headlines."""
+    now = now or datetime.now(UTC)
+    topics = TopicList.load(data_dir)
+    if topic_id not in topics.themen:
+        raise KeyError(f"Thema {topic_id} unbekannt")
+    targets = {tid for tid in topics.themen if topics.resolve(tid) == topic_id}
+    topics.themen[topic_id]["aufgeloest"] = _iso(now)
+    topics.themen[topic_id]["anzahl"] = 0
+    topics.save(data_dir)
+    cleared = 0
+    for offset in range(LOOKBACK_DAYS):
+        day = now.date() - timedelta(days=offset)
+        rows = store.read_day(data_dir, day)
+        hits = [row for row in rows if row.get("thema_id") in targets]
+        for row in hits:
+            row["thema_id"] = None
+        if hits:
+            store.write_day(data_dir, day, rows)
+            cleared += len(hits)
+    return cleared
 
 
 # -- consolidation ----------------------------------------------------------------

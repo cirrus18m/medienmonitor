@@ -67,7 +67,12 @@ def build_payload(data_dir: Path, now: datetime | None = None) -> dict:
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
         topic_id = topics.resolve(row.get("thema_id"))
-        if topic_id and topic_id != OTHER and topic_id in topics.themen:
+        if (
+            topic_id
+            and topic_id != OTHER
+            and topic_id in topics.themen
+            and not topics.themen[topic_id].get("aufgeloest")
+        ):
             grouped[topic_id].append(row)
 
     entries = []
