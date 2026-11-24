@@ -56,6 +56,13 @@ quellen:
     lager: links
     spektrum: links
 
+  - name: junge Welt
+    domain: https://www.jungewelt.de
+    land: DE
+    feed: https://www.jungewelt.de/feeds/newsticker.rss
+    lager: links
+    spektrum: links
+
   - name: Berliner Zeitung
     domain: https://www.berliner-zeitung.de
     land: DE
