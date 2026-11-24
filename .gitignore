@@ -4,3 +4,5 @@ __pycache__/
 # local copy of the data branch (git worktree)
 daten/
 ausgabe/
+# local plan, not published
+PLAN.md

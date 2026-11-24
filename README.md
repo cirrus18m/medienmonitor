@@ -44,7 +44,6 @@ sich direkt verlinken: `medienmonitor.html#thema=T5`.
 - [x] Seite als Prototyp (`seite/`), Ansichten je Medium, nach Lager, nach Spektrum
 - [ ] Seite ins deutschlandmonitor-Repo übernehmen
 - [ ] Upload per SFTP
-- [ ] YouTube-Trends: Top 30 der letzten 10 Tage, Aufrufe über Tage online
+- [ ] YouTube-Trends (eigener Branch)
 - [ ] Podcast (Option)
 
-Ausbauplan: [PLAN.md](PLAN.md).
