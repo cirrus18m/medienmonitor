@@ -1,5 +1,5 @@
 """Stündlicher Lauf: Feeds abrufen, neue Schlagzeilen speichern, Themen zuordnen,
-daten.json schreiben.
+daten.json und grafik.html (Grafik für deutschlandmonitor.info) schreiben.
 
     uv run scripts/run_hourly.py --data-dir daten               # alles
     uv run scripts/run_hourly.py --data-dir daten --no-topics   # nur abrufen
@@ -16,7 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
 
-from medienmonitor import feeds, labeler, publish, store, topics
+from medienmonitor import feeds, labeler, publish, render, store, topics
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -95,7 +95,9 @@ def main() -> int:
                     print(f"  Fehler – {line}")
 
     payload = publish.build_payload(args.data_dir, now)
-    publish.write_payload(payload, args.payload or args.data_dir / "daten.json")
+    payload_path = args.payload or args.data_dir / "daten.json"
+    publish.write_payload(payload, payload_path)
+    render.write_html(payload, payload_path.with_name("grafik.html"))
     print(
         f"daten.json: {len(payload['themen'])} Themen, "
         f"{payload['artikel_zugeordnet']} von {payload['artikel_gesamt']} Artikeln "

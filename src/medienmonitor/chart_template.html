@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Medienmonitor – Grafik</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; padding: 0.25rem 0.5rem; background: #fff; color: #1B1B1B;
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  p { margin: 0.4rem 0; }
+  .stand, .hinweis, .quelle, .klein { font-size: 0.85rem; color: #555; }
+  .schalter { display: inline-flex; border: 1px solid #c7ccd4; border-radius: 0.3rem;
+    overflow: hidden; margin: 0.4rem 0; }
+  .schalter button { font: inherit; padding: 0.3rem 0.8rem; border: 0; background: #fff;
+    color: #1B1B1B; cursor: pointer; }
+  .schalter button + button { border-left: 1px solid #c7ccd4; }
+  .schalter button[aria-pressed="true"] { background: #0077BB; color: #fff; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  h2 { font-size: 1.1rem; margin: 1rem 0 0.3rem; }
+  .themen { columns: 2 18rem; padding-left: 1.1rem; margin: 0.3rem 0; }
+  .themen button, .alle { font: inherit; background: none; border: 0; padding: 0;
+    color: #0077BB; text-decoration: underline; cursor: pointer; text-align: left; }
+  .artikel ul { padding-left: 1.1rem; }
+  .artikel li { margin: 0.25rem 0; }
+  .artikel a { color: #0077BB; }
+  .grau { color: #767676; }
+  .fehler { color: #B2182B; }
+</style>
+</head>
+<body>
+<p class="stand">{{STAND}}</p>
+<div class="schalter" role="group" aria-label="Ansicht">{{BUTTONS}}</div>
+<p class="hinweis" id="hinweis"></p>
+<div class="scroll"><div id="grafik"></div></div>
+<p class="quelle">{{SOURCE}}.</p>
+<h2>Schlagzeilen zum Thema</h2>
+<p class="klein">Ein Feld der Grafik oder ein Thema anklicken, um die Schlagzeilen mit Links
+zu sehen.</p>
+<ul class="themen" id="themen"></ul>
+<div class="artikel" id="artikel" aria-live="polite"></div>
+<script src="{{PLOTLY_SRC}}"></script>
+<script>
+// Data: Plotly figures made in Python (render.py) and the headlines per topic.
+const DATA = {{DATA}};
+(() => {
+  "use strict";
+  const chart = document.getElementById("grafik");
+  const note = document.getElementById("hinweis");
+  const list = document.getElementById("artikel");
+  const buttons = [...document.querySelectorAll(".schalter button")];
+  const time = new Intl.DateTimeFormat("de-DE", {
+    weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
+  });
+  const state = {view: buttons[0]?.dataset.view, topic: null, group: null};
+
+  function el(tag, props = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(props)) {
+      if (key === "text") node.textContent = value;
+      else node.setAttribute(key, value);
+    }
+    node.append(...children.filter(Boolean));
+    return node;
+  }
+  const safeUrl = url => {
+    try {
+      const parsed = new URL(url);
+      return ["https:", "http:"].includes(parsed.protocol) ? parsed.href : null;
+    } catch {
+      return null;
+    }
+  };
+
+  // Tell the embedding page (same domain) how tall the content is.
+  function reportHeight() {
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        {medienmonitorHoehe: document.documentElement.scrollHeight}, location.origin);
+    }
+  }
+
+  function draw() {
+    for (const button of buttons) {
+      button.setAttribute("aria-pressed", String(button.dataset.view === state.view));
+    }
+    const figure = DATA.figures[state.view];
+    note.textContent = DATA.notes[state.view];
+    const narrow = document.body.clientWidth < 640;
+    const layout = {...figure.layout};
+    if (state.view === "medium") {
+      // many topic columns: keep cells readable and scroll sideways on small screens
+      const columns = figure.data[0].x.length;
+      layout.width = Math.max(document.body.clientWidth - 16, narrow ? 140 + 30 * columns : 0);
+    } else {
+      layout.width = document.body.clientWidth - 16;
+    }
+    const trace = {...figure.data[0]};
+    if (narrow && state.view === "medium") {
+      trace.texttemplate = "";
+      layout.yaxis = {...layout.yaxis, ticktext: layout.meta.kurz};
+    }
+    Plotly.react(chart, [trace], layout, {displayModeBar: false, locale: "de"})
+      .then(reportHeight);
+    chart.removeAllListeners?.("plotly_click");
+    chart.on("plotly_click", event => {
+      const custom = event.points[0].customdata;
+      state.topic = custom[4];
+      state.group = custom[5];
+      showArticles(true);
+    });
+  }
+
+  function showArticles(scroll) {
+    const topic = DATA.themen[state.topic];
+    if (!topic) {
+      list.replaceChildren();
+      reportHeight();
+      return;
+    }
+    // group filter: medium name (view "je Medium") or lager/spektrum key
+    const field = {medium: 0, spektrum: 1, lager: 2}[state.view];
+    const labels = DATA.labels[state.view === "lager" ? "lager" : "spektrum"];
+    const articles = topic.artikel.filter(a => !state.group || a[field] === state.group);
+    const groupName = state.view === "medium" ? state.group : labels[state.group];
+    const heading = el("h3", {text: topic.name + (state.group ? ` – ${groupName}` : "")});
+    const items = el("ul");
+    for (const [source, spectrum, camp, title, url, moment] of articles) {
+      const safe = safeUrl(url);
+      const label = state.view === "lager" ? labels[camp] : labels[spectrum];
+      items.append(el("li", {},
+        el("span", {class: "grau", text: `${time.format(new Date(moment))} · `}),
+        el("strong", {text: source}),
+        el("span", {class: "grau", text: ` (${label ?? ""}): `}),
+        safe
+          ? el("a", {href: safe, target: "_blank", rel: "noopener nofollow noreferrer",
+            text: title})
+          : el("span", {text: title})));
+    }
+    let all = null;
+    if (state.group) {
+      all = el("button", {type: "button", class: "alle",
+        text: state.view === "medium" ? "alle Medien zeigen" : "alle Gruppen zeigen"});
+      all.addEventListener("click", () => { state.group = null; showArticles(false); });
+    }
+    list.replaceChildren(heading, el("p", {class: "klein", text: topic.beschreibung}), all, items);
+    reportHeight();
+    if (scroll) heading.scrollIntoView({behavior: "smooth", block: "nearest"});
+  }
+
+  if (!window.Plotly) {
+    chart.replaceChildren(el("p", {class: "fehler",
+      text: "Die Grafik konnte nicht geladen werden. Bitte später erneut versuchen."}));
+    return;
+  }
+  const nav = document.getElementById("themen");
+  for (const id of DATA.reihenfolge) {
+    const topic = DATA.themen[id];
+    const button = el("button", {type: "button",
+      text: `${topic.name} (${topic.artikel.length})`});
+    button.addEventListener("click", () => {
+      state.topic = id;
+      state.group = null;
+      showArticles(true);
+    });
+    nav.append(el("li", {}, button));
+  }
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      state.view = button.dataset.view;
+      state.group = null;
+      draw();
+      showArticles(false);
+    });
+  }
+  // Direct link to a topic: the embedding page passes #thema=T5 on.
+  const wanted = new URLSearchParams(location.hash.slice(1)).get("thema");
+  if (wanted && DATA.themen[wanted]) state.topic = wanted;
+  draw();
+  showArticles(false);
+  let timer;
+  window.addEventListener("resize", () => {
+    clearTimeout(timer);
+    timer = setTimeout(draw, 150);
+  });
+})();
+</script>
+</body>
+</html>

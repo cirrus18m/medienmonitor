@@ -21,19 +21,21 @@ Mediengruppe bezieht sich auf alle Artikel dieser Gruppe in den letzten 24 Stund
 ```bash
 uv sync                                  # Umgebung
 uv run scripts/check_feeds.py            # alle Feeds prüfen
-uv run scripts/run_hourly.py             # abrufen, Themen zuordnen, daten/daten.json schreiben
+uv run scripts/run_hourly.py             # abrufen, Themen zuordnen, daten.json + grafik.html
 uv run scripts/run_hourly.py --no-topics # nur abrufen (ohne KI)
-uv run scripts/preview.py --data-dir daten --plotly <pfad>/plotly.min.js  # Seite lokal ansehen
+uv run scripts/preview.py --data-dir daten --plotly <pfad>/plotly.min.js  # eingebettet ansehen
 uv run pytest && uv run ruff check .
 ```
 
-## Seite
+## Grafik
 
-`seite/medienmonitor.js` und `seite/medienmonitor.qmd` sind die Vorlagen für die Seite
-„Medienmonitor“ im deutschlandmonitor-Repo (`site/assets/medienmonitor.js`,
-`site/medienmonitor.qmd`). Das Skript lädt `medienmonitor/daten.json` vom eigenen Server
-und zeigt die Themen als Heatmap (Lager oder Spektrum) mit Artikellinks. Ein Thema lässt
-sich direkt verlinken: `medienmonitor.html#thema=T5`.
+Jeder Lauf schreibt neben `daten.json` die Datei `grafik.html`: die Heatmaps (je Medium,
+nach Lager, nach Spektrum) als Plotly-Grafik aus Python (`src/medienmonitor/render.py`)
+mit Umschalter und den Schlagzeilen samt Links. Der Workflow lädt beide nach
+`deutschlandmonitor.info/medienmonitor/`. Die Seite „Medienmonitor“ des deutschlandmonitor
+bettet `grafik.html` per iframe ein (Vorlage: `seite/medienmonitor.qmd`);
+`plotly.min.js` kommt vom selben Server (`/assets/plotly.min.js`). Ein Thema lässt sich
+direkt verlinken: `medienmonitor.html#thema=T5`.
 
 ## Stand
 
@@ -41,9 +43,9 @@ sich direkt verlinken: `medienmonitor.html#thema=T5`.
 - [x] Workflow „Abruf“ mit Branch `daten`
 - [x] Themenzuordnung per KI (Claude Code mit Abo, Modell Sonnet)
 - [x] `daten.json` (24 Stunden, Themen × Mediengruppen, mit Artikellinks)
-- [x] Seite als Prototyp (`seite/`), Ansichten je Medium, nach Lager, nach Spektrum
+- [x] Grafik `grafik.html` (je Medium, nach Lager, nach Spektrum)
+- [x] Upload per SFTP
 - [ ] Seite ins deutschlandmonitor-Repo übernehmen
-- [ ] Upload per SFTP
 - [ ] YouTube-Trends (eigener Branch)
 - [ ] Podcast (Option)
 

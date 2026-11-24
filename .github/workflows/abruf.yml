@@ -81,16 +81,17 @@ jobs:
               commit -q -m "Abruf $(date -u +%Y-%m-%dT%H:%MZ)"
           git push origin HEAD:daten
 
-      # Upload of daten.json to deutschlandmonitor.info/medienmonitor/ (Host Europe, SFTP).
+      # Upload of grafik.html (embedded by the page "Medienmonitor") and daten.json to
+      # deutschlandmonitor.info/medienmonitor/ (Host Europe, SFTP).
       # Skipped while the secrets are missing. The SFTP user can write to all sites of the
       # package, so the step checks the marker file of the site and then writes nothing
-      # but the folder medienmonitor/ and daten.json in it: no mirror, no delete.
+      # but the folder medienmonitor/ and the two files in it: no mirror, no delete.
       #   $HE_TARGET_DIR/upload-ziel.txt  contains "deutschlandmonitor.info"
       # The website workflow of deutschlandmonitor excludes medienmonitor/ from its
       # mirror --delete.
       # Secrets HE_SSH_USER, HE_SSH_PASSWORD, HE_SSH_KNOWN_HOSTS and variable HE_TARGET_DIR
       # as in the repository deutschlandmonitor (.github/workflows/site.yml).
-      - name: daten.json hochladen
+      - name: Grafik hochladen
         if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
         env:
           LFTP_PASSWORD: ${{ secrets.HE_SSH_PASSWORD }}
@@ -103,6 +104,7 @@ jobs:
             exit 0
           fi
           test -s daten/daten.json || { echo "daten.json fehlt"; exit 1; }
+          test -s daten/grafik.html || { echo "grafik.html fehlt"; exit 1; }
           if [[ ! "$TARGET_DIR" =~ ^/?([A-Za-z0-9._-]+/)*deutschlandmonitor/?$ || "$TARGET_DIR" == *..* ]]; then
             echo "HE_TARGET_DIR muss auf /deutschlandmonitor enden"; exit 1
           fi
@@ -134,5 +136,8 @@ jobs:
             put daten/daten.json -o daten.json.neu;
             rm -f daten.json;
             mv daten.json.neu daten.json;
+            put daten/grafik.html -o grafik.html.neu;
+            rm -f grafik.html;
+            mv grafik.html.neu grafik.html;
             bye"
-          echo "daten.json hochgeladen."
+          echo "daten.json und grafik.html hochgeladen."

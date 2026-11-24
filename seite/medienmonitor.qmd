@@ -2,17 +2,30 @@
 title: "Medienmonitor"
 ---
 
-<!-- Vorlage für site/medienmonitor.qmd im deutschlandmonitor-Repo. Die Daten
-(medienmonitor/daten.json) lädt das Repo medienmonitor stündlich per SFTP hoch. -->
+<!-- Vorlage für site/medienmonitor.qmd im deutschlandmonitor-Repo. Die Grafik
+(medienmonitor/grafik.html) erzeugt das Repo cirrus18m/medienmonitor stündlich und lädt
+sie per SFTP hoch; diese Seite bettet sie nur ein. -->
 
-Welche Themen bestimmen die Schlagzeilen der letzten 24 Stunden – und berichten
-Medien unterschiedlicher Ausrichtung gleich stark darüber? Die Grafik zeigt je Gruppe von
-Medien, welcher Anteil ihrer Schlagzeilen auf ein Thema entfällt. Ein Wert von 5 heißt:
-5 von 100 Schlagzeilen dieser Gruppe gehören zu dem Thema.
+Welche Themen bestimmen die Schlagzeilen der letzten 24 Stunden – und welche Medien
+greifen sie auf? Die Grafik zeigt für jedes Medium, welcher Anteil seiner Schlagzeilen auf
+ein Thema entfällt. Ein Wert von 5 heißt: 5 von 100 Schlagzeilen dieses Mediums gehören zu
+dem Thema. Oben stehen neue Medien, unten etablierte, jeweils von links nach rechts
+geordnet. Die Grafik wird stündlich erneuert.
 
 ```{=html}
-<div id="medienmonitor" data-src="medienmonitor/daten.json">Daten werden geladen …</div>
-<script src="assets/medienmonitor.js" defer></script>
+<iframe id="medienmonitor" src="medienmonitor/grafik.html" title="Medienmonitor: Themen der Schlagzeilen je Medium" loading="lazy" style="width:100%;height:1400px;border:0;display:block"></iframe>
+<script>
+  (() => {
+    // Same domain: the embedded page reports its height; #thema=T5 is passed on.
+    const frame = document.getElementById("medienmonitor");
+    if (location.hash) frame.src = "medienmonitor/grafik.html" + location.hash;
+    window.addEventListener("message", event => {
+      if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+      const height = Number(event.data?.medienmonitorHoehe);
+      if (height > 0) frame.style.height = Math.ceil(height + 8) + "px";
+    });
+  })();
+</script>
 ```
 
 ## So entsteht die Grafik
@@ -24,11 +37,11 @@ Medien, welcher Anteil ihrer Schlagzeilen auf ein Thema entfällt. Ein Wert von 
   zählen als „Sonstiges“ und erscheinen nicht in der Grafik. Gezeigt werden Themen mit
   mindestens 5 Schlagzeilen aus 2 Medien. Die Zuordnung ist automatisch und kann im
   Einzelfall danebenliegen.
-* **Gruppen:** Die Einordnung der Medien in Lager (links, Mitte, rechts, alternativ) und
-  das feinere Spektrum ist eine eigene, grobe Einschätzung. „Alternativ“ sind Medien, die
-  sich ausdrücklich gegen etablierte Medien positionieren. Die Liste der Medien mit ihrer
+* **Einordnung der Medien:** Lager (links, Mitte, rechts, alternativ) und das feinere
+  Spektrum sind eine eigene, grobe Einschätzung. „Neue Medien“ (Lager „alternativ“)
+  positionieren sich ausdrücklich gegen etablierte Medien. Die Liste der Medien mit ihrer
   Einordnung steht im öffentlichen Repository
   [cirrus18m/medienmonitor](https://github.com/cirrus18m/medienmonitor/blob/main/feeds.yaml).
-* **Anteile:** Jede Gruppe zählt für sich, damit Gruppen mit vielen oder sehr aktiven
-  Medien nicht überwiegen.
+* **Anteile:** Jedes Medium (bzw. jede Gruppe) zählt für sich, damit Medien mit vielen
+  Meldungen nicht überwiegen.
 * **Links** führen zu den Artikeln auf den Seiten der Medien.
