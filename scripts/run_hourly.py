@@ -110,6 +110,10 @@ def main() -> int:
 
     domains = {f.name: f.domain for f in feeds.load_feeds(args.feeds, only_active=False)}
     payload = publish.build_payload(args.data_dir, now, domains)
+    # second window for the filter "nur heute": since midnight in Berlin
+    payload["heute"] = publish.build_payload(
+        args.data_dir, now, domains, start=publish.start_of_day(now), categories=False
+    )
     payload_path = args.payload or args.data_dir / "daten.json"
     publish.write_payload(payload, payload_path)
     render.write_html(payload, payload_path.with_name("grafik.html"))

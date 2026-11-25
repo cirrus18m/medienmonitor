@@ -50,8 +50,9 @@
 </style>
 </head>
 <body>
-<p class="stand">{{STAND}}</p>
-<div class="schalter" role="group" aria-label="Ansicht">{{BUTTONS}}</div>
+<p class="stand" id="stand">{{STAND}}</p>
+{{WINDOW_BUTTONS}}
+<div class="schalter ansicht" role="group" aria-label="Ansicht">{{BUTTONS}}</div>
 <p class="hinweis" id="hinweis"></p>
 <div class="scroll"><div id="grafik"></div></div>
 <p class="quelle">{{SOURCE}}.</p>
@@ -69,14 +70,18 @@ zu sehen.</p>
 <script src="{{PLOTLY_SRC}}"></script>
 <script>
 // Data: Plotly figures made in Python (render.py) and the headlines per topic.
-const DATA = {{DATA}};
+// ALL.fenster: one set per time window ("24h", "heute"); DATA = the chosen one.
+const ALL = {{DATA}};
+let DATA = {...ALL, ...ALL.fenster["24h"]};
 (() => {
   "use strict";
   const chart = document.getElementById("grafik");
   const note = document.getElementById("hinweis");
   const list = document.getElementById("artikel");
   const popup = document.getElementById("fenster");
-  const buttons = [...document.querySelectorAll(".schalter button")];
+  const buttons = [...document.querySelectorAll(".schalter.ansicht button")];
+  const windowButtons = [...document.querySelectorAll(".schalter.zeitraum button")];
+  const stand = document.getElementById("stand");
   const time = new Intl.DateTimeFormat("de-DE", {
     weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
   });
@@ -184,6 +189,14 @@ const DATA = {{DATA}};
       button.setAttribute("aria-pressed", String(button.dataset.view === state.view));
     }
     const figure = DATA.figures[state.view];
+    if (!figure) {
+      note.textContent = "";
+      Plotly.purge(chart);
+      chart.replaceChildren(el("p", {class: "klein",
+        text: "Für diesen Zeitraum gibt es noch zu wenige Schlagzeilen."}));
+      reportHeight();
+      return;
+    }
     note.textContent = DATA.notes[state.view];
     const narrow = document.body.clientWidth < 640;
     const layout = {...figure.layout};
@@ -276,16 +289,36 @@ const DATA = {{DATA}};
     if (event.key === "Escape") closePopup();
   });
   const nav = document.getElementById("themen");
-  for (const id of DATA.reihenfolge) {
-    const topic = DATA.themen[id];
-    const button = el("button", {type: "button",
-      text: `${topic.name} (${topic.artikel.length})`});
+  function buildNav() {
+    nav.replaceChildren();
+    for (const id of DATA.reihenfolge) {
+      const topic = DATA.themen[id];
+      const button = el("button", {type: "button",
+        text: `${topic.name} (${topic.artikel.length})`});
+      button.addEventListener("click", () => {
+        state.topic = id;
+        state.group = null;
+        showArticles(true);
+      });
+      nav.append(el("li", {}, button));
+    }
+  }
+  buildNav();
+  // Time window: last 24 hours or today since midnight.
+  for (const button of windowButtons) {
     button.addEventListener("click", () => {
-      state.topic = id;
+      for (const other of windowButtons) {
+        other.setAttribute("aria-pressed", String(other === button));
+      }
+      DATA = {...ALL, ...ALL.fenster[button.dataset.window]};
+      stand.textContent = DATA.stand;
+      if (!DATA.themen[state.topic]) state.topic = null;
       state.group = null;
-      showArticles(true);
+      closePopup();
+      buildNav();
+      draw();
+      showArticles(false);
     });
-    nav.append(el("li", {}, button));
   }
   for (const button of buttons) {
     button.addEventListener("click", () => {

@@ -129,8 +129,8 @@ def test_render_html_escapes_foreign_text():
     html = render.render_html(payload())
     assert "Stand: 24.11.2026, 13:17 Uhr" in html and "1.234 Schlagzeilen" in html
     assert "<script>alert(1)" not in html  # headline cannot close the data script
-    data = html.split("const DATA = ", 1)[1].split(";\n", 1)[0]
-    parsed = json.loads(data)
+    data = html.split("const ALL = ", 1)[1].split(";\n", 1)[0]
+    parsed = json.loads(data)["fenster"]["24h"]
     assert parsed["themen"]["T1"]["artikel"][0][3].startswith("Haushalt </script>")
     assert set(parsed["figures"]) == {"medium", "lager", "spektrum"}
     assert render.PLOTLY_SRC in html and "cdn" not in html
@@ -139,3 +139,18 @@ def test_render_html_escapes_foreign_text():
         "neueste": [["Wetter", "https://taz.de/w", NOW.isoformat(), None]],
     }
     assert parsed["medien"]["NIUS"]["domain"] is None
+
+
+def test_render_html_with_window_today():
+    full = payload()
+    today = payload()
+    today["fenster"] = "heute"
+    today["themen"] = []
+    full["heute"] = today
+    html = render.render_html(full)
+    data = json.loads(html.split("const ALL = ", 1)[1].split(";\n", 1)[0])
+    assert set(data["fenster"]) == {"24h", "heute"}
+    assert "heute seit 0:00 Uhr" in data["fenster"]["heute"]["stand"]
+    assert data["fenster"]["heute"]["reihenfolge"] == []
+    assert 'data-window="heute"' in html and 'data-window="24h" aria-pressed="true"' in html
+    assert "data-window" not in render.render_html(payload())  # without "heute": no switch

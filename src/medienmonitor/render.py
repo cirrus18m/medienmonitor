@@ -350,36 +350,67 @@ def _json(value) -> str:
     return text.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
 
 
-def render_html(payload: dict) -> str:
+WINDOWS = (("24h", "letzte 24 Stunden"), ("heute", "nur heute"))
+
+
+def _window(payload: dict) -> dict:
+    """Figures, notes, topics and media of one time window (24 hours or today)."""
     stand = datetime.fromisoformat(payload["stand"])
-    stand_text = f"{stand:%d.%m.%Y, %H:%M} Uhr"
     figures = {}
     if payload.get("medien"):
         figures["medium"] = figure_by_medium(payload).to_plotly_json()
     figures["lager"] = figure_by_group(payload, "lager").to_plotly_json()
     figures["spektrum"] = figure_by_group(payload, "spektrum").to_plotly_json()
-    views = [(key, label) for key, label in VIEWS if key in figures]
+    total = f"{payload['artikel_gesamt']:,}".replace(",", ".")
+    if payload.get("fenster") == "heute":
+        span = "heute seit 0:00 Uhr"
+    else:
+        span = f"letzte {payload['fenster_stunden']} Stunden"
+    return {
+        "stand": (
+            f"Stand: {stand:%d.%m.%Y, %H:%M} Uhr · {span} · {total} Schlagzeilen aus "
+            f"{payload['quellen_gesamt']} Medien"
+        ),
+        "figures": figures,
+        "notes": {
+            key: NOTES[key].replace("in den letzten 24 Stunden", span)
+            if payload.get("fenster") == "heute"
+            else NOTES[key]
+            for key in figures
+        },
+        "themen": _articles(payload),
+        "medien": _media(payload),
+        "reihenfolge": [t["id"] for t in payload["themen"][:MAX_TOPIC_ROWS]],
+    }
+
+
+def render_html(payload: dict) -> str:
+    """grafik.html; ``payload["heute"]`` (optional) adds the filter "nur heute"."""
+    windows = {"24h": _window(payload)}
+    if payload.get("heute"):
+        windows["heute"] = _window(payload["heute"])
+    views = [(key, label) for key, label in VIEWS if key in windows["24h"]["figures"]]
     buttons = "".join(
         f'<button type="button" data-view="{key}">{escape(label)}</button>' for key, label in views
     )
-    total = f"{payload['artikel_gesamt']:,}".replace(",", ".")
-    numbers = (
-        f"Stand: {stand_text} · letzte {payload['fenster_stunden']} Stunden · "
-        f"{total} Schlagzeilen aus {payload['quellen_gesamt']} Medien"
+    window_buttons = (
+        '<div class="schalter zeitraum" role="group" aria-label="Zeitraum">'
+        + "".join(
+            f'<button type="button" data-window="{key}" aria-pressed="{str(key == "24h").lower()}">'
+            f"{escape(label)}</button>"
+            for key, label in WINDOWS
+            if key in windows
+        )
+        + "</div>"
+        if len(windows) > 1
+        else ""
     )
-    data = {
-        "figures": figures,
-        "notes": {k: NOTES[k] for k in figures},
-        "labels": LABELS,
-        "themen": _articles(payload),
-        "medien": _media(payload),
-        "kategorien": payload.get("kategorien"),
-        "reihenfolge": [t["id"] for t in payload["themen"][:MAX_TOPIC_ROWS]],
-    }
+    data = {"fenster": windows, "labels": LABELS, "kategorien": payload.get("kategorien")}
     template = (Path(__file__).parent / "chart_template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{PLOTLY_SRC}}", PLOTLY_SRC)
-        .replace("{{STAND}}", escape(numbers))
+        .replace("{{STAND}}", escape(windows["24h"]["stand"]))
+        .replace("{{WINDOW_BUTTONS}}", window_buttons)
         .replace("{{BUTTONS}}", buttons)
         .replace("{{SOURCE}}", escape(SOURCE))
         .replace("{{DATA}}", _json(data))

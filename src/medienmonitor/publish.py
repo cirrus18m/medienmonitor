@@ -33,10 +33,20 @@ BERLIN = ZoneInfo("Europe/Berlin")
 _time = store.row_time
 
 
-def window_rows(data_dir: Path, now: datetime, hours: int = WINDOW_HOURS) -> list[dict]:
-    limit = (now - timedelta(hours=hours)).astimezone(UTC).isoformat(timespec="seconds")
-    days = hours // 24 + 2
+def window_rows(
+    data_dir: Path, now: datetime, hours: int = WINDOW_HOURS, start: datetime | None = None
+) -> list[dict]:
+    """Headlines of the last ``hours`` hours, or since ``start`` if given."""
+    begin = start if start is not None else now - timedelta(hours=hours)
+    limit = begin.astimezone(UTC).isoformat(timespec="seconds")
+    days = (now - begin).days + 2
     return [row for row in store.read_days(data_dir, now.date(), days) if _time(row) >= limit]
+
+
+def start_of_day(now: datetime) -> datetime:
+    """Midnight of today in Berlin (filter "nur heute")."""
+    local = now.astimezone(BERLIN)
+    return local.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
 def _shares(counts: Counter, totals: Counter, keys: tuple[str, ...]) -> dict[str, float]:
@@ -51,13 +61,21 @@ def _topic_name(topics: TopicList, topic_id: str | None) -> str | None:
 
 
 def build_payload(
-    data_dir: Path, now: datetime | None = None, domains: dict[str, str] | None = None
+    data_dir: Path,
+    now: datetime | None = None,
+    domains: dict[str, str] | None = None,
+    start: datetime | None = None,
+    categories: bool = True,
 ) -> dict:
-    """``domains``: medium name -> home page (feeds.yaml), shown as link in the chart."""
+    """Topics of the last WINDOW_HOURS hours, or since ``start`` (filter "nur heute").
+
+    ``domains``: medium name -> home page (feeds.yaml), shown as link in the chart.
+    ``categories``: add the TOP- and Blasen-Themen (bubbles.py).
+    """
     now = now or datetime.now(UTC)
     domains = domains or {}
     topics = TopicList.load(data_dir)
-    rows = window_rows(data_dir, now)
+    rows = window_rows(data_dir, now, start=start)
     per_camp = Counter(row["lager"] for row in rows)
     per_spectrum = Counter(row["spektrum"] for row in rows)
     media: dict[str, dict] = {}
@@ -138,6 +156,10 @@ def build_payload(
         "schema": SCHEMA,
         "stand": now.astimezone(BERLIN).isoformat(timespec="minutes"),
         "fenster_stunden": WINDOW_HOURS,
+        "fenster": "heute" if start is not None else "24h",
+        "seit": (start or now - timedelta(hours=WINDOW_HOURS))
+        .astimezone(BERLIN)
+        .isoformat(timespec="minutes"),
         "gruppen": {"lager": list(CAMPS), "spektrum": list(SPECTRA)},
         "artikel_je_gruppe": {"lager": dict(per_camp), "spektrum": dict(per_spectrum)},
         "artikel_gesamt": len(rows),
@@ -145,8 +167,10 @@ def build_payload(
         "quellen_gesamt": len(media),
         "medien": sorted(media.values(), key=lambda m: m["name"]),
         "themen": entries[:MAX_TOPICS],
-        "kategorien": bubbles.categories(
-            window_rows(data_dir, now, bubbles.BUBBLE_HOURS), topics, now
+        "kategorien": (
+            bubbles.categories(window_rows(data_dir, now, bubbles.BUBBLE_HOURS), topics, now)
+            if categories
+            else None
         ),
     }
 

@@ -153,3 +153,14 @@ def test_catch_all_topic_is_rejected_and_dissolve(tmp_path):
     assert len(topics.unassigned(tmp_path, NOW)) == 6
     assert topics.TopicList.load(tmp_path).active(NOW) == []
     assert publish.build_payload(tmp_path, NOW)["themen"] == []
+
+
+def test_payload_today_starts_at_midnight_in_berlin(tmp_path):
+    fill(tmp_path)  # headlines 1 hour before NOW (12:17 UTC) and one 30 hours before
+    start = publish.start_of_day(NOW)
+    assert start.isoformat() == "2026-11-24T00:00:00+01:00"
+    today = publish.build_payload(tmp_path, NOW, start=start, categories=False)
+    assert today["fenster"] == "heute" and today["kategorien"] is None
+    assert today["artikel_gesamt"] == 6 and today["seit"].startswith("2026-11-24T00:00")
+    late = publish.build_payload(tmp_path, NOW, start=NOW - timedelta(minutes=30))
+    assert late["artikel_gesamt"] == 0
