@@ -239,28 +239,77 @@ def render_html(payload: dict) -> str:
     )
 
 
+SORTS = (("relativ", "Wachstum relativ"), ("absolut", "Wachstum absolut"), ("name", "Alphabetisch"))
+
+
+def change_text(change: dict) -> tuple[str, str]:
+    """Absolute and relative change of subscribers as German text; empty if unknown."""
+    if change.get("absolut") is None:
+        return "", ""
+    absolute = change["absolut"]
+    sign = "+" if absolute > 0 else ("−" if absolute < 0 else "±")
+    relative = change.get("relativ_pct")
+    relative_text = (
+        ""
+        if relative is None
+        else f"{sign}{abs(relative):.1f} %".replace(".", ",")
+        if absolute
+        else "± 0 %"
+    )
+    return f"{sign}{number(abs(absolute))}" if absolute else "± 0", relative_text
+
+
+def sort_channels(channels: list[dict], key: str = "relativ") -> list[dict]:
+    """Channels by growth (unknown at the end) or by name."""
+    if key == "name":
+        return sorted(channels, key=lambda c: c["name"].casefold())
+    field = "relativ_pct" if key == "relativ" else "absolut"
+
+    def value(channel: dict) -> tuple:
+        number_ = (channel.get("abo_veraenderung") or {}).get(field)
+        return (number_ is None, -(number_ or 0), channel["name"].casefold())
+
+    return sorted(channels, key=value)
+
+
 def _channel_table(channels: list[dict], both: bool) -> str:
     rows = []
-    for c in channels:
+    for c in sort_channels(channels):
+        change = c.get("abo_veraenderung") or {}
+        absolute, relative = change_text(change)
+        since = change.get("seit")
+        title = f' title="seit {datetime.fromisoformat(since):%d.%m.%Y}"' if since else ""
+        raw = {
+            key: "" if change.get(field) is None else change[field]
+            for key, field in (("absolut", "absolut"), ("relativ", "relativ_pct"))
+        }
+        data = (
+            f' data-name="{escape(c["name"].casefold())}"'
+            f' data-absolut="{raw["absolut"]}" data-relativ="{raw["relativ"]}"'
+        )
         handle = f' <span class="grau">{escape(c["handle"])}</span>' if c["handle"] else ""
         language = c["sprache"].upper() if c["sprache"] in ("de", "en") else "mehrspr."
         tag = f' <span class="grau">{escape(language)}</span>' if both else ""
         kind = "Neue Medien" if c["lager"] == "alternativ" else ART_LABELS.get(c["art"], c["art"])
         rows.append(
-            "<tr>"
+            f"<tr{data}>"
             f'<td><a href="{escape(c["url"])}" target="_blank" '
             f'rel="noopener nofollow noreferrer">{escape(c["name"])}</a>{handle}{tag}</td>'
             f"<td>{escape(c['land'])}</td>"
             f"<td>{escape(kind)}</td>"
             f"<td>{escape(SPECTRUM_LABELS.get(c['spektrum'], c['spektrum']))}</td>"
             f'<td class="zahl">{subscribers_text(c["abonnenten"])}</td>'
+            f'<td class="zahl"{title}>{absolute}</td>'
+            f'<td class="zahl"{title}>{relative}</td>'
             f'<td class="zahl">{c["videos"]}</td>'
             f'<td class="zahl">{c["gezaehlt"]}</td>'
             "</tr>"
         )
     return (
         '<div class="scroll"><table><thead><tr><th>Kanal</th><th>Land</th><th>Art</th>'
-        '<th>Spektrum</th><th class="zahl">Abonnenten</th><th class="zahl">Videos</th>'
+        '<th>Spektrum</th><th class="zahl">Abonnenten</th>'
+        '<th class="zahl">Veränderung</th><th class="zahl">in %</th>'
+        '<th class="zahl">Videos</th>'
         '<th class="zahl">davon gezählt</th></tr></thead><tbody>'
         + "".join(rows)
         + "</tbody></table></div>"
@@ -294,16 +343,33 @@ def render_channels_html(payload: dict) -> str:
         f"{escape(label)}</button>"
         for i, (key, label) in enumerate(VIEWS)
     )
+    since = sorted(
+        {(c.get("abo_veraenderung") or {}).get("seit") for c in payload["kanaele"]} - {None}
+    )
+    change_note = (
+        f" „Veränderung“ der Abonnenten seit {datetime.fromisoformat(since[0]):%d.%m.%Y} "
+        f"(gespeichert werden höchstens {payload.get('abo_tage', 21)} Tage); YouTube rundet "
+        "Abonnentenzahlen auf drei Stellen, kleine Veränderungen erscheinen erst nach "
+        "einiger Zeit."
+        if since
+        else " Die Veränderung der Abonnenten erscheint ab dem zweiten Tag der Erfassung."
+    )
+    sort_buttons = "".join(
+        f'<button type="button" data-sort="{key}" aria-pressed="{str(i == 0).lower()}">'
+        f"{escape(label)}</button>"
+        for i, (key, label) in enumerate(SORTS)
+    )
     numbers = (
         f"{_stand(payload)} · „Videos“: veröffentlicht in den letzten "
         f"{payload['fenster_tage']} Tagen; „davon gezählt“: länger als "
         f"{payload['mindestdauer_min']} Minuten, ohne Livestreams und Nachrichtensendungen. "
-        "Mehrsprachige Kanäle stehen in jeder Auswahl."
+        "Mehrsprachige Kanäle stehen in jeder Auswahl." + change_note
     )
     template = (Path(__file__).parent / "kanaele_template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{STAND}}", escape(numbers))
         .replace("{{BUTTONS}}", buttons)
+        .replace("{{SORT_BUTTONS}}", sort_buttons)
         .replace("{{SECTIONS}}", "\n".join(views))
         .replace("{{SOURCE}}", escape(SOURCE))
     )

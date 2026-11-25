@@ -8,6 +8,10 @@ else is pure and testable.
 
 Only titles, channel, figures and links are kept, and only in the current ``youtube.json``
 (no history: the API terms limit how long API data may be stored without refreshing it).
+Two short-lived stores exist outside the repository (Actions cache in the workflow): the
+views of young videos (``update_snapshots``, WINDOW_DAYS + 1 days) and one subscriber
+count per channel and day (``update_subscriber_history``, SUBSCRIBER_DAYS days). GitHub
+deletes caches that were not used for 7 days, so no value is older than 30 days.
 """
 
 from __future__ import annotations
@@ -34,6 +38,9 @@ LISTS = ("de", "en", "alle")
 METRICS = ("aufrufe", "aufrufe_je_tag", "aufrufe_erster_tag")
 FIRST_DAY_H = 24
 MAX_GAP_H = 12  # snapshots around 24 h further apart give no first-day value
+# Subscriber history: one count per channel and day. 21 days plus at most 7 days in an
+# unused Actions cache stays below the 30 days of the YouTube API terms.
+SUBSCRIBER_DAYS = 21
 
 # Titles of regular news programs and live broadcasts (all channels); per channel more
 # patterns in youtube.yaml (field "ausschliessen").
@@ -205,6 +212,41 @@ def update_snapshots(snapshots: dict, videos: list[tuple[Video, Channel]], now: 
     return kept
 
 
+def update_subscriber_history(
+    history: dict, subscribers: dict[str, int | None], now: datetime
+) -> dict:
+    """Channel id -> {date: subscribers}; today's count replaces an earlier one of the
+    day, counts older than SUBSCRIBER_DAYS days leave."""
+    today = now.date()
+    oldest = (today - timedelta(days=SUBSCRIBER_DAYS)).isoformat()
+    kept = {
+        channel_id: {day: count for day, count in days.items() if day > oldest}
+        for channel_id, days in history.items()
+    }
+    for channel_id, count in subscribers.items():
+        if count is not None:
+            kept.setdefault(channel_id, {})[today.isoformat()] = count
+    return {channel_id: days for channel_id, days in kept.items() if days}
+
+
+def subscriber_change(days: dict[str, int] | None, now: datetime) -> dict:
+    """Change from the oldest stored count (before today) to the newest one:
+    ``{"seit": date, "absolut": int, "relativ_pct": float}`` or empty values."""
+    empty = {"seit": None, "absolut": None, "relativ_pct": None}
+    if not days:
+        return empty
+    today = now.date().isoformat()
+    earlier = sorted(day for day in days if day < today)
+    if not earlier:
+        return empty
+    first, last = days[earlier[0]], days[max(days)]
+    return {
+        "seit": earlier[0],
+        "absolut": last - first,
+        "relativ_pct": round(100 * (last - first) / first, 2) if first else None,
+    }
+
+
 def first_day_views(entry: dict | None) -> int | None:
     """Views after 24 hours, linear between the counts before and after; None if unknown
     (video first seen after its first day, or the counts are too far apart)."""
@@ -323,12 +365,15 @@ def build_payload(
     channels: list[Channel] | None = None,
     subscribers: dict[str, int | None] | None = None,
     snapshots: dict | None = None,
+    subscriber_history: dict | None = None,
 ) -> dict:
     """youtube.json: per language choice and per metric (METRICS) the TOP_N counting
     videos of the last WINDOW_DAYS (at most MAX_PER_CHANNEL per channel), and the list of
-    channels. ``snapshots`` (update_snapshots) give the views on the first day."""
+    channels. ``snapshots`` (update_snapshots) give the views on the first day,
+    ``subscriber_history`` (update_subscriber_history) the change of subscribers."""
     subscribers = subscribers or {}
     snapshots = snapshots or {}
+    subscriber_history = subscriber_history or {}
     channels = channels if channels is not None else list({c.name: c for _, c in videos}.values())
     counting = []
     reasons: dict[str, int] = {}
@@ -382,6 +427,7 @@ def build_payload(
         "stand": now.isoformat(timespec="minutes"),
         "fenster_tage": WINDOW_DAYS,
         "mindestdauer_min": MIN_DURATION_S // 60,
+        "abo_tage": SUBSCRIBER_DAYS,
         "videos_geprueft": len(videos),
         "videos_gezaehlt": len(counting),
         "gezaehlt_je_liste": {key: sum(in_list(i[2], key) for i in counting) for key in LISTS},
@@ -400,6 +446,7 @@ def build_payload(
                 "lager": c.lager,
                 "spektrum": c.spektrum,
                 "abonnenten": subscribers.get(c.kanal_id),
+                "abo_veraenderung": subscriber_change(subscriber_history.get(c.kanal_id), now),
                 "videos": per_channel.get(c.name, [0, 0])[0],
                 "gezaehlt": per_channel.get(c.name, [0, 0])[1],
             }

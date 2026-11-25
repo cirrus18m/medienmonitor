@@ -8,3 +8,5 @@ ausgabe/
 PLAN.md
 # Aufrufe junger Videos für „Aufrufe am ersten Tag“ (lokal, im Workflow im Actions-Cache)
 youtube-zwischenstand.json
+# Abonnenten je Kanal und Tag (höchstens 21 Tage; lokal, im Workflow im Actions-Cache)
+youtube-abonnenten.json

@@ -72,9 +72,10 @@ jobs:
       # pages "Video-Medien" and "YouTube-Kanäle". About 200 of the 10,000 free quota units
       # per run. Secret YOUTUBE_API_KEY; skipped while it is missing.
       # For "Aufrufe am ersten Tag" each run keeps the views of young videos in
-      # youtube-zwischenstand.json. It lives in the Actions cache, not in the public branch
-      # daten: entries leave after 11 days, unused caches after 7 (YouTube API terms allow
-      # keeping API data for at most 30 days).
+      # youtube-zwischenstand.json, and for the change of subscribers one count per channel
+      # and day in youtube-abonnenten.json. Both live in the Actions cache, not in the
+      # public branch daten: entries leave after 11 resp. 21 days, unused caches after 7
+      # (YouTube API terms allow keeping API data for at most 30 days).
       - name: YouTube fällig?
         id: youtube
         if: ${{ !cancelled() }}
@@ -94,7 +95,9 @@ jobs:
         if: ${{ !cancelled() && steps.youtube.outputs.faellig == 'true' }}
         uses: actions/cache/restore@v6
         with:
-          path: youtube-zwischenstand.json
+          path: |
+            youtube-zwischenstand.json
+            youtube-abonnenten.json
           key: youtube-zwischenstand-${{ github.run_id }}
           restore-keys: youtube-zwischenstand-
 
@@ -110,7 +113,9 @@ jobs:
         if: ${{ !cancelled() && steps.youtube_abruf.outcome == 'success' }}
         uses: actions/cache/save@v6
         with:
-          path: youtube-zwischenstand.json
+          path: |
+            youtube-zwischenstand.json
+            youtube-abonnenten.json
           key: youtube-zwischenstand-${{ github.run_id }}
 
       - name: Neue Schlagzeilen und Themen committen

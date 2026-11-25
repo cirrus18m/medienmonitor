@@ -4,7 +4,9 @@ deutschlandmonitor.info schreiben.
 
 Für „Aufrufe am ersten Tag“ merkt sich jeder Lauf die Aufrufe junger Videos in
 --zwischenstand (Standard youtube-zwischenstand.json, nicht im Repo; im Workflow im
-Actions-Cache). Einträge fallen nach 11 Tagen heraus.
+Actions-Cache). Einträge fallen nach 11 Tagen heraus. Ebenso speichert --abonnenten je
+Kanal und Tag die Zahl der Abonnenten (höchstens 21 Tage) für die Veränderung in der
+Kanalübersicht.
 
     YOUTUBE_API_KEY=… uv run scripts/run_youtube.py --out ausgabe
     uv run scripts/run_youtube.py --beispiel --out ausgabe   # ohne API, erfundene Videos
@@ -75,12 +77,28 @@ def example_snapshots(videos, now: datetime) -> dict:
     return snapshots
 
 
+def example_history(subscribers: dict[str, int], now: datetime) -> dict:
+    """Made-up subscriber counts 14 days ago for the example channels."""
+    rng = random.Random(2)
+    day = (now - timedelta(days=14)).date().isoformat()
+    return {
+        channel_id: {day: int(count / (1 + rng.uniform(-0.01, 0.08)))}
+        for channel_id, count in subscribers.items()
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--kanaele", type=Path, default=ROOT / "youtube.yaml")
     parser.add_argument("--out", type=Path, default=ROOT / "ausgabe")
     parser.add_argument("--beispiel", action="store_true", help="erfundene Videos, ohne API")
     parser.add_argument("--zwischenstand", type=Path, default=ROOT / "youtube-zwischenstand.json")
+    parser.add_argument(
+        "--abonnenten",
+        type=Path,
+        default=ROOT / "youtube-abonnenten.json",
+        help="Abonnenten je Kanal und Tag (höchstens 21 Tage, im Workflow im Actions-Cache)",
+    )
     args = parser.parse_args()
     now = datetime.now(UTC)
     channels = youtube.load_channels(args.kanaele)
@@ -88,6 +106,9 @@ def main() -> int:
     if args.beispiel:
         videos, errors, subscribers = example(channels, now)
         snapshots = example_snapshots(videos, now)
+        history = youtube.update_subscriber_history(
+            example_history(subscribers, now), subscribers, now
+        )
     else:
         try:
             api = youtube.YouTubeApi(api_key())
@@ -100,8 +121,13 @@ def main() -> int:
             snapshots = json.loads(args.zwischenstand.read_text(encoding="utf-8"))
         snapshots = youtube.update_snapshots(snapshots, videos, now)
         args.zwischenstand.write_text(json.dumps(snapshots), encoding="utf-8")
+        history = {}
+        if args.abonnenten.exists():
+            history = json.loads(args.abonnenten.read_text(encoding="utf-8"))
+        history = youtube.update_subscriber_history(history, subscribers, now)
+        args.abonnenten.write_text(json.dumps(history), encoding="utf-8")
 
-    payload = youtube.build_payload(videos, now, errors, channels, subscribers, snapshots)
+    payload = youtube.build_payload(videos, now, errors, channels, subscribers, snapshots, history)
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "youtube.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8"

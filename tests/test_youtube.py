@@ -292,3 +292,69 @@ def test_subscribers_text():
     assert youtube_render.subscribers_text(396_000) == "396.000"
     assert youtube_render.subscribers_text(44_800_000) == "44,8 Mio."
     assert youtube_render.subscribers_text(None) == ""
+
+
+def test_subscriber_history_keeps_one_count_per_day_and_at_most_21_days():
+    old_day = (NOW - timedelta(days=22)).date().isoformat()
+    kept_day = (NOW - timedelta(days=20)).date().isoformat()
+    history = {"UCa": {old_day: 900, kept_day: 1000}, "UCgone": {old_day: 5}}
+    history = youtube.update_subscriber_history(history, {"UCa": 1100, "UCb": None}, NOW)
+    today = NOW.date().isoformat()
+    assert history == {"UCa": {kept_day: 1000, today: 1100}}  # UCgone and UCb left out
+    later = NOW + timedelta(hours=3)
+    history = youtube.update_subscriber_history(history, {"UCa": 1200}, later)
+    assert history["UCa"][today] == 1200  # last count of the day
+
+
+def test_subscriber_change():
+    today = NOW.date().isoformat()
+    week = (NOW - timedelta(days=7)).date().isoformat()
+    days = {week: 2000, today: 2100}
+    assert youtube.subscriber_change(days, NOW) == {
+        "seit": week,
+        "absolut": 100,
+        "relativ_pct": 5.0,
+    }
+    empty = {"seit": None, "absolut": None, "relativ_pct": None}
+    assert youtube.subscriber_change({today: 2100}, NOW) == empty  # first day
+    assert youtube.subscriber_change(None, NOW) == empty
+
+
+def test_channel_list_sorted_by_growth_with_change_columns():
+    def entry(name, absolute, relative):
+        return {
+            "name": name,
+            "abo_veraenderung": {
+                "seit": "2026-11-17",
+                "absolut": absolute,
+                "relativ_pct": relative,
+            },
+        }
+
+    channels = [entry("B", 500, 1.0), entry("a", 100, 5.0), entry("C", None, None)]
+    assert [c["name"] for c in youtube_render.sort_channels(channels)] == ["a", "B", "C"]
+    by_absolute = youtube_render.sort_channels(channels, "absolut")
+    assert [c["name"] for c in by_absolute] == ["B", "a", "C"]
+    assert [c["name"] for c in youtube_render.sort_channels(channels, "name")] == ["a", "B", "C"]
+    assert youtube_render.change_text({"absolut": 12000, "relativ_pct": 1.25}) == (
+        "+12.000",
+        "+1,2 %",
+    )
+    assert youtube_render.change_text({"absolut": -500, "relativ_pct": -0.5}) == ("−500", "−0,5 %")
+    assert youtube_render.change_text({"absolut": 0, "relativ_pct": 0.0}) == ("± 0", "± 0 %")
+    assert youtube_render.change_text({"absolut": None}) == ("", "")
+
+
+def test_channel_page_shows_change_and_sort_buttons():
+    channels = [channel(name="Kanal A", kanal_id="UCa"), channel(name="Kanal B", kanal_id="UCb")]
+    week = (NOW - timedelta(days=7)).date().isoformat()
+    history = {"UCa": {week: 1000}, "UCb": {week: 1000}}
+    subscribers = {"UCa": 1010, "UCb": 1100}
+    history = youtube.update_subscriber_history(history, subscribers, NOW)
+    payload = youtube.build_payload([], NOW, [], channels, subscribers, {}, history)
+    assert payload["kanaele"][1]["abo_veraenderung"]["relativ_pct"] == 10.0
+    html = youtube_render.render_channels_html(payload)
+    assert 'data-sort="relativ" aria-pressed="true"' in html
+    assert "Alphabetisch" in html and "Veränderung" in html and "+10,0 %" in html
+    assert html.index("Kanal B") < html.index("Kanal A")  # stronger growth first
+    assert "documentElement.scrollHeight" not in html

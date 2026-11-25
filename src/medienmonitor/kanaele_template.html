@@ -34,30 +34,59 @@
 <body>
 <p class="stand">{{STAND}}</p>
 <div class="schalter" role="group" aria-label="Sprache">{{BUTTONS}}</div>
+<div class="schalter sortierung" role="group" aria-label="Sortierung">{{SORT_BUTTONS}}</div>
 {{SECTIONS}}
 <p class="quelle">{{SOURCE}}.</p>
 <script>
   // Language choice: show one of the prepared views.
-  const buttons = [...document.querySelectorAll(".schalter button")];
+  const buttons = [...document.querySelectorAll(".schalter:not(.sortierung) button")];
+  const sortButtons = [...document.querySelectorAll(".sortierung button")];
   const views = [...document.querySelectorAll(".ansicht")];
-  // Tell the embedding page (same domain) how tall the content is.
+  // Tell the embedding page (same domain) how tall the content is. Measured from the
+  // content, not scrollHeight: that is never below the frame's own height, so every
+  // report would make the frame taller and the page would grow without end.
+  let reported = 0;
   const report = () => {
-    if (window.parent !== window) {
-      window.parent.postMessage(
-        {medienmonitorKanaeleHoehe: document.documentElement.scrollHeight}, location.origin);
-    }
+    if (window.parent === window) return;
+    const height = Math.ceil(document.body.getBoundingClientRect().bottom + window.scrollY);
+    if (Math.abs(height - reported) < 2) return;
+    reported = height;
+    window.parent.postMessage({medienmonitorKanaeleHoehe: height}, location.origin);
+  };
+  const press = (group, chosen) => {
+    for (const other of group) other.setAttribute("aria-pressed", String(other === chosen));
   };
   for (const button of buttons) {
     button.addEventListener("click", () => {
-      for (const other of buttons) {
-        other.setAttribute("aria-pressed", String(other === button));
-      }
+      press(buttons, button);
       for (const view of views) view.hidden = view.dataset.view !== button.dataset.view;
       report();
     });
   }
+  // Sorting: growth relative (default, as delivered), growth absolute, alphabetical;
+  // channels without a change stay at the end.
+  const compare = key => (a, b) => {
+    if (key === "name") return a.dataset.name.localeCompare(b.dataset.name, "de");
+    const x = a.dataset[key], y = b.dataset[key];
+    if (x === "" || y === "") return (x === "") - (y === "") || a.dataset.name.localeCompare(b.dataset.name, "de");
+    return Number(y) - Number(x) || a.dataset.name.localeCompare(b.dataset.name, "de");
+  };
+  for (const button of sortButtons) {
+    button.addEventListener("click", () => {
+      press(sortButtons, button);
+      for (const body of document.querySelectorAll("tbody")) {
+        body.append(...[...body.rows].sort(compare(button.dataset.sort)));
+      }
+    });
+  }
   window.addEventListener("load", report);
-  window.addEventListener("resize", report);
+  let width = document.body.clientWidth;
+  window.addEventListener("resize", () => {
+    if (document.body.clientWidth !== width) {
+      width = document.body.clientWidth;
+      report();
+    }
+  });
 </script>
 </body>
 </html>

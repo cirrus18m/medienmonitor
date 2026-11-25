@@ -90,11 +90,15 @@ const DATA = {{DATA}};
       return null;
     }
   };
+  // Height of the content, not scrollHeight: that is never below the frame's own height,
+  // so every report would make the frame taller and the page would grow without end.
+  let reported = 0;
   function reportHeight() {
-    if (window.parent !== window) {
-      window.parent.postMessage(
-        {medienmonitorYoutubeHoehe: document.documentElement.scrollHeight}, location.origin);
-    }
+    if (window.parent === window) return;
+    const height = Math.ceil(document.body.getBoundingClientRect().bottom + window.scrollY);
+    if (Math.abs(height - reported) < 2) return;
+    reported = height;
+    window.parent.postMessage({medienmonitorYoutubeHoehe: height}, location.origin);
   }
 
   function table() {
@@ -180,10 +184,16 @@ const DATA = {{DATA}};
       draw();
     });
   }
+  // Redraw only when the width changes; a new frame height needs no redraw.
   let timer;
+  let width = document.body.clientWidth;
   window.addEventListener("resize", () => {
     clearTimeout(timer);
-    timer = setTimeout(draw, 150);
+    timer = setTimeout(() => {
+      if (document.body.clientWidth === width) return;
+      width = document.body.clientWidth;
+      draw();
+    }, 150);
   });
 })();
 </script>
