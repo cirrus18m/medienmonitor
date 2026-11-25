@@ -25,6 +25,8 @@ MIN_ARTICLES = 5
 MIN_SOURCES = 2
 MAX_TOPICS = 40
 LATEST_PER_MEDIUM = 10
+TREND_HOURS = 6  # compare the last 6 hours with the 6 hours before
+FIRST_SEEN_HOURS = 48  # a topic is "new" if its first headline of this span is recent
 CAMPS = ("links", "mitte", "rechts", "alternativ")
 SPECTRA = ("links", "mitte-links", "mitte", "mitte-rechts", "rechts", "unklar")
 BERLIN = ZoneInfo("Europe/Berlin")
@@ -58,6 +60,41 @@ def _topic_name(topics: TopicList, topic_id: str | None) -> str | None:
     if not topic_id or topic_id == OTHER or topic_id not in topics.themen:
         return None
     return topics.themen[topic_id]["name"]
+
+
+def _valid_topic(topics: TopicList, row: dict) -> str | None:
+    topic_id = topics.resolve(row.get("thema_id"))
+    if (
+        topic_id
+        and topic_id != OTHER
+        and topic_id in topics.themen
+        and not topics.themen[topic_id].get("aufgeloest")
+    ):
+        return topic_id
+    return None
+
+
+def topic_trends(rows: list[dict], topics: TopicList, now: datetime) -> dict[str, dict]:
+    """Per topic: headlines in the last TREND_HOURS and in the TREND_HOURS before, and the
+    first and last headline in ``rows`` (the last FIRST_SEEN_HOURS hours)."""
+    recent = (now - timedelta(hours=TREND_HOURS)).astimezone(UTC).isoformat(timespec="seconds")
+    before = (now - timedelta(hours=2 * TREND_HOURS)).astimezone(UTC).isoformat(timespec="seconds")
+    result: dict[str, dict] = {}
+    for row in rows:
+        topic_id = _valid_topic(topics, row)
+        if not topic_id:
+            continue
+        moment = _time(row)
+        entry = result.setdefault(
+            topic_id, {"letzte_6h": 0, "vorher_6h": 0, "erste": moment, "letzte": moment}
+        )
+        if moment >= recent:
+            entry["letzte_6h"] += 1
+        elif moment >= before:
+            entry["vorher_6h"] += 1
+        entry["erste"] = min(entry["erste"], moment)
+        entry["letzte"] = max(entry["letzte"], moment)
+    return result
 
 
 def build_payload(
@@ -108,14 +145,10 @@ def build_payload(
 
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
-        topic_id = topics.resolve(row.get("thema_id"))
-        if (
-            topic_id
-            and topic_id != OTHER
-            and topic_id in topics.themen
-            and not topics.themen[topic_id].get("aufgeloest")
-        ):
+        topic_id = _valid_topic(topics, row)
+        if topic_id:
             grouped[topic_id].append(row)
+    trends = topic_trends(window_rows(data_dir, now, FIRST_SEEN_HOURS), topics, now)
 
     entries = []
     for topic_id, items in grouped.items():
@@ -133,6 +166,7 @@ def build_payload(
                 "quellen": len({r["quelle"] for r in items}),
                 "anzahl": {"lager": dict(camps), "spektrum": dict(spectra)},
                 "anzahl_medium": dict(Counter(r["quelle"] for r in items)),
+                "trend": trends.get(topic_id),
                 "anteil_pct": {
                     "lager": _shares(camps, per_camp, CAMPS),
                     "spektrum": _shares(spectra, per_spectrum, SPECTRA),

@@ -1,5 +1,7 @@
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+
+import pytest
 
 from medienmonitor import render
 
@@ -154,3 +156,38 @@ def test_render_html_with_window_today():
     assert data["fenster"]["heute"]["reihenfolge"] == []
     assert 'data-window="heute"' in html and 'data-window="24h" aria-pressed="true"' in html
     assert "data-window" not in render.render_html(payload())  # without "heute": no switch
+
+
+def trend_topic(first_hours_ago: float, last: int, before: int) -> dict:
+    return {
+        "name": "Bahnstreik",
+        "trend": {
+            "letzte_6h": last,
+            "vorher_6h": before,
+            "erste": (NOW - timedelta(hours=first_hours_ago)).isoformat(),
+            "letzte": NOW.isoformat(),
+        },
+    }
+
+
+@pytest.mark.parametrize(
+    ("first", "last", "before", "expected"),
+    [
+        (2, 5, 0, "neu"),
+        (30, 9, 4, "steigend"),
+        (30, 4, 4, None),
+        (30, 2, 6, "fallend"),
+        (30, 0, 6, "ruhig"),
+        (30, 2, 0, None),  # too few to call it rising
+    ],
+)
+def test_trend_of(first, last, before, expected):
+    assert render.trend_of(trend_topic(first, last, before), NOW) == expected
+    assert render.trend_of({"name": "x"}, NOW) is None
+
+
+def test_topic_label_and_hover_mark_the_trend():
+    label = render.topic_label(trend_topic(2, 5, 0), NOW, 30)
+    assert label.endswith(" Bahnstreik") and ">neu<" in label
+    assert "letzte 6 Stunden: 5" in render.trend_text(trend_topic(2, 5, 0), NOW)
+    assert render.topic_label({"name": "A <b>"}, NOW, 30) == "A &lt;b&gt;"

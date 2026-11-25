@@ -11,7 +11,7 @@ textContent and allows only http(s) links.
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from html import escape
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -115,6 +115,63 @@ def hover_titles(articles: list[dict]) -> str:
     return "<br>".join(lines)
 
 
+GREEN = "#117733"
+RED = "#B2182B"
+NEW_HOURS = 6  # "neu": first headline (of the last 48 hours) at most 6 hours ago
+NEW_FILTERS = (0, 3, 6)  # filter buttons: all topics, new for 3 hours, new for 6 hours
+TREND_FACTOR = 1.5  # rising/falling: at least 1.5 times more/less than 6 hours before
+TREND_MIN = 3  # ... and at least 3 headlines in the busier half
+TREND_MARKS = {  # key: label in the chart, colour, explanation
+    "neu": ("neu", BLUE, "neues Thema: erste Schlagzeile vor höchstens 6 Stunden"),
+    "steigend": ("↑", GREEN, "häufiger als in den 6 Stunden davor"),
+    "fallend": ("↓", RED, "seltener als in den 6 Stunden davor"),
+    "ruhig": ("ruhig", GREY, "keine Schlagzeile in den letzten 6 Stunden"),
+}
+
+
+def trend_of(topic: dict, now: datetime) -> str | None:
+    """neu, steigend, fallend, ruhig or None, from ``topic["trend"]`` (publish.py)."""
+    trend = topic.get("trend")
+    if not trend:
+        return None
+    if datetime.fromisoformat(trend["erste"]) >= now - timedelta(hours=NEW_HOURS):
+        return "neu"
+    last, before = trend["letzte_6h"], trend["vorher_6h"]
+    if last == 0:
+        return "ruhig"
+    if last >= TREND_MIN and last >= TREND_FACTOR * max(before, 1):
+        return "steigend"
+    if before >= TREND_MIN and last * TREND_FACTOR <= before:
+        return "fallend"
+    return None
+
+
+def topic_label(topic: dict, now: datetime, limit: int) -> str:
+    """Axis label: trend mark (coloured) and the shortened, escaped name."""
+    name = escape(shorten(topic["name"], limit))
+    mark = trend_of(topic, now)
+    if not mark:
+        return name
+    text, color, _ = TREND_MARKS[mark]
+    return f"<span style='color:{color}'><b>{escape(text)}</b></span> {name}"
+
+
+def trend_text(topic: dict, now: datetime) -> str:
+    """Hover line on the trend (escaped)."""
+    trend = topic.get("trend")
+    if not trend:
+        return ""
+    mark = trend_of(topic, now)
+    first = f"{_clock(trend['erste'])}"
+    text = (
+        f"letzte 6 Stunden: {trend['letzte_6h']}, 6 Stunden davor: {trend['vorher_6h']} "
+        f"Schlagzeilen · erste Meldung {first}"
+    )
+    if mark:
+        text = f"{TREND_MARKS[mark][0]}: {TREND_MARKS[mark][2]} · " + text
+    return escape(text)
+
+
 def medium_label(medium: dict) -> str:
     """Tick label: name, a link to the home page, spectrum and number of headlines."""
     spectrum = LABELS["spektrum"].get(medium["spektrum"], medium["spektrum"])
@@ -130,11 +187,13 @@ def figure_by_medium(payload: dict) -> go.Figure:
     """Rows = media (new media on top), columns = topics; value = number of the medium's
     headlines on the topic. The hover box lists these headlines."""
     columns = payload["themen"][:MAX_TOPIC_COLUMNS]
+    now = datetime.fromisoformat(payload["stand"])
+    trends = [trend_text(topic, now) for topic in columns]
     media = list(reversed(media_order(payload["medien"])))  # Plotly draws rows bottom-up
     z, text, custom = [], [], []
     for medium in media:
         row_z, row_text, row_custom = [], [], []
-        for topic in columns:
+        for topic, trend in zip(columns, trends, strict=True):
             count = topic.get("anzahl_medium", {}).get(medium["name"], 0)
             articles = [a for a in topic["artikel"] if a["quelle"] == medium["name"]]
             row_z.append(count)
@@ -156,6 +215,7 @@ def figure_by_medium(payload: dict) -> go.Figure:
                     medium["name"],
                     titles,
                     escape(medium["name"]),
+                    trend,
                 ]
             )
         z.append(row_z)
@@ -182,7 +242,8 @@ def figure_by_medium(payload: dict) -> go.Figure:
             hovertemplate=(
                 "<b>%{customdata[7]}</b>: %{customdata[2]} · %{z} Schlagzeilen "
                 "(von %{customdata[1]} des Mediums)<br>"
-                "<span style='color:" + GREY + "'>%{customdata[6]}</span><extra></extra>"
+                "<span style='color:" + GREY + "'>%{customdata[6]}</span><br>"
+                "<i>%{customdata[8]}</i><extra></extra>"
             ),
         )
     )
@@ -226,7 +287,7 @@ def figure_by_medium(payload: dict) -> go.Figure:
                 "automargin": True,
                 "tickangle": -40,
                 "tickvals": list(range(len(columns))),
-                "ticktext": [escape(shorten(t["name"], 30)) for t in columns],
+                "ticktext": [topic_label(t, now, 30) for t in columns],
             },
             yaxis={
                 "fixedrange": True,
@@ -244,6 +305,7 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
     groups = payload["gruppen"][grouping]
     totals = payload["artikel_je_gruppe"][grouping]
     rows = list(reversed(payload["themen"][:MAX_TOPIC_ROWS]))
+    now = datetime.fromisoformat(payload["stand"])
     labels = [LABELS[grouping].get(g, g) for g in groups]
     z, text, custom = [], [], []
     for topic in rows:
@@ -259,6 +321,7 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
                     label,
                     topic["id"],
                     g,
+                    trend_text(topic, now),
                 ]
                 for g, label in zip(groups, labels, strict=True)
             ]
@@ -279,7 +342,7 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
             hoverongaps=False,
             hovertemplate=(
                 "<b>%{customdata[2]}</b><br>%{customdata[3]}: %{z} Schlagzeilen "
-                "(von %{customdata[1]} der Gruppe)<extra></extra>"
+                "(von %{customdata[1]} der Gruppe)<br><i>%{customdata[6]}</i><extra></extra>"
             ),
         )
     )
@@ -291,7 +354,7 @@ def figure_by_group(payload: dict, grouping: str) -> go.Figure:
                 "fixedrange": True,
                 "automargin": True,
                 "tickvals": list(range(len(rows))),
-                "ticktext": [escape(shorten(t["name"], 45)) for t in rows],
+                "ticktext": [topic_label(t, now, 45) for t in rows],
             },
         )
     )
@@ -317,11 +380,14 @@ NOTES = {
 
 
 def _articles(payload: dict) -> dict:
-    """Topic id -> name, description and articles (only what the list needs)."""
+    """Topic id -> name, description, trend and articles (only what the list needs)."""
+    now = datetime.fromisoformat(payload["stand"])
     return {
         t["id"]: {
             "name": t["name"],
             "beschreibung": t["beschreibung"],
+            "erste": (t.get("trend") or {}).get("erste"),
+            "marke": TREND_MARKS[mark][0] if (mark := trend_of(t, now)) else "",
             "artikel": [
                 [a["quelle"], a["spektrum"], a["lager"], a["titel"], a["url"], a["zeit"]]
                 for a in t["artikel"]
@@ -380,6 +446,7 @@ def _window(payload: dict) -> dict:
         },
         "themen": _articles(payload),
         "medien": _media(payload),
+        "jetzt": payload["stand"],
         "reihenfolge": [t["id"] for t in payload["themen"][:MAX_TOPIC_ROWS]],
     }
 
@@ -405,6 +472,16 @@ def render_html(payload: dict) -> str:
         if len(windows) > 1
         else ""
     )
+    new_buttons = "".join(
+        f'<button type="button" data-neu="{hours}" aria-pressed="{str(hours == 0).lower()}">'
+        + ("alle Themen" if hours == 0 else f"neu seit {hours} Stunden")
+        + "</button>"
+        for hours in NEW_FILTERS
+    )
+    legend = " · ".join(
+        f"<span style='color:{color}'><b>{escape(text)}</b></span> {escape(meaning)}"
+        for text, color, meaning in TREND_MARKS.values()
+    )
     data = {"fenster": windows, "labels": LABELS, "kategorien": payload.get("kategorien")}
     template = (Path(__file__).parent / "chart_template.html").read_text(encoding="utf-8")
     return (
@@ -412,6 +489,8 @@ def render_html(payload: dict) -> str:
         .replace("{{STAND}}", escape(windows["24h"]["stand"]))
         .replace("{{WINDOW_BUTTONS}}", window_buttons)
         .replace("{{BUTTONS}}", buttons)
+        .replace("{{NEW_BUTTONS}}", new_buttons)
+        .replace("{{TREND_LEGEND}}", legend)
         .replace("{{SOURCE}}", escape(SOURCE))
         .replace("{{DATA}}", _json(data))
     )

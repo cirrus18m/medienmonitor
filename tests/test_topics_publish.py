@@ -164,3 +164,21 @@ def test_payload_today_starts_at_midnight_in_berlin(tmp_path):
     assert today["artikel_gesamt"] == 6 and today["seit"].startswith("2026-11-24T00:00")
     late = publish.build_payload(tmp_path, NOW, start=NOW - timedelta(minutes=30))
     assert late["artikel_gesamt"] == 0
+
+
+def test_topic_trends_count_both_halves_and_first_headline(tmp_path):
+    items = [
+        headline(i, f"Haushalt {i}", "taz", "links", hours_ago=h)
+        for i, h in enumerate([1, 2, 3, 7, 30])
+    ]
+    store.append_new(tmp_path, items, NOW)
+    topic_list = topics.TopicList()
+    topic_id = topic_list.add("Haushalt", "x", NOW)
+    rows = [{**r, "thema_id": topic_id} for r in store.read_day(tmp_path, NOW.date())]
+    rows += [
+        {**r, "thema_id": topic_id}
+        for r in store.read_day(tmp_path, NOW.date() - timedelta(days=1))
+    ]
+    trend = publish.topic_trends(rows, topic_list, NOW)[topic_id]
+    assert (trend["letzte_6h"], trend["vorher_6h"]) == (3, 1)
+    assert trend["erste"] == (NOW - timedelta(hours=30)).isoformat(timespec="seconds")

@@ -53,6 +53,8 @@
 <p class="stand" id="stand">{{STAND}}</p>
 {{WINDOW_BUTTONS}}
 <div class="schalter ansicht" role="group" aria-label="Ansicht">{{BUTTONS}}</div>
+<div class="schalter neu" role="group" aria-label="Neue Themen">{{NEW_BUTTONS}}</div>
+<p class="klein">{{TREND_LEGEND}}</p>
 <p class="hinweis" id="hinweis"></p>
 <div class="scroll"><div id="grafik"></div></div>
 <p class="quelle">{{SOURCE}}.</p>
@@ -81,11 +83,46 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
   const popup = document.getElementById("fenster");
   const buttons = [...document.querySelectorAll(".schalter.ansicht button")];
   const windowButtons = [...document.querySelectorAll(".schalter.zeitraum button")];
+  const newButtons = [...document.querySelectorAll(".schalter.neu button")];
   const stand = document.getElementById("stand");
   const time = new Intl.DateTimeFormat("de-DE", {
     weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
   });
-  const state = {view: buttons[0]?.dataset.view, topic: null, group: null};
+  const state = {view: buttons[0]?.dataset.view, topic: null, group: null, neu: 0};
+
+  // Filter "neu seit 3/6 Stunden": topics whose first headline is that recent.
+  function keepTopic(id) {
+    if (!state.neu) return true;
+    const first = DATA.themen[id]?.erste;
+    return Boolean(first) && new Date(first) >= new Date(DATA.jetzt) - state.neu * 3600e3;
+  }
+  // Copy of a heatmap with only the kept topics (columns in "je Medium", rows otherwise).
+  function filtered(figure) {
+    const trace = {...figure.data[0]};
+    const layout = {...figure.layout};
+    if (!state.neu) return {trace, layout};
+    if (state.view === "medium") {
+      const columns = trace.customdata[0].map((cell, c) => [cell[4], c])
+        .filter(([id]) => keepTopic(id)).map(([, c]) => c);
+      if (!columns.length) return null;
+      const pick = row => columns.map(c => row[c]);
+      Object.assign(trace, {z: trace.z.map(pick), text: trace.text.map(pick),
+        customdata: trace.customdata.map(pick), x: columns.map((_, i) => i)});
+      layout.xaxis = {...layout.xaxis, tickvals: columns.map((_, i) => i),
+        ticktext: columns.map(c => layout.xaxis.ticktext[c])};
+    } else {
+      const rows = trace.customdata.map((row, r) => [row[0][4], r])
+        .filter(([id]) => keepTopic(id)).map(([, r]) => r);
+      if (!rows.length) return null;
+      const pick = list => rows.map(r => list[r]);
+      Object.assign(trace, {z: pick(trace.z), text: pick(trace.text),
+        customdata: pick(trace.customdata), y: rows.map((_, i) => i)});
+      layout.yaxis = {...layout.yaxis, tickvals: rows.map((_, i) => i),
+        ticktext: pick(layout.yaxis.ticktext)};
+      layout.height = 90 + 28 * rows.length;
+    }
+    return {trace, layout};
+  }
 
   function el(tag, props = {}, ...children) {
     const node = document.createElement(tag);
@@ -199,15 +236,23 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
     }
     note.textContent = DATA.notes[state.view];
     const narrow = document.body.clientWidth < 640;
-    const layout = {...figure.layout};
+    const chosen = filtered(figure);
+    if (!chosen) {
+      Plotly.purge(chart);
+      chart.replaceChildren(el("p", {class: "klein",
+        text: `Keine neuen Themen in den letzten ${state.neu} Stunden.`}));
+      reportHeight();
+      return;
+    }
+    const layout = chosen.layout;
     if (state.view === "medium") {
       // many topic columns: keep cells readable and scroll sideways on small screens
-      const columns = figure.data[0].x.length;
+      const columns = chosen.trace.x.length;
       layout.width = Math.max(document.body.clientWidth - 16, narrow ? 140 + 30 * columns : 0);
     } else {
       layout.width = document.body.clientWidth - 16;
     }
-    const trace = {...figure.data[0]};
+    const trace = chosen.trace;
     if (narrow && state.view === "medium") {
       trace.texttemplate = "";
       layout.yaxis = {...layout.yaxis, ticktext: layout.meta.kurz};
@@ -291,10 +336,10 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
   const nav = document.getElementById("themen");
   function buildNav() {
     nav.replaceChildren();
-    for (const id of DATA.reihenfolge) {
+    for (const id of DATA.reihenfolge.filter(keepTopic)) {
       const topic = DATA.themen[id];
       const button = el("button", {type: "button",
-        text: `${topic.name} (${topic.artikel.length})`});
+        text: `${topic.marke ? topic.marke + " · " : ""}${topic.name} (${topic.artikel.length})`});
       button.addEventListener("click", () => {
         state.topic = id;
         state.group = null;
@@ -304,6 +349,18 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
     }
   }
   buildNav();
+  for (const button of newButtons) {
+    button.addEventListener("click", () => {
+      for (const other of newButtons) {
+        other.setAttribute("aria-pressed", String(other === button));
+      }
+      state.neu = Number(button.dataset.neu);
+      state.group = null;
+      closePopup();
+      buildNav();
+      draw();
+    });
+  }
   // Time window: last 24 hours or today since midnight.
   for (const button of windowButtons) {
     button.addEventListener("click", () => {
