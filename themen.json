@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 666,
+ "naechste_nr": 791,
  "themen": {
   "T1": {
    "name": "Angriff auf Grünen-Sitzung Schwerte",
@@ -15,8 +15,8 @@
    "name": "International Emmys für deutsche Produktionen",
    "beschreibung": "Die ARD-Doku „Der talentierte Mr. F“ gewann einen International Emmy.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 18,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -28,7 +28,7 @@
    "anzahl": 13,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T4": {
    "name": "Trump und Vollstreckung von Todesurteilen",
@@ -38,14 +38,14 @@
    "anzahl": 10,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T5": {
    "name": "Nvidia-Affäre um Jensen Huang",
    "beschreibung": "Die Rückkehr von Jensen Huang an die Nvidia-Spitze, auch mit Einfluss Trumps, bewegt die Märkte.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 168,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 174,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -61,18 +61,18 @@
    "name": "Russische Drohnen über Polen",
    "beschreibung": "Russische Drohnen verletzten erneut den polnischen Luftraum, die Nato verstärkt die Kontrolle.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 21,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 22,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T8": {
    "name": "Fraktionsausschluss Vanessa Emde",
    "beschreibung": "Die Berliner Linksfraktion stimmt über den Ausschluss der Abgeordneten Vanessa Emde ab.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 102,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 112,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -89,8 +89,8 @@
    "name": "Haushaltswoche Bundestag 2027",
    "beschreibung": "Der Bundestag berät den Etat 2027 und entscheidet am Freitag.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 46,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 57,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -102,7 +102,7 @@
    "anzahl": 14,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T12": {
    "name": "Russische Atomwaffen im Weltraum",
@@ -144,21 +144,21 @@
    "name": "Pflegereform und häusliche Pflege",
    "beschreibung": "Die Mehrheit der Versicherten fordert eine grundlegende Pflegereform.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T17": {
    "name": "Drohnenbeschaffung der Bundeswehr",
    "beschreibung": "Deutschland baut ukrainische Drohnen, Kamikazedrohnen der Bundeswehr werden kritisch begutachtet.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 13,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 15,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T18": {
    "name": "Börsenentwicklung und Geldanlage",
@@ -168,14 +168,14 @@
    "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T19": {
    "name": "Immobilienpreise und Erschwinglichkeit",
    "beschreibung": "Hohe Immobilienpreise überfordern die Mittelschicht.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 11,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -191,8 +191,8 @@
    "name": "Krieg in der Ukraine",
    "beschreibung": "Aktuelle Entwicklungen im russischen Krieg gegen die Ukraine und seine Folgen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 141,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 151,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -200,8 +200,8 @@
    "name": "Rentenreform",
    "beschreibung": "Streit um die Rentenreform und Vorwürfe der Verschleppung.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 21,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 31,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -209,8 +209,8 @@
    "name": "Gesundheitsreform Facharztzentren",
    "beschreibung": "Fragen zur Umsetzung der Gesundheitsreform und zu Facharztzentren.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -218,10 +218,11 @@
    "name": "Gaza Umweltfolgen",
    "beschreibung": "Oxfam warnt vor langfristiger Verseuchung des Gazastreifens.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
-   "ressort": "politik"
+   "ressort": "politik",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T25": {
    "name": "Spanien Regierungswechsel",
@@ -245,11 +246,11 @@
    "name": "Schweiz-Nordkorea Büro",
    "beschreibung": "Nordkorea droht mit Schließung des Schweizer Büros.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T28": {
    "name": "Zürcher Jugendprotest Polizei",
@@ -268,7 +269,7 @@
    "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T30": {
    "name": "Pilnacek-Untersuchungsausschuss",
@@ -336,8 +337,8 @@
    "name": "Sparkassen-Gehälter und Zinsen",
    "beschreibung": "Kritik an hohen Gehältern von Sparkassenchefs bei niedrigen Kundenzinsen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -408,8 +409,8 @@
    "name": "Auspeitschung iranischer Sängerin Ahmadi",
    "beschreibung": "Die iranische Sängerin Parastoo Ahmadi wurde nach einem Konzert mit 74 Hieben ausgepeitscht.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 19,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 21,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -421,7 +422,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T47": {
    "name": "Freie Wähler nach Aiwanger",
@@ -454,8 +455,8 @@
    "name": "Schach-WM in Genf",
    "beschreibung": "In Genf beginnt die Schach-Weltmeisterschaft zwischen zwei 20-Jährigen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 22,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -463,8 +464,8 @@
    "name": "Ukrainische Angriffe auf Schiffe und Ostsee",
    "beschreibung": "Die Ukraine greift mit Seedrohnen russische Schiffe an, Pistorius warnt vor Ausweitung auf die Ostsee.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 36,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 37,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -472,8 +473,8 @@
    "name": "Union Berlin und Lustrinelli",
    "beschreibung": "Nationaltorhüterin Berger wechselt zu Union Berlin.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 21,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 22,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -490,8 +491,8 @@
    "name": "Wahlniederlage der Republikaner",
    "beschreibung": "Die Republikaner erleiden ihre schwerste Wahlniederlage seit 1958.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -512,7 +513,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T57": {
    "name": "AfD Verbot und Streit",
@@ -565,7 +566,7 @@
    "anzahl": 18,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T63": {
    "name": "Streusalzverbot und Glatteis",
@@ -647,7 +648,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T72": {
    "name": "Hackerangriffe auf IT-Systeme",
@@ -671,8 +672,8 @@
    "name": "Regierungsbildung Sachsen-Anhalt",
    "beschreibung": "Minderheitsregierung, AfD-Opposition und Debatte um Zusammenarbeit.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 21,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 25,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -729,7 +730,7 @@
    "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T81": {
    "name": "Kasachstan bestellt Transportflugzeuge",
@@ -843,8 +844,8 @@
    "name": "KI-Beweis Riemannsche Vermutung",
    "beschreibung": "Mathematischer Durchbruch mit KI-Hilfe.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -904,8 +905,8 @@
    "name": "Wiener Budgetdefizit 2027",
    "beschreibung": "Wien setzt den Sparkurs fort, das Defizit bleibt hoch.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -926,7 +927,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T103": {
    "name": "Pelicot-Nacktfotos in Werbung",
@@ -950,8 +951,8 @@
    "name": "Krebserkrankung Dieter Nuhr",
    "beschreibung": "Kabarettist Dieter Nuhr ist an Krebs erkrankt.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 15,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 17,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -1011,11 +1012,11 @@
    "name": "Tarifkonflikte Metall und Banken",
    "beschreibung": "Warnstreiks in der Metall- und Elektroindustrie sowie Tarifkonflikt bei privaten Banken.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 9,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T113": {
    "name": "Lage der Autoindustrie",
@@ -1083,8 +1084,8 @@
    "name": "Champions-League-Spieltag",
    "beschreibung": "Spiele deutscher Klubs in der Champions League.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-25T03:04:42+00:00",
-   "anzahl": 97,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 119,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -1100,8 +1101,8 @@
    "name": "Gewalt gegen Frauen",
    "beschreibung": "Zahlen und Forderungen zu Gewaltschutz und fehlenden Frauenhausplätzen.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 76,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 92,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -1127,11 +1128,11 @@
    "name": "KI-Börsenblase und Anthropic-Aktie",
    "beschreibung": "Sorgen über eine KI-Rezession und hohe Kursverluste im KI-Sektor.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 20,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 22,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T126": {
    "name": "Gefährlicher Häftling Berlin",
@@ -1155,8 +1156,8 @@
    "name": "Wetten dass und Traumschiff",
    "beschreibung": "Fernsehthemen um das Comeback von Wetten, dass..? und das Traumschiff.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 15,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 16,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -1218,8 +1219,8 @@
    "name": "Iran-Konflikt am Golf",
    "beschreibung": "Iranische Angriffe auf Bahrain und Sorgen der Golfstaaten sowie Lage an der Straße von Hormus.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 34,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 37,
    "zusammengelegt_in": null,
    "ressort": "politik",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -1268,7 +1269,7 @@
    "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T141": {
    "name": "Wintereinbruch in der Schweiz",
@@ -1292,8 +1293,8 @@
    "name": "APEC-Gipfel in Shenzhen",
    "beschreibung": "Treffen von Trump, Xi und Putin beim APEC-Gipfel in Shenzhen.",
    "erstellt": "2026-11-24T08:30:41+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 13,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 15,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1467,8 +1468,8 @@
    "name": "Strompreise und Steuerentlastung",
    "beschreibung": "Debatte über Stromsteuer, Strompreise und Entlastungen.",
    "erstellt": "2026-11-24T08:30:41+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 9,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1476,8 +1477,8 @@
    "name": "Gewalttaten und Unglücke",
    "beschreibung": "Mehrere Meldungen zu Messerangriffen, Schlägereien und Bränden in Deutschland.",
    "erstellt": "2026-11-24T08:30:41+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 22,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 25,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -1494,20 +1495,21 @@
    "name": "EU-Westbalkan-Gipfel und Serbien",
    "beschreibung": "Vor dem EU-Westbalkan-Gipfel wird die Lage Serbiens eingeordnet.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-24T08:35:03+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
-   "ressort": "politik"
+   "ressort": "politik",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T167": {
    "name": "Konflikte im Jemen",
    "beschreibung": "Angriffe und Machtverschiebungen im Jemen.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 11,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T168": {
    "name": "Kosten der Energiewende",
@@ -1540,8 +1542,8 @@
    "name": "Trump, Putin und Nato",
    "beschreibung": "Trumps Nähe zu Putin gefährdet laut Kommentaren die europäische Sicherheit.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-24T08:35:03+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1594,8 +1596,8 @@
    "name": "Satelliten und Raumfahrt-Infrastruktur",
    "beschreibung": "Satellitenausfall-Vorsorge und Rückschlag bei Amazons Satelliten.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -1603,8 +1605,8 @@
    "name": "Netzagenturchef Müller",
    "beschreibung": "Ein Grüner bleibt Chef der Bundesnetzagentur.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1634,7 +1636,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T182": {
    "name": "Landminen-Opfer",
@@ -1644,7 +1646,7 @@
    "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T183": {
    "name": "Erdbeben in Peru",
@@ -1699,7 +1701,7 @@
    "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T189": {
    "name": "Bundeswehr-Verlegung nach Litauen",
@@ -1732,8 +1734,8 @@
    "name": "Klingbeils Autobahn-Plan",
    "beschreibung": "Kritik von Experten an Klingbeils Autobahnplänen und einer möglichen Pkw-Maut.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1750,8 +1752,8 @@
    "name": "Berliner Linke und Islamisten-Kontakte",
    "beschreibung": "Berliner Linken-Politiker geraten wegen eines Hisbollah-Vereins und Aussagen unter Druck.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 13,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1966,8 +1968,8 @@
    "name": "Kanaren Migration",
    "beschreibung": "Migration auf die Kanaren.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -2002,8 +2004,8 @@
    "name": "Sinkende Spritpreise",
    "beschreibung": "Diskussion über Wirkung eines Preisdeckels für Kraftstoffe.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 8,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 10,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -2191,8 +2193,8 @@
    "name": "Afrika-Cup Titelentscheid CAS",
    "beschreibung": "Der Sportgerichtshof spricht Senegal den Afrika-Cup-Titel zu.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 18,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -2204,7 +2206,7 @@
    "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T245": {
    "name": "BVG Umstellungen",
@@ -2228,11 +2230,11 @@
    "name": "Tötung Hamas-Sicherheitschef",
    "beschreibung": "Israels Armee meldet die Tötung eines Hamas-Sicherheitschefs.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T248": {
    "name": "Schädelfund auf Kita-Gelände Rees",
@@ -2366,7 +2368,7 @@
    "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T263": {
    "name": "Haischutzkonferenz",
@@ -2549,8 +2551,8 @@
    "name": "Kongo Kobalt-Exportstopp",
    "beschreibung": "Preise ziehen an.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -2567,8 +2569,8 @@
    "name": "TU Berlin Sanierung",
    "beschreibung": "Sanierungsstau.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -2639,11 +2641,11 @@
    "name": "Pushbacks und EGMR-Urteile",
    "beschreibung": "Der EGMR hält Pushbacks bei Instrumentalisierung von Migration teils für legal.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 18,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T294": {
    "name": "Anklage Reuß-Netzwerk",
@@ -2653,7 +2655,7 @@
    "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T295": {
    "name": "Einbruch bei Prinz William",
@@ -2668,8 +2670,8 @@
    "name": "GTA VI",
    "beschreibung": "GTA 6 erzielt einen Rekordstart.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 22,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -2726,7 +2728,7 @@
    "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T303": {
    "name": "Carney und Trump-Imitator",
@@ -2795,8 +2797,8 @@
    "name": "US-Armee Chemikalien Iowa",
    "beschreibung": "Die US-Armee darf Fässer mit Chemikalien in Iowa sprengen.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -2822,8 +2824,8 @@
    "name": "Deutsch-Afrikanischer Wirtschaftsgipfel",
    "beschreibung": "Wirtschaftsgipfel in Ghana.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -2867,8 +2869,8 @@
    "name": "Kitaplätze fehlen",
    "beschreibung": "Trotz weniger Geburten fehlen Kitaplätze.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -3056,8 +3058,8 @@
    "name": "BYD kauft Werke in Europa",
    "beschreibung": "BYD übernimmt offenbar ehemalige Smart- und Ineos-Werke in Europa.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 18,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 21,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -3146,8 +3148,8 @@
    "name": "Mietpreisbremse Wirkung",
    "beschreibung": "Debatte über die Wirkung der Mietpreisbremse auf den Wohnungsmarkt.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -3155,8 +3157,8 @@
    "name": "Absetzung der Wollnys",
    "beschreibung": "RTLzwei stoppt die Sendung Die Wollnys nach Rassismus-Vorwürfen.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -3200,11 +3202,11 @@
    "name": "Treffen Magyar und Selenskyj",
    "beschreibung": "Ungarns Regierungschef Magyar trifft Selenskyj in Transkarpatien.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 10,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 11,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T356": {
    "name": "Treibstoffknappheit Schweiz Notreserve",
@@ -3228,8 +3230,8 @@
    "name": "Merz unter Druck und sinkende Zustimmung",
    "beschreibung": "Umfragen zeigen sinkende Zustimmung für Kanzler Merz.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 17,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 21,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -3461,8 +3463,8 @@
    "name": "Casinos-Prozess Strache",
    "beschreibung": "Prozess gegen Strache und Novomatic in der Causa Casinos.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -3479,11 +3481,11 @@
    "name": "Neue US-Zölle Überkapazitäten",
    "beschreibung": "Die USA planen neue Zölle wegen Überkapazitäten.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T387": {
    "name": "Hackerangriff auf Banken",
@@ -3543,8 +3545,8 @@
    "name": "Verkehrsunfälle Regionalmeldungen",
    "beschreibung": "Unfälle mit Verletzten nach Frontalcrash und Abbiegefehler.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-25T03:04:42+00:00",
-   "anzahl": 8,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -3583,7 +3585,7 @@
    "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T398": {
    "name": "Sexkaufverbot Initiative",
@@ -3607,8 +3609,8 @@
    "name": "Konjunkturstimmung Deutschland",
    "beschreibung": "Ifo-Index und Unternehmenserwartungen zur Wirtschaftslage.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 12,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 13,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -4086,7 +4088,7 @@
    "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T454": {
    "name": "Kunasek und Grazer Amoklauf",
@@ -4148,7 +4150,7 @@
    "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T461": {
    "name": "Zahnersatz wird teurer",
@@ -4262,8 +4264,8 @@
    "name": "Handelshaus für Seltene Erden",
    "beschreibung": "Konzerne planen ein Handelshaus für Rohstoffe.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -4568,11 +4570,11 @@
    "name": "US-Blockade gegen Kuba",
    "beschreibung": "Die WHO warnt vor den Folgen der US-Treibstoffblockade gegen Kuba.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "politik",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T508": {
    "name": "Huawei-Schuldspruch",
@@ -4582,14 +4584,14 @@
    "anzahl": 14,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T509": {
    "name": "Sexkaufverbot und Freier-Anmeldepflicht",
    "beschreibung": "Debatte über Sexkaufverbot und Alternativen.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -4642,8 +4644,8 @@
    "name": "Unfall Dietikon Spielplatz",
    "beschreibung": "Auto schleudert in Dietikon über einen Spielplatz, Fahndung nach Verursachern.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -4885,8 +4887,8 @@
    "name": "Outlook-Ausfall bei Microsoft",
    "beschreibung": "Weltweite Störung von Outlook und interne Alarmstufe bei Microsoft.",
    "erstellt": "2026-11-25T00:09:01+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -4975,8 +4977,8 @@
    "name": "Schutz von Prostituierten Kommission",
    "beschreibung": "Eine Expertenkommission legt Empfehlungen für besseren Schutz von Prostituierten vor.",
    "erstellt": "2026-11-25T03:04:42+00:00",
-   "zuletzt": "2026-11-25T03:04:42+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -5029,8 +5031,8 @@
    "name": "Gasspeicher Füllstand Deutschland",
    "beschreibung": "Deutschlands Gasspeicher sind sehr niedrig gefüllt.",
    "erstellt": "2026-11-25T03:04:42+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -5038,8 +5040,8 @@
    "name": "Ulmen Fernandes einstweilige Verfügung",
    "beschreibung": "Der Spiegel wehrt sich gegen eine einstweilige Verfügung von Christian Ulmen im Fall Fernandes.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -5047,8 +5049,8 @@
    "name": "Eishockey-WM Russland-Zulassung",
    "beschreibung": "Der Eishockey-Weltverband ficht das Cas-Urteil zur Teilnahme Russlands an der WM an.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -5056,8 +5058,8 @@
    "name": "Musiala Absencen beim FC Bayern",
    "beschreibung": "Der FC Bayern äußert sich zu Untersuchungen und Symptomen bei Jamal Musiala.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 8,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 12,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -5083,11 +5085,11 @@
    "name": "Kartenzahlung überholt Bargeld",
    "beschreibung": "Laut EZB-Befragung wird in Geschäften erstmals häufiger mit Karte als bar gezahlt.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T565": {
    "name": "Neuer Polizeipräsident Baden-Württemberg",
@@ -5102,11 +5104,11 @@
    "name": "Rechtsterror-Gruppe Terror 18",
    "beschreibung": "Die Bundesanwaltschaft geht gegen mutmaßliche Rechtsterroristen der Gruppe Terror 18 vor.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 10,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 15,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T567": {
    "name": "Demokratische Sozialisten im US-Kongress",
@@ -5130,18 +5132,18 @@
    "name": "Deutsche Bahn und Flixtrain",
    "beschreibung": "Bahn und Flixtrain kooperieren beim Ticketverkauf, zudem Debatte um Verspätungen beim Bahnausbau.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T570": {
    "name": "Crack-Konsum in Städten",
    "beschreibung": "Städte suchen Antworten auf stark steigenden Crackkonsum.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -5149,8 +5151,8 @@
    "name": "Missbrauchsbericht Bistum Trier",
    "beschreibung": "Der Abschlussbericht zu Missbrauch im Bistum Trier liegt vor.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -5203,8 +5205,8 @@
    "name": "Gen-Z-Proteste",
    "beschreibung": "Proteste der Generation Z und deren Gewalt.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5248,8 +5250,8 @@
    "name": "Löhne Textilarbeiter Bangladesch",
    "beschreibung": "Textilbeschäftigte in Bangladesch erhalten 36 Prozent mehr Lohn.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -5311,8 +5313,8 @@
    "name": "Demo Potsdam Villa-Adlon-Jahrestag",
    "beschreibung": "Omas gegen Rechts und SPD demonstrieren drei Jahre nach dem Villa-Adlon-Treffen in Potsdam.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5383,8 +5385,8 @@
    "name": "Nur-Ja-heißt-Ja Sexualstrafrecht",
    "beschreibung": "Die österreichische Regierung plant eine Verschärfung des Sexualstrafrechts.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5392,8 +5394,8 @@
    "name": "EU-Budget 2027",
    "beschreibung": "Das EU-Parlament nimmt den EU-Haushalt für 2027 an.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5410,8 +5412,8 @@
    "name": "Amnesty-Bericht Frauen Gaza",
    "beschreibung": "Amnesty dokumentiert die Lage von Frauen im Gazastreifen.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5423,14 +5425,14 @@
    "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft",
-   "gegengeprueft": "2026-11-25T13:10:58+00:00"
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T602": {
    "name": "EU-Schweiz Vertragspaket",
    "beschreibung": "Das EU-Parlament stimmt dem Vertragspaket mit der Schweiz zu.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5465,8 +5467,8 @@
    "name": "Spyware gegen Sea-Watch",
    "beschreibung": "Eine Sea-Watch-Sprecherin wurde mit Spyware überwacht.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -5528,8 +5530,8 @@
    "name": "Miss Universe 2026",
    "beschreibung": "Jennifer Barreto gewinnt die Miss-Universe-Wahl.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -5537,10 +5539,11 @@
    "name": "Zölle gegen EU",
    "beschreibung": "Mögliche neue US-Zölle gegen die EU.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 16,
    "zusammengelegt_in": null,
-   "ressort": "wirtschaft"
+   "ressort": "wirtschaft",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
   },
   "T615": {
    "name": "Puigdemont Rückkehr nach Spanien",
@@ -5582,8 +5585,8 @@
    "name": "BSW vor Bundesparteitag",
    "beschreibung": "Das BSW streitet vor dem Parteitag über Kooperation mit der AfD; ein linker Super-PAC mischt mit.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5636,8 +5639,8 @@
    "name": "Leichenfund in Utrecht",
    "beschreibung": "In Utrecht wird eine Leiche in einer Gefriertruhe entdeckt.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -5780,8 +5783,8 @@
    "name": "Festnahme Vucic-nahes Medium Serbien",
    "beschreibung": "Der Chef eines regierungsnahen Mediums in Serbien wird festgenommen.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5807,8 +5810,8 @@
    "name": "Libysche Soldaten Ukraine-Angriffe",
    "beschreibung": "Zwei libysche Soldaten sterben nach ukrainischen Angriffen.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -5843,8 +5846,8 @@
    "name": "Migrationshintergrund Erwerbstätige Wien",
    "beschreibung": "Mehr als die Hälfte der Wiener Erwerbstätigen hat Migrationshintergrund.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -5915,8 +5918,8 @@
    "name": "Konzernverantwortung Gegenvorschlag Schweiz",
    "beschreibung": "Der Bundesrat passt den Gegenvorschlag zur Konzernverantwortung der EU an.",
    "erstellt": "2026-11-25T13:10:58+00:00",
-   "zuletzt": "2026-11-25T13:10:58+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -6000,6 +6003,1134 @@
    "anzahl": 1,
    "zusammengelegt_in": null,
    "ressort": "panorama"
+  },
+  "T666": {
+   "name": "Thanksgiving-Parade New York verschoben",
+   "beschreibung": "Eine Sturmwarnung führt zur Verschiebung der Thanksgiving-Parade in New York.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T667": {
+   "name": "Blockade Veranstaltung Ex-Mossad-Chef Barnea",
+   "beschreibung": "Linke-Abgeordnete blockieren im Bundestag eine Veranstaltung mit dem früheren Mossad-Chef David Barnea.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 7,
+   "zusammengelegt_in": "T194",
+   "ressort": "politik",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
+  },
+  "T668": {
+   "name": "Dimorphos-Krater und Hera-Bilder",
+   "beschreibung": "Die ESA-Sonde Hera liefert Bilder des Einschlagkraters auf dem Asteroiden Dimorphos.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 9,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T669": {
+   "name": "Tod von Veruschka",
+   "beschreibung": "Das Model und die Schauspielerin Vera Lehndorff, genannt Veruschka, ist gestorben.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 8,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T670": {
+   "name": "Missbrauch von Schülerinnen durch Jugendliche",
+   "beschreibung": "Ermittlungen wegen monatelangen sexuellen Missbrauchs von Mädchen durch mutmaßlich jugendliche Täter.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 5,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
+  },
+  "T671": {
+   "name": "Libyens Ölexporte",
+   "beschreibung": "Libysche Ölförderung und Exporte laufen wieder.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T672": {
+   "name": "Strafe gegen Parfümkartell",
+   "beschreibung": "Die EU-Kommission verhängt eine Millionenstrafe gegen ein Parfümkartell.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T673": {
+   "name": "Kehlsteinhaus Berchtesgaden Umgestaltung",
+   "beschreibung": "Die Ruine am Kehlsteinhaus soll künftig anders gestaltet werden.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T674": {
+   "name": "Krise der Baubranche",
+   "beschreibung": "Die Baubranche und der Wohnungsbau stecken in einer tiefen Krise.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T675": {
+   "name": "Hochschulproteste Hamburg Kürzungen",
+   "beschreibung": "Studierende in Hamburg protestieren gegen Kürzungen an den Hochschulen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T676": {
+   "name": "Abschiebehaft Mönchengladbach",
+   "beschreibung": "In Mönchengladbach entsteht eine Abschiebehafteinrichtung.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T677": {
+   "name": "Deutsche Syrien-Politik",
+   "beschreibung": "Kritik an der Unterstützung für Syrien trotz Menschenrechtsverletzungen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T678": {
+   "name": "Bundeswehrübung in Senegal",
+   "beschreibung": "Die Bundeswehr übt gemeinsam mit senegalesischen Streitkräften.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T679": {
+   "name": "Säuberungen in Chinas Führung",
+   "beschreibung": "Xi Jinping lässt auch führende Technokraten entmachten.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T680": {
+   "name": "Generalstreik in Griechenland",
+   "beschreibung": "Ein Generalstreik legt Griechenland lahm.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T681": {
+   "name": "Masern-Ausbruch in den USA",
+   "beschreibung": "In den USA steigt die Zahl der Maserninfektionen 2026 stark an.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T682": {
+   "name": "Metas KI-Agent Muse",
+   "beschreibung": "Meta-Mitarbeiter äußern Unbehagen über den KI-Agenten Muse.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T683": {
+   "name": "Klagen gegen Smart Glasses",
+   "beschreibung": "Klagen richten sich gegen Überwachung durch smarte Brillen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T684": {
+   "name": "Nord-Stream-Ermittlungen Segeljacht",
+   "beschreibung": "Neue Details zur Crew der Segeljacht im Nord-Stream-Fall.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T685": {
+   "name": "Tarifbindung und Tarifverträge",
+   "beschreibung": "Debatte über den schwierigen Weg zu mehr Tarifverträgen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T686": {
+   "name": "Leck bei der Polizei",
+   "beschreibung": "Suche nach einem Informationsleck bei der Polizei und Sorge um Pressefreiheit.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T687": {
+   "name": "Mobbing an russischen Schulen",
+   "beschreibung": "Berichte über Mobbing und Beschimpfungen an russischen Schulen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T688": {
+   "name": "Inhaftierter Aktivist in Israel",
+   "beschreibung": "Ein Aktivist in israelischer Haft berichtet von Misshandlungen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T689": {
+   "name": "Prozess gegen Letzte Generation",
+   "beschreibung": "Ein Gericht bereitet ein Verfahren gegen Klimaaktivisten der Letzten Generation vor.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T690": {
+   "name": "Terrorprozess Mosambik Oppositionsführer",
+   "beschreibung": "In Mosambik läuft ein Terrorprozess gegen einen Oppositionsführer.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T691": {
+   "name": "Frauen in israelischer Sekte",
+   "beschreibung": "Porträt einer Aussteigerin aus einer israelischen Sekte.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T692": {
+   "name": "Klage Kreisklinik Krankenhausfinanzierung",
+   "beschreibung": "Eine Kreisklinik klagt wegen der Krankenhausfinanzierung.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T693": {
+   "name": "Tariflohn Duisburger Hafen",
+   "beschreibung": "Streit um Tariflöhne im Duisburger Hafen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T694": {
+   "name": "Hafenfinanzierung Norddeutschland",
+   "beschreibung": "Norddeutsche Länder verlangen Geld des Bundes für Häfen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T695": {
+   "name": "Heizungsausfall Charlottenburg-Wilmersdorf",
+   "beschreibung": "80 Wohnhäuser bleiben ohne Heizung, weil Eigentümer nicht zahlen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T696": {
+   "name": "Kurdistan-Konflikt um Öl",
+   "beschreibung": "Konflikt um Öl und Autonomie in Kurdistan.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T697": {
+   "name": "Somalia Souveränitätsstreit",
+   "beschreibung": "Somalia ringt um seine Souveränität.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T698": {
+   "name": "Abhängigkeit von Chipherstellern",
+   "beschreibung": "Die Halbleiterindustrie hängt von wenigen Chipriesen ab.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T699": {
+   "name": "Massenstreiks und Gewerkschaftsarbeit",
+   "beschreibung": "Streiks und Union Busting im Fokus der Gewerkschaften.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T700": {
+   "name": "Fidel-Castro-Gedenken in Moskau",
+   "beschreibung": "Gedenken zum zehnten Todestag Fidel Castros in Moskau.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T701": {
+   "name": "Histadrut zu Gast beim DGB",
+   "beschreibung": "Besuch der israelischen Histadrut beim DGB löst Kritik aus.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T702": {
+   "name": "Leihrad-Protest in Dresden",
+   "beschreibung": "Ein Künstler stapelt in Dresden-Übigau Lime-Leihräder als Protest auf.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T703": {
+   "name": "Verfahren gegen John Eliot Gardiner",
+   "beschreibung": "Das Verfahren wegen sexueller Belästigung gegen den Dirigenten Gardiner wird eingestellt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T704": {
+   "name": "Kollision der Mein Schiff 3",
+   "beschreibung": "Nach einer Kollision mit einem Containerschiff fährt die Mein Schiff 3 mit einer Übergangslösung weiter.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T705": {
+   "name": "Union Berlin Führungsdebatte",
+   "beschreibung": "Diskussion um Ruhnert und Präsident Zingler vor einem Fan-Abend bei Union Berlin.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T706": {
+   "name": "Stollen-Taxi Sachsen Vatikan",
+   "beschreibung": "Linke und AfD kritisieren den Stollen-Transport von Sachsen in den Vatikan.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T707": {
+   "name": "Grüne Landtagsfraktion Mecklenburg-Vorpommern",
+   "beschreibung": "Ole Krüger führt nach Müllers Wechsel ins Kabinett die Grünen im Landtag.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T708": {
+   "name": "Gasnetz Ostdeutschland Extremkälte",
+   "beschreibung": "Nach dem Wegfall einer Erdgasleitung wird die Versorgungssicherheit im Osten diskutiert.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T709": {
+   "name": "Schließung Feuerfest-Werk Meißen",
+   "beschreibung": "Rath gibt den Standort Meißen bis Ende 2028 auf.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T710": {
+   "name": "Wildschweine in Spandau",
+   "beschreibung": "Anwohner in Berlin-Spandau sorgen sich wegen Wildschweinen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T711": {
+   "name": "Frauen-Taxi Berlin",
+   "beschreibung": "Fahrerinnen des Dienstes Frauen für Frauen haben in Berlin lange Wartezeiten.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T712": {
+   "name": "S-Bahn-Tunnel Berlin",
+   "beschreibung": "Ein weiterer S-Bahn-Tunnel soll 2027 am Brandenburger Tor beginnen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T713": {
+   "name": "Aus für Millionenshow",
+   "beschreibung": "Der ORF beendet offenbar die Millionenshow.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T714": {
+   "name": "Revolut-Datenleck Niederlande",
+   "beschreibung": "Die niederländische Polizei vereitelt nach einem Datenleck Gewaltakte gegen Revolut-Kunden.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T715": {
+   "name": "Aussterben der Neandertaler",
+   "beschreibung": "Eine Studie verbindet das Aussterben der Neandertaler mit dem modernen Menschen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T716": {
+   "name": "Mordprozess Parkbank-Würgeangriff",
+   "beschreibung": "Prozess gegen einen 20-Jährigen, der seine Ex-Freundin gewürgt haben soll.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T717": {
+   "name": "Tiefkühlgemüse Marchfeld",
+   "beschreibung": "Im Marchfeld wird der Absatz von Tiefkühlgemüse neu geordnet.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T718": {
+   "name": "Schuldenlage der Länder",
+   "beschreibung": "Kommentar zu Auswegen aus der Verschuldung der Bundesländer.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T719": {
+   "name": "Hansainvest gegen Lilihill",
+   "beschreibung": "Der Fondsanbieter fordert Millionen von der insolventen Lilihill.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T720": {
+   "name": "Wahlärzte und Gesundheitskliniken",
+   "beschreibung": "Die Ärztekammer kritisiert Einschränkungen für Wahlärzte.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T721": {
+   "name": "Chinas Sicherheitschef in Wien",
+   "beschreibung": "Chinas Sicherheitschef besucht Wien und trifft Rosenkranz.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T722": {
+   "name": "Lockerung EU-Umweltvorgaben",
+   "beschreibung": "Das EU-Parlament befürwortet eine Lockerung von Umweltvorgaben.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T723": {
+   "name": "Illegale Beauty-Kliniken Wien",
+   "beschreibung": "In Wien wird die zwölfte illegale Beauty-Klinik aufgedeckt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T724": {
+   "name": "Telekom-Kollektivvertrag Österreich",
+   "beschreibung": "Der Telekom-Abschluss bringt bis zu 3,2 Prozent mehr Gehalt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T725": {
+   "name": "Sicherheitslücken Kinder-Smartwatches",
+   "beschreibung": "Eine Studie deckt Sicherheitslücken bei Kinder-Smartwatches auf.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T726": {
+   "name": "Karriereende Federica Brignone",
+   "beschreibung": "Die Ski-Olympiasiegerin beendet verletzungsbedingt ihre Karriere.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T727": {
+   "name": "Alkohol- und Nikotinkonsum Österreich",
+   "beschreibung": "Österreich liegt beim Konsum von Alkohol und Nikotin an der Spitze Europas.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T728": {
+   "name": "Theater im Prater Neubau",
+   "beschreibung": "Der Bau des Theaters im Prater liegt im Zeitplan.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T729": {
+   "name": "Kaiseradler fliegt nach Kamerun",
+   "beschreibung": "Ein Kaiseradler legte 12.000 Kilometer von Österreich nach Kamerun zurück.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T730": {
+   "name": "Lungenkrebsscreening Österreich",
+   "beschreibung": "Es wird ein Lungenkrebsscreening für Österreich gefordert.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T731": {
+   "name": "Immobilienverkäufe von Erben",
+   "beschreibung": "Erben verkaufen Immobilien deutlich öfter als Beschenkte.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T732": {
+   "name": "Tod von Andy Taylor",
+   "beschreibung": "Der Duran-Duran-Gitarrist Andy Taylor ist gestorben.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T733": {
+   "name": "Großbrand bei Kairo",
+   "beschreibung": "Bei einem Brand nahe einem Tunnel bei Kairo und Gizeh sterben mindestens 30 Menschen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T734": {
+   "name": "U2-Album Carnaval De Luz",
+   "beschreibung": "U2 veröffentlichen nach neun Jahren ein neues Album.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T735": {
+   "name": "Bobfahrer Sandro Michel Comeback",
+   "beschreibung": "Sandro Michel fährt nach schwerem Unfall wieder Bob.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T736": {
+   "name": "Zürichsee Querschiff Wasserstand",
+   "beschreibung": "Die Querschiff-Verbindung verkehrt nach Niedrigwasser wieder normal.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T737": {
+   "name": "Rückzug Matthias Michel Ständerat",
+   "beschreibung": "Ständerat Matthias Michel tritt 2027 nicht mehr an.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T738": {
+   "name": "Reform der Unfallversicherung",
+   "beschreibung": "Opfer sexueller Gewalt nach K.-o.-Tropfen sollen Unfallleistungen erhalten.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T739": {
+   "name": "Nachwuchs Eishockey Agenten Schweiz",
+   "beschreibung": "Schweizer Eishockey warnt vor Agenten, die schon 12-Jährige umwerben.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T740": {
+   "name": "Bestechungsvorwurf gegen Netanjahu",
+   "beschreibung": "Der Bestechungsvorwurf gegen Netanjahu könnte fallen gelassen werden.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T741": {
+   "name": "EU-Staatshilfen Landwirte Industrie",
+   "beschreibung": "Die EU-Kommission erlaubt weiter Staatshilfen für Landwirte und Industrie.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T742": {
+   "name": "VRM-Druckauftrag für Nius",
+   "beschreibung": "Kontroverse um die Verlagsgruppe VRM wegen eines Druckauftrags für die Nius-Wochenzeitung.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T743": {
+   "name": "EU-Regeln gegen Medikamentenengpässe",
+   "beschreibung": "Das Europäische Parlament beschließt neue Regeln gegen Medikamentenengpässe und digitale Beipackzettel.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T744": {
+   "name": "Gedenkort Kolonialismus Bremen",
+   "beschreibung": "Kulturstaatsminister Weimer schlägt Bremen als Gedenkort für Opfer des Kolonialismus vor.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T745": {
+   "name": "Bachmann-Lyrikpreis",
+   "beschreibung": "Ein österreichisch-deutscher Lyrikpreis zum Bachmann-Jubiläum wird vergeben.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T746": {
+   "name": "Steinmeier-Besuch in Kenia",
+   "beschreibung": "Bundespräsident Steinmeier will in Nairobi die Ausbildungszusammenarbeit mit Kenia stärken.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T747": {
+   "name": "PFAS-Verbot Schleswig-Holstein",
+   "beschreibung": "Schleswig-Holstein verbietet PFAS-Pflanzenschutzmittel in Wasserschutzgebieten.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T748": {
+   "name": "Proteste in Albanien",
+   "beschreibung": "Albaniens Jugend protestiert gegen Premier Edi Rama.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T749": {
+   "name": "EU-Verurteilung wegen Käfighaltung",
+   "beschreibung": "Die EU-Kommission wird wegen Untätigkeit bei der Käfighaltung verurteilt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T750": {
+   "name": "Sicherheitsgarantien für die Ukraine",
+   "beschreibung": "US-Gesandter Kushner äußert sich zu Artikel-5-Zusagen und europäischen Zahlungen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "politik",
+   "gegengeprueft": "2026-11-25T22:37:40+00:00"
+  },
+  "T751": {
+   "name": "Pentagon-Kredit für Startup",
+   "beschreibung": "Ein Pentagon-Kredit über 15 Milliarden Dollar für ein Startup mit Trump-Jr.-Bezug steht in der Kritik.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T752": {
+   "name": "UNRWA-Entlassungen Tribunal",
+   "beschreibung": "Ein Tribunal urteilt über Entlassungen des UN-Hilfswerks wegen unbewiesener Hamas-Vorwürfe.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T753": {
+   "name": "Zverev und Ex-Freundin",
+   "beschreibung": "Rechtsstreit zwischen Alexander Zverev und seiner Ex-Freundin.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T754": {
+   "name": "Wolff-Abschied THW Kiel",
+   "beschreibung": "Handball-Torwart Andreas Wolff verlässt den THW Kiel.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T755": {
+   "name": "Festnahmen Gangmitglieder Istanbul",
+   "beschreibung": "Nach einer ZDF-Doku nimmt die Polizei in Istanbul Gangmitglieder fest.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T756": {
+   "name": "Spende an Trump Nationalparks",
+   "beschreibung": "Ein anonymer Spender gibt Trump 300 Millionen Dollar für Bauprojekte.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T757": {
+   "name": "US-Wirtschaftswachstum und Inflation",
+   "beschreibung": "Die US-Wirtschaft wächst kräftiger, auch die Inflation steigt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T758": {
+   "name": "NBA-Pläne für Europa",
+   "beschreibung": "Die NBA veröffentlicht Pläne für eine Liga in Europa.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T759": {
+   "name": "Asylverfahren Sexualität Richter",
+   "beschreibung": "Ein Richter glaubt einem Asylbewerber seine angegebene Homosexualität nicht.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T760": {
+   "name": "Ferrari-Sicherstellung auf A8",
+   "beschreibung": "Schleierfahnder stellen einen Ferrari im Wert von 1,5 Millionen Euro sicher.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T761": {
+   "name": "Anschlag auf Krim-Brücke Raketen",
+   "beschreibung": "Ein Exil-Russe lieferte Raketen für den Angriff auf die Krim-Brücke.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T762": {
+   "name": "Bleiberechtsprogramm Köln",
+   "beschreibung": "Die Stadt Köln schließt 62 Personen aus dem Bleiberechtsprogramm aus.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T763": {
+   "name": "Norovirus auf Kreuzfahrtschiff",
+   "beschreibung": "Ein Kreuzfahrtschiff kehrt nach einem Norovirus-Ausbruch zurück.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T764": {
+   "name": "Sturm an Hängebrücke Chile",
+   "beschreibung": "Ein deutscher Tourist wird in Chile fast von einer Hängebrücke geweht.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T765": {
+   "name": "Vermisste Frau tot im Wald",
+   "beschreibung": "Eine vermisste Frau wird tot im Wald gefunden.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T766": {
+   "name": "U-Haft Marius Borg Høiby",
+   "beschreibung": "Marius Borg Høiby arbeitet in Untersuchungshaft als Tischler.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T767": {
+   "name": "Iranische Ölexporte trotz Blockade",
+   "beschreibung": "Iran bereitet trotz der US-Marineblockade die Wiederaufnahme von Ölexporten vor.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T768": {
+   "name": "Chinas Exportkontrollen für Drohnenteile",
+   "beschreibung": "China verschärft Exportkontrollen für Komponenten russischer Drohnen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T769": {
+   "name": "Bezahlbarkeit in der Linken-Debatte",
+   "beschreibung": "Kommentar zum Begriff Bezahlbarkeit in der Politik der Linken.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T770": {
+   "name": "Ski-Weltcup Kanada abgesagt",
+   "beschreibung": "Zwei Weltcuprennen in Kanada fallen wegen Schneemangels aus.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T771": {
+   "name": "Van der Bellen zu US-Abhängigkeit",
+   "beschreibung": "Bundespräsident Van der Bellen warnt vor Abhängigkeit von den USA.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T772": {
+   "name": "SpaceX-Satelliten-Genehmigung",
+   "beschreibung": "SpaceX darf eine Million Satelliten ins All bringen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T773": {
+   "name": "Telekom-Kollektivvertrag Österreich",
+   "beschreibung": "Abschluss mit bis zu 3,2 Prozent mehr Gehalt.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T774": {
+   "name": "Polnische Flugverbotszone Ukraine-Grenze",
+   "beschreibung": "Polen richtet eine Flugverbotszone an der Grenze zur Ukraine ein.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T775": {
+   "name": "Arbeitsfähigkeit im Alter",
+   "beschreibung": "Arbeiterkammer: Viele Arbeiter sind mit 65 nicht mehr arbeitsfähig.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T776": {
+   "name": "Tod Feuerwehrmann Groß-Enzersdorf",
+   "beschreibung": "Ein junger Feuerwehrmann verunglückt tödlich.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T777": {
+   "name": "Trumps Boeing 747",
+   "beschreibung": "Berichte über Rekorde und Sicherheitsproblem von Trumps Boeing 747.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T778": {
+   "name": "Bezirksstreit Josefstadt Budget",
+   "beschreibung": "Streit im Wiener Bezirk Josefstadt um geplatztes Budget.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T779": {
+   "name": "Medizinische Versorgung im Alter",
+   "beschreibung": "Kritik an Einschränkungen medizinischer Hilfe für Ältere.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T780": {
+   "name": "US-Militärabkommen mit Venezuela",
+   "beschreibung": "Die USA schließen ein Militärabkommen mit Venezuela.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T781": {
+   "name": "Bundesgerichtspräsident Parrino",
+   "beschreibung": "Francesco Parrino soll Bundesgerichtspräsident werden.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T782": {
+   "name": "Unruhen bei Demos Schweiz",
+   "beschreibung": "Ausschreitungen bei Demonstrationen in Zürich und Lausanne.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T783": {
+   "name": "Skandalspiel Innerschweizer Fussball",
+   "beschreibung": "Der Verband setzt ein Skandalspiel neu an.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T784": {
+   "name": "Velofahrer nach Hundesturz im Koma",
+   "beschreibung": "Ein Velofahrer liegt nach einem Sturz wegen eines Hundes im Koma.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T785": {
+   "name": "Wirtschaftsweise zu Staatsverschuldung",
+   "beschreibung": "Warnung vor 100 Prozent Schuldenquote bis 2040.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T786": {
+   "name": "Justizminister und Antifa-Reel",
+   "beschreibung": "Justizminister löscht offenbar ein Antifa-Reel, CDU und AfD fordern Aufklärung.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T787": {
+   "name": "Lage nach Eskalationsgefahr",
+   "beschreibung": "Einschätzung, dass eine Eskalation unwahrscheinlich scheint.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T788": {
+   "name": "Steuerstreit Koalition",
+   "beschreibung": "SPD kritisiert Merz im Steuerstreit.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T789": {
+   "name": "Angriff auf Compact-Mitarbeiter",
+   "beschreibung": "Zwei Compact-Mitarbeiter werden bei einer YouTube-Gala in Berlin angegriffen.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T790": {
+   "name": "Wadephul und Frohnmaier Deutschlandpolitik",
+   "beschreibung": "Wadephul warnt vor Rückzug, Frohnmaier spottet.",
+   "erstellt": "2026-11-25T22:37:40+00:00",
+   "zuletzt": "2026-11-25T22:37:40+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
   }
  }
 }
