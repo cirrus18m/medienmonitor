@@ -72,7 +72,7 @@
    "beschreibung": "Die Berliner Linksfraktion stimmt über den Ausschluss der Abgeordneten Vanessa Emde ab.",
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 78,
+   "anzahl": 97,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -108,8 +108,8 @@
    "name": "Russische Atomwaffen im Weltraum",
    "beschreibung": "Warnungen vor möglicher Stationierung russischer Atomwaffen im Weltall.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 33,
+   "zuletzt": "2026-11-25T00:20:29+00:00",
+   "anzahl": 34,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -119,7 +119,7 @@
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T21:59:36+00:00",
    "anzahl": 18,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T8",
    "ressort": "politik"
   },
   "T14": {
@@ -141,11 +141,11 @@
    "ressort": "wirtschaft"
   },
   "T16": {
-   "name": "Pflegereform",
+   "name": "Pflegereform und häusliche Pflege",
    "beschreibung": "Die Mehrheit der Versicherten fordert eine grundlegende Pflegereform.",
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T16:17:33+00:00",
-   "anzahl": 5,
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -310,7 +310,7 @@
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T17:48:11+00:00",
    "anzahl": 6,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T122",
    "ressort": "gesellschaft"
   },
   "T35": {
@@ -437,7 +437,7 @@
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T18:57:24+00:00",
    "anzahl": 40,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T120",
    "ressort": "sport"
   },
   "T49": {
@@ -500,7 +500,7 @@
    "erstellt": "2026-11-24T06:41:49+00:00",
    "zuletzt": "2026-11-24T16:17:33+00:00",
    "anzahl": 13,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T122",
    "ressort": "gesellschaft"
   },
   "T56": {
@@ -517,8 +517,8 @@
    "name": "AfD Verbot und Streit",
    "beschreibung": "Debatten um die AfD: Verbotsfrage, Kulturpolitik und Parteiausschluss.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 23,
+   "zuletzt": "2026-11-25T00:09:01+00:00",
+   "anzahl": 24,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1082,7 +1082,7 @@
    "beschreibung": "Spiele deutscher Klubs in der Champions League.",
    "erstellt": "2026-11-24T06:58:57+00:00",
    "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 54,
+   "anzahl": 94,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -1095,11 +1095,11 @@
    "zusammengelegt_in": "T21"
   },
   "T122": {
-   "name": "Gewalt gegen Frauen und Frauenhäuser",
+   "name": "Gewalt gegen Frauen",
    "beschreibung": "Zahlen und Forderungen zu Gewaltschutz und fehlenden Frauenhausplätzen.",
    "erstellt": "2026-11-24T08:28:30+00:00",
    "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 41,
+   "anzahl": 60,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -1217,7 +1217,7 @@
    "beschreibung": "Iranische Angriffe auf Bahrain und Sorgen der Golfstaaten sowie Lage an der Straße von Hormus.",
    "erstellt": "2026-11-24T08:28:30+00:00",
    "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 25,
+   "anzahl": 33,
    "zusammengelegt_in": null,
    "ressort": "politik",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -1387,7 +1387,7 @@
    "erstellt": "2026-11-24T08:30:41+00:00",
    "zuletzt": "2026-11-24T17:48:11+00:00",
    "anzahl": 8,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T135",
    "ressort": "wirtschaft"
   },
   "T155": {
@@ -1611,7 +1611,7 @@
    "erstellt": "2026-11-24T08:35:03+00:00",
    "zuletzt": "2026-11-24T16:17:33+00:00",
    "anzahl": 10,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T358",
    "ressort": "politik"
   },
   "T180": {
@@ -2433,7 +2433,7 @@
    "erstellt": "2026-11-24T16:17:33+00:00",
    "zuletzt": "2026-11-24T16:17:33+00:00",
    "anzahl": 2,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T16",
    "ressort": "gesellschaft"
   },
   "T271": {
@@ -3220,11 +3220,11 @@
    "ressort": "gesellschaft"
   },
   "T358": {
-   "name": "Zustimmung für Merz sinkt",
+   "name": "Merz unter Druck und sinkende Zustimmung",
    "beschreibung": "Umfragen zeigen sinkende Zustimmung für Kanzler Merz.",
    "erstellt": "2026-11-24T16:17:33+00:00",
    "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 5,
+   "anzahl": 15,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -4527,7 +4527,7 @@
    "erstellt": "2026-11-24T21:59:36+00:00",
    "zuletzt": "2026-11-24T21:59:36+00:00",
    "anzahl": 1,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T8",
    "ressort": "politik"
   },
   "T504": {
@@ -4561,8 +4561,8 @@
    "name": "US-Blockade gegen Kuba",
    "beschreibung": "Die WHO warnt vor den Folgen der US-Treibstoffblockade gegen Kuba.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T00:20:29+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -4897,7 +4897,7 @@
    "erstellt": "2026-11-25T00:09:01+00:00",
    "zuletzt": "2026-11-25T00:09:01+00:00",
    "anzahl": 1,
-   "zusammengelegt_in": null,
+   "zusammengelegt_in": "T57",
    "ressort": "politik"
   },
   "T545": {
