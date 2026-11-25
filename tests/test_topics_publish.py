@@ -182,3 +182,18 @@ def test_topic_trends_count_both_halves_and_first_headline(tmp_path):
     trend = publish.topic_trends(rows, topic_list, NOW)[topic_id]
     assert (trend["letzte_6h"], trend["vorher_6h"]) == (3, 1)
     assert trend["erste"] == (NOW - timedelta(hours=30)).isoformat(timespec="seconds")
+
+
+def test_payload_only_new_media(tmp_path):
+    items = [headline(i, f"Haushalt {i}", f"Neu{i % 2}", "alternativ") for i in range(3)]
+    items += [headline(10 + i, f"Haushalt alt {i}", "Welt", "rechts") for i in range(5)]
+    store.append_new(tmp_path, items, NOW)
+    topics.assign_new(tmp_path, FakeLabeler(), NOW)
+    payload = publish.build_payload(tmp_path, NOW, only_new=True, categories=False)
+    assert payload["nur_neue_medien"] and payload["min_artikel"] == publish.MIN_ARTICLES_NEW
+    assert payload["artikel_gesamt"] == 3 and {m["name"] for m in payload["medien"]} == {
+        "Neu0",
+        "Neu1",
+    }
+    [topic] = payload["themen"]
+    assert topic["anzahl_gesamt"] == 3 and topic["trend"]["letzte_6h"] == 3

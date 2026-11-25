@@ -114,6 +114,18 @@ def main() -> int:
     payload["heute"] = publish.build_payload(
         args.data_dir, now, domains, start=publish.start_of_day(now), categories=False
     )
+    # filter "nur neue Medien": the same without the headlines of the old media
+    payload["neu"] = publish.build_payload(
+        args.data_dir, now, domains, categories=False, only_new=True
+    )
+    payload["heute_neu"] = publish.build_payload(
+        args.data_dir,
+        now,
+        domains,
+        start=publish.start_of_day(now),
+        categories=False,
+        only_new=True,
+    )
     payload_path = args.payload or args.data_dir / "daten.json"
     publish.write_payload(payload, payload_path)
     render.write_html(payload, payload_path.with_name("grafik.html"))

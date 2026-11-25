@@ -191,3 +191,16 @@ def test_topic_label_and_hover_mark_the_trend():
     assert label.endswith(" Bahnstreik") and ">neu<" in label
     assert "letzte 6 Stunden: 5" in render.trend_text(trend_topic(2, 5, 0), NOW)
     assert render.topic_label({"name": "A <b>"}, NOW, 30) == "A &lt;b&gt;"
+
+
+def test_render_html_with_only_new_media():
+    full = payload()
+    new = payload()
+    new["nur_neue_medien"] = True
+    full["neu"] = new
+    html = render.render_html(full)
+    data = json.loads(html.split("const ALL = ", 1)[1].split(";\n", 1)[0])
+    assert "24h_neu" in data["fenster"]
+    assert "lager" not in data["fenster"]["24h_neu"]["figures"]  # one camp only
+    assert "neuen Medien" in data["fenster"]["24h_neu"]["stand"]
+    assert 'data-medien="neu"' in html and "Warum diese Auswertung" in html

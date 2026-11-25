@@ -22,6 +22,8 @@ from medienmonitor.topics import OTHER, TopicList
 SCHEMA = 1
 WINDOW_HOURS = 24
 MIN_ARTICLES = 5
+MIN_ARTICLES_NEW = 3  # filter "nur neue Medien": far fewer headlines
+NEW_CAMP = "alternativ"  # lager of the new media
 MIN_SOURCES = 2
 MAX_TOPICS = 40
 LATEST_PER_MEDIUM = 10
@@ -103,16 +105,22 @@ def build_payload(
     domains: dict[str, str] | None = None,
     start: datetime | None = None,
     categories: bool = True,
+    only_new: bool = False,
 ) -> dict:
     """Topics of the last WINDOW_HOURS hours, or since ``start`` (filter "nur heute").
 
     ``domains``: medium name -> home page (feeds.yaml), shown as link in the chart.
     ``categories``: add the TOP- and Blasen-Themen (bubbles.py).
+    ``only_new``: only headlines of the new media (lager NEW_CAMP), so that their topics
+    are not drowned by the many headlines of the old media; lower thresholds.
     """
     now = now or datetime.now(UTC)
     domains = domains or {}
     topics = TopicList.load(data_dir)
     rows = window_rows(data_dir, now, start=start)
+    if only_new:
+        rows = [row for row in rows if row["lager"] == NEW_CAMP]
+    min_articles = MIN_ARTICLES_NEW if only_new else MIN_ARTICLES
     per_camp = Counter(row["lager"] for row in rows)
     per_spectrum = Counter(row["spektrum"] for row in rows)
     media: dict[str, dict] = {}
@@ -148,11 +156,14 @@ def build_payload(
         topic_id = _valid_topic(topics, row)
         if topic_id:
             grouped[topic_id].append(row)
-    trends = topic_trends(window_rows(data_dir, now, FIRST_SEEN_HOURS), topics, now)
+    recent = window_rows(data_dir, now, FIRST_SEEN_HOURS)
+    if only_new:
+        recent = [row for row in recent if row["lager"] == NEW_CAMP]
+    trends = topic_trends(recent, topics, now)
 
     entries = []
     for topic_id, items in grouped.items():
-        if len(items) < MIN_ARTICLES or len({r["quelle"] for r in items}) < MIN_SOURCES:
+        if len(items) < min_articles or len({r["quelle"] for r in items}) < MIN_SOURCES:
             continue
         camps = Counter(r["lager"] for r in items)
         spectra = Counter(r["spektrum"] for r in items)
@@ -191,6 +202,8 @@ def build_payload(
         "stand": now.astimezone(BERLIN).isoformat(timespec="minutes"),
         "fenster_stunden": WINDOW_HOURS,
         "fenster": "heute" if start is not None else "24h",
+        "nur_neue_medien": only_new,
+        "min_artikel": min_articles,
         "seit": (start or now - timedelta(hours=WINDOW_HOURS))
         .astimezone(BERLIN)
         .isoformat(timespec="minutes"),

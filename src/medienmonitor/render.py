@@ -417,6 +417,12 @@ def _json(value) -> str:
 
 
 WINDOWS = (("24h", "letzte 24 Stunden"), ("heute", "nur heute"))
+NEW_ONLY_NOTE = (
+    "Warum diese Auswertung: Die alten Medien veröffentlichen ein Vielfaches an "
+    "Schlagzeilen. In der Auswertung aller Medien bestimmen darum sie, welche Themen oben "
+    "stehen, und was die neuen Medien beschäftigt, fällt kaum ins Gewicht. Hier zählen nur "
+    "die Schlagzeilen der neuen Medien; ein Thema erscheint ab 3 Schlagzeilen aus 2 Medien."
+)
 
 
 def _window(payload: dict) -> dict:
@@ -425,17 +431,19 @@ def _window(payload: dict) -> dict:
     figures = {}
     if payload.get("medien"):
         figures["medium"] = figure_by_medium(payload).to_plotly_json()
-    figures["lager"] = figure_by_group(payload, "lager").to_plotly_json()
+    if not payload.get("nur_neue_medien"):  # one camp only: nothing to compare
+        figures["lager"] = figure_by_group(payload, "lager").to_plotly_json()
     figures["spektrum"] = figure_by_group(payload, "spektrum").to_plotly_json()
     total = f"{payload['artikel_gesamt']:,}".replace(",", ".")
     if payload.get("fenster") == "heute":
         span = "heute seit 0:00 Uhr"
     else:
         span = f"letzte {payload['fenster_stunden']} Stunden"
+    media = " neuen" if payload.get("nur_neue_medien") else ""
     return {
         "stand": (
             f"Stand: {stand:%d.%m.%Y, %H:%M} Uhr · {span} · {total} Schlagzeilen aus "
-            f"{payload['quellen_gesamt']} Medien"
+            f"{payload['quellen_gesamt']}{media} Medien"
         ),
         "figures": figures,
         "notes": {
@@ -454,8 +462,9 @@ def _window(payload: dict) -> dict:
 def render_html(payload: dict) -> str:
     """grafik.html; ``payload["heute"]`` (optional) adds the filter "nur heute"."""
     windows = {"24h": _window(payload)}
-    if payload.get("heute"):
-        windows["heute"] = _window(payload["heute"])
+    for key in ("heute", "neu", "heute_neu"):
+        if payload.get(key):
+            windows["24h_neu" if key == "neu" else key] = _window(payload[key])
     views = [(key, label) for key, label in VIEWS if key in windows["24h"]["figures"]]
     buttons = "".join(
         f'<button type="button" data-view="{key}">{escape(label)}</button>' for key, label in views
@@ -469,7 +478,15 @@ def render_html(payload: dict) -> str:
             if key in windows
         )
         + "</div>"
-        if len(windows) > 1
+        if "heute" in windows
+        else ""
+    )
+    media_buttons = (
+        '<div class="schalter medienauswahl" role="group" aria-label="Medien">'
+        '<button type="button" data-medien="alle" aria-pressed="true">alle Medien</button>'
+        '<button type="button" data-medien="neu" aria-pressed="false">nur neue Medien</button>'
+        "</div>"
+        if "24h_neu" in windows
         else ""
     )
     new_buttons = "".join(
@@ -487,7 +504,8 @@ def render_html(payload: dict) -> str:
     return (
         template.replace("{{PLOTLY_SRC}}", PLOTLY_SRC)
         .replace("{{STAND}}", escape(windows["24h"]["stand"]))
-        .replace("{{WINDOW_BUTTONS}}", window_buttons)
+        .replace("{{WINDOW_BUTTONS}}", window_buttons + media_buttons)
+        .replace("{{NEW_ONLY_NOTE}}", escape(NEW_ONLY_NOTE))
         .replace("{{BUTTONS}}", buttons)
         .replace("{{NEW_BUTTONS}}", new_buttons)
         .replace("{{TREND_LEGEND}}", legend)

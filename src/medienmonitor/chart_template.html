@@ -53,6 +53,7 @@
 <p class="stand" id="stand">{{STAND}}</p>
 {{WINDOW_BUTTONS}}
 <div class="schalter ansicht" role="group" aria-label="Ansicht">{{BUTTONS}}</div>
+<p class="hinweis" id="nur-neu" hidden>{{NEW_ONLY_NOTE}}</p>
 <div class="schalter neu" role="group" aria-label="Neue Themen">{{NEW_BUTTONS}}</div>
 <p class="klein">{{TREND_LEGEND}}</p>
 <p class="hinweis" id="hinweis"></p>
@@ -83,12 +84,15 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
   const popup = document.getElementById("fenster");
   const buttons = [...document.querySelectorAll(".schalter.ansicht button")];
   const windowButtons = [...document.querySelectorAll(".schalter.zeitraum button")];
+  const mediaButtons = [...document.querySelectorAll(".schalter.medienauswahl button")];
+  const newOnlyNote = document.getElementById("nur-neu");
   const newButtons = [...document.querySelectorAll(".schalter.neu button")];
   const stand = document.getElementById("stand");
   const time = new Intl.DateTimeFormat("de-DE", {
     weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
   });
-  const state = {view: buttons[0]?.dataset.view, topic: null, group: null, neu: 0};
+  const state = {view: buttons[0]?.dataset.view, topic: null, group: null, neu: 0,
+    window: "24h", media: "alle"};
 
   // Filter "neu seit 3/6 Stunden": topics whose first headline is that recent.
   function keepTopic(id) {
@@ -226,7 +230,7 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
       button.setAttribute("aria-pressed", String(button.dataset.view === state.view));
     }
     const figure = DATA.figures[state.view];
-    if (!figure) {
+    if (!figure || !DATA.reihenfolge.length) {
       note.textContent = "";
       Plotly.purge(chart);
       chart.replaceChildren(el("p", {class: "klein",
@@ -257,6 +261,8 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
       trace.texttemplate = "";
       layout.yaxis = {...layout.yaxis, ticktext: layout.meta.kurz};
     }
+    // a note from an earlier empty selection must not stay below the chart
+    for (const node of chart.querySelectorAll(":scope > p")) node.remove();
     Plotly.react(chart, [trace], layout, {displayModeBar: false, locale: "de"})
       .then(reportHeight);
     chart.removeAllListeners?.("plotly_click");
@@ -361,21 +367,32 @@ let DATA = {...ALL, ...ALL.fenster["24h"]};
       draw();
     });
   }
-  // Time window: last 24 hours or today since midnight.
-  for (const button of windowButtons) {
-    button.addEventListener("click", () => {
-      for (const other of windowButtons) {
-        other.setAttribute("aria-pressed", String(other === button));
-      }
-      DATA = {...ALL, ...ALL.fenster[button.dataset.window]};
-      stand.textContent = DATA.stand;
-      if (!DATA.themen[state.topic]) state.topic = null;
-      state.group = null;
-      closePopup();
-      buildNav();
-      draw();
-      showArticles(false);
-    });
+  // Time window (last 24 hours or today) and media (all or only the new media): one of
+  // the prepared sets "24h", "heute", "24h_neu", "heute_neu".
+  function applyChoice() {
+    const key = state.window + (state.media === "neu" ? "_neu" : "");
+    DATA = {...ALL, ...(ALL.fenster[key] || ALL.fenster[state.window])};
+    newOnlyNote.hidden = state.media !== "neu";
+    // views without data in this set (e.g. "nach Lager" for the new media alone) disappear
+    for (const button of buttons) button.hidden = !DATA.figures[button.dataset.view];
+    if (!DATA.figures[state.view]) state.view = buttons.find(b => !b.hidden)?.dataset.view;
+    stand.textContent = DATA.stand;
+    if (!DATA.themen[state.topic]) state.topic = null;
+    state.group = null;
+    closePopup();
+    buildNav();
+    draw();
+    showArticles(false);
+  }
+  for (const [group, field] of [[windowButtons, "window"], [mediaButtons, "medien"]]) {
+    for (const button of group) {
+      button.addEventListener("click", () => {
+        for (const other of group) other.setAttribute("aria-pressed", String(other === button));
+        if (field === "window") state.window = button.dataset.window;
+        else state.media = button.dataset.medien;
+        applyChoice();
+      });
+    }
   }
   for (const button of buttons) {
     button.addEventListener("click", () => {
