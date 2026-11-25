@@ -27,15 +27,15 @@
   a { color: #0077BB; }
   .grau { color: #767676; font-size: 0.8rem; }
   .zeichen { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.3rem; }
-  .etabliert { background: #0077BB; border-radius: 50%; }
-  .neu { background: #EE7733; transform: rotate(45deg) scale(0.85); }
+  .medienhaus { background: #0077BB; border-radius: 50%; }
+  .unabhaengig { background: #EE7733; transform: rotate(45deg) scale(0.85); }
   .fehler { color: #B2182B; }
 </style>
 </head>
 <body>
 <p class="stand" id="stand"></p>
 <div class="schalter" role="group" aria-label="Sprache">{{BUTTONS}}</div>
-<p class="hinweis">Die 30 meistgesehenen Videos der letzten Tage, die länger als 10 Minuten
+<p class="hinweis">Die 30 meistgesehenen Videos der letzten Tage, die länger als 8 Minuten
 sind – ohne Livestreams und regelmäßige Nachrichtensendungen. Ältere Videos hatten mehr Zeit,
 Aufrufe zu sammeln; vergleichbarer sind die Aufrufe je Tag.</p>
 <div id="grafik"></div>
@@ -121,6 +121,8 @@ const DATA = {{DATA}};
       const narrow = document.body.clientWidth < 640;
       const data = view.figure.data.map(trace => ({
         ...trace, mode: narrow ? "markers" : trace.mode,
+        // long group names: one break after the first comma on phones
+        name: narrow ? trace.name.replace(", ", ",<br>") : trace.name,
       }));
       Plotly.react(chart, data, layout, {displayModeBar: false, locale: "de"})
         .then(reportHeight);

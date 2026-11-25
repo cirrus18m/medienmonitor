@@ -64,7 +64,8 @@ def test_load_channels_only_active_with_id(tmp_path):
     ("changes", "reason"),
     [
         ({}, None),
-        ({"dauer_s": 600}, "kurz"),
+        ({"dauer_s": 480}, "kurz"),
+        ({"dauer_s": 481}, None),
         ({"live": True}, "live"),
         ({"veroeffentlicht": NOW - timedelta(days=11)}, "älter"),
         ({"aufrufe": None}, "ohne Aufrufe"),
@@ -189,20 +190,40 @@ def test_languages_per_list():
 def test_render_escapes_titles_and_groups(tmp_path):
     videos = [
         (video(titel="</script><script>alert(1)</script> lang genug"), channel()),
-        (video(video_id="m", aufrufe=10), channel(name="<b>Mitte</b>", lager="mitte")),
+        (
+            video(video_id="m", aufrufe=10),
+            channel(name="<b>Mitte</b>", art="oeffentlich", lager="mitte"),
+        ),
     ]
     payload = youtube.build_payload(videos, NOW, subscribers={"UCabc": 2_140_000})
     html = youtube_render.render_html(payload)
     assert "<script>alert(1)" not in html
     data = json.loads(html.split("const DATA = ", 1)[1].split(";\n", 1)[0])
     rows = data["views"]["de"]["rows"]
-    assert [row[1] for row in rows] == ["neu", "etabliert"]
+    assert [row[1] for row in rows] == ["unabhaengig", "medienhaus"]
     assert rows[0][9] == "2,14 Mio."
     assert data["views"]["de"]["figure"]["layout"]["yaxis"]["type"] == "log"
     channels = youtube_render.render_channels_html(payload)
     assert "&lt;b&gt;Mitte&lt;/b&gt;" in channels and "<b>Mitte</b>" not in channels
+    assert channels.count('class="ansicht"') == 3  # Deutsch, Englisch, Deutsch & Englisch
+    assert "Staatliche und private Medienhäuser (1)" in channels
+    assert "öffentlich-rechtlich" in channels
     youtube_render.write_html(payload, tmp_path)
     assert {p.name for p in tmp_path.iterdir()} == {"youtube.html", "kanaele.html"}
+
+
+@pytest.mark.parametrize(
+    ("art", "lager", "expected"),
+    [
+        ("oeffentlich", "mitte", "medienhaus"),
+        ("privat", "rechts", "medienhaus"),
+        ("privat", "alternativ", "unabhaengig"),  # new media
+        ("unabhaengig", "mitte", "unabhaengig"),
+        ("organisation", "mitte", "unabhaengig"),
+    ],
+)
+def test_group(art, lager, expected):
+    assert youtube_render.group({"art": art, "lager": lager}) == expected
 
 
 def test_subscribers_text():

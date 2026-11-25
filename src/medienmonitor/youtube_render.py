@@ -21,13 +21,15 @@ from medienmonitor.render import PLOTLY_SRC, _json, _layout
 # Groups: color AND symbol differ (readable without colors), colors of deutschlandmonitor.
 GROUPS = (
     # key, label, color, symbol
-    ("etabliert", "Medienhäuser, unabhängige Kanäle, Organisationen", "#0077BB", "circle"),
-    ("neu", "Neue Medien", "#EE7733", "diamond"),
+    ("medienhaus", "Staatliche und private Medienhäuser", "#0077BB", "circle"),
+    ("unabhaengig", "Unabhängige Kanäle, Organisationen und neue Medien", "#EE7733", "diamond"),
 )
+MEDIA_HOUSES = ("oeffentlich", "privat")  # values of "art" in youtube.yaml
 VIEWS = (("de", "Deutsch"), ("en", "Englisch"), ("alle", "Deutsch & Englisch"))
-LANGUAGE_LABELS = {"de": "Deutsch", "en": "Englisch", "mehrsprachig": "Mehrsprachig"}
+LANGUAGE_LABELS = {"de": "Deutsch", "en": "Englisch", "mehrsprachig": "mehrsprachig"}
 ART_LABELS = {
-    "medienhaus": "Medienhaus",
+    "oeffentlich": "öffentlich-rechtlich",
+    "privat": "privat",
     "unabhaengig": "unabhängig",
     "organisation": "Organisation",
 }
@@ -46,8 +48,11 @@ SOURCE = (
 )
 
 
-def group(video: dict) -> str:
-    return "neu" if video["lager"] == "alternativ" else "etabliert"
+def group(entry: dict) -> str:
+    """Group of a video or channel: media houses unless the channel is a new medium."""
+    if entry["art"] in MEDIA_HOUSES and entry["lager"] != "alternativ":
+        return "medienhaus"
+    return "unabhaengig"
 
 
 def duration_text(seconds: int) -> str:
@@ -187,15 +192,17 @@ def render_html(payload: dict) -> str:
     )
 
 
-def _channel_table(channels: list[dict]) -> str:
+def _channel_table(channels: list[dict], both: bool) -> str:
     rows = []
     for c in channels:
         handle = f' <span class="grau">{escape(c["handle"])}</span>' if c["handle"] else ""
+        language = c["sprache"].upper() if c["sprache"] in ("de", "en") else "mehrspr."
+        tag = f' <span class="grau">{escape(language)}</span>' if both else ""
         kind = "Neue Medien" if c["lager"] == "alternativ" else ART_LABELS.get(c["art"], c["art"])
         rows.append(
             "<tr>"
             f'<td><a href="{escape(c["url"])}" target="_blank" '
-            f'rel="noopener nofollow noreferrer">{escape(c["name"])}</a>{handle}</td>'
+            f'rel="noopener nofollow noreferrer">{escape(c["name"])}</a>{handle}{tag}</td>'
             f"<td>{escape(c['land'])}</td>"
             f"<td>{escape(kind)}</td>"
             f"<td>{escape(SPECTRUM_LABELS.get(c['spektrum'], c['spektrum']))}</td>"
@@ -213,24 +220,44 @@ def _channel_table(channels: list[dict]) -> str:
     )
 
 
+def _in_view(channel: dict, view: str) -> bool:
+    """Multilingual channels appear in every view: their videos count by video language."""
+    return view == "alle" or channel["sprache"] in (view, "mehrsprachig")
+
+
 def render_channels_html(payload: dict) -> str:
-    sections = []
-    for key in ("de", "en", "mehrsprachig"):
-        chosen = [c for c in payload["kanaele"] if c["sprache"] == key]
-        if chosen:
-            sections.append(
-                f"<h2>{escape(LANGUAGE_LABELS[key])} ({len(chosen)} Kanäle)</h2>"
-                + _channel_table(chosen)
-            )
+    views = []
+    for view, _ in VIEWS:
+        in_view = [c for c in payload["kanaele"] if _in_view(c, view)]
+        sections = []
+        for key, label, _, _ in GROUPS:
+            chosen = [c for c in in_view if group(c) == key]
+            if chosen:
+                sections.append(
+                    f'<h2><span class="zeichen {key}"></span>{escape(label)} '
+                    f"({len(chosen)})</h2>" + _channel_table(chosen, view == "alle")
+                )
+        hidden = "" if view == VIEWS[0][0] else " hidden"
+        views.append(
+            f'<div class="ansicht" data-view="{view}"{hidden}>'
+            f"<p>{len(in_view)} Kanäle</p>" + "\n".join(sections) + "</div>"
+        )
+    buttons = "".join(
+        f'<button type="button" data-view="{key}" aria-pressed="{str(i == 0).lower()}">'
+        f"{escape(label)}</button>"
+        for i, (key, label) in enumerate(VIEWS)
+    )
     numbers = (
-        f"{_stand(payload)} · {len(payload['kanaele'])} Kanäle · „Videos“: veröffentlicht in "
-        f"den letzten {payload['fenster_tage']} Tagen; „davon gezählt“: länger als "
-        f"{payload['mindestdauer_min']} Minuten, ohne Livestreams und Nachrichtensendungen"
+        f"{_stand(payload)} · „Videos“: veröffentlicht in den letzten "
+        f"{payload['fenster_tage']} Tagen; „davon gezählt“: länger als "
+        f"{payload['mindestdauer_min']} Minuten, ohne Livestreams und Nachrichtensendungen. "
+        "Mehrsprachige Kanäle stehen in jeder Auswahl."
     )
     template = (Path(__file__).parent / "kanaele_template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{STAND}}", escape(numbers))
-        .replace("{{SECTIONS}}", "\n".join(sections))
+        .replace("{{BUTTONS}}", buttons)
+        .replace("{{SECTIONS}}", "\n".join(views))
         .replace("{{SOURCE}}", escape(SOURCE))
     )
 

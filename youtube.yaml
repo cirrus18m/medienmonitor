@@ -6,7 +6,11 @@
 #   handle    @-Name des Kanals (nur zur Orientierung)
 #   sprache   de | en | mehrsprachig (Auswahl der Grafik; je Video zählt die Tonspur-Sprache, falls angegeben)
 #   land      Land laut Kanal bzw. Sitz
-#   art       medienhaus | unabhaengig | organisation
+#   art       oeffentlich (öffentlich-rechtlich/staatlich, auch funk) | privat (privates
+#             Medienhaus) | unabhaengig | organisation
+#             Gruppen der Grafik: oeffentlich/privat = „Staatliche und private Medienhäuser“
+#             (außer lager alternativ), alle übrigen = „Unabhängige Kanäle, Organisationen
+#             und neue Medien“
 #   lager     wie in feeds.yaml: links | mitte | rechts | alternativ
 #   spektrum  links | mitte-links | mitte | mitte-rechts | rechts | unklar
 #   aktiv     false = wird nicht abgerufen (Grund als Kommentar)
@@ -20,13 +24,13 @@
 
 kanaele:
 
-  # ---------- Medienhäuser ----------
+  # ---------- Medienhäuser (öffentlich-rechtlich und privat) ----------
   - name: tagesschau
     kanal_id: UC5NOEUbkLheQcaaRldYW5GA
     handle: "@tagesschau"
     sprache: de
     land: DE
-    art: medienhaus
+    art: oeffentlich
     lager: mitte
     spektrum: mitte
     ausschliessen:
@@ -37,7 +41,7 @@ kanaele:
     handle: "@ZDFheute"
     sprache: de
     land: DE
-    art: medienhaus
+    art: oeffentlich
     lager: mitte
     spektrum: mitte
 
@@ -46,7 +50,7 @@ kanaele:
     handle: "@phoenix"
     sprache: de
     land: DE
-    art: medienhaus
+    art: oeffentlich
     lager: mitte
     spektrum: mitte
 
@@ -55,7 +59,7 @@ kanaele:
     handle: "@DERSPIEGEL"
     sprache: de
     land: DE
-    art: medienhaus
+    art: privat
     lager: links
     spektrum: mitte-links
 
@@ -64,7 +68,7 @@ kanaele:
     handle: "@WELTVideoTV"
     sprache: de
     land: DE
-    art: medienhaus
+    art: privat
     lager: rechts
     spektrum: mitte-rechts
 
@@ -73,7 +77,7 @@ kanaele:
     handle: "@bild"
     sprache: de
     land: DE
-    art: medienhaus
+    art: privat
     lager: rechts
     spektrum: mitte-rechts
 
@@ -82,7 +86,7 @@ kanaele:
     handle: "@Ronzheimer"
     sprache: de
     land: DE
-    art: medienhaus   # Podcast von Paul Ronzheimer (BILD)
+    art: privat   # Podcast von Paul Ronzheimer (BILD)
     lager: rechts
     spektrum: mitte-rechts
 
@@ -91,7 +95,7 @@ kanaele:
     handle: ""
     sprache: de
     land: DE
-    art: medienhaus
+    art: oeffentlich
     lager: mitte
     spektrum: mitte
     aktiv: false   # 24.11.2026: kein offizieller eigener Kanal gefunden; Ausschnitte laufen über ZDFheute
@@ -101,7 +105,7 @@ kanaele:
     handle: ""
     sprache: de
     land: DE
-    art: medienhaus
+    art: oeffentlich
     lager: mitte
     spektrum: mitte
     aktiv: false   # 24.11.2026: Podcast des ZDF, kein offizieller YouTube-Kanal gefunden (nur Fan-Archive wie @PRECHTARCHIV)
@@ -112,7 +116,7 @@ kanaele:
     handle: "@MrWissen2go"
     sprache: de
     land: DE
-    art: unabhaengig   # funk (öffentlich-rechtlich finanziert)
+    art: oeffentlich   # funk (öffentlich-rechtlich finanziert)
     lager: mitte
     spektrum: mitte
 
@@ -121,7 +125,7 @@ kanaele:
     handle: "@DieDaOben"
     sprache: de
     land: DE
-    art: unabhaengig   # funk (öffentlich-rechtlich finanziert)
+    art: oeffentlich   # funk (öffentlich-rechtlich finanziert)
     lager: links
     spektrum: mitte-links
 
@@ -438,7 +442,7 @@ kanaele:
     handle: "@INDUSTRIEMAGAZIN"
     sprache: de
     land: AT
-    art: medienhaus
+    art: privat
     lager: mitte
     spektrum: mitte
 
@@ -456,7 +460,7 @@ kanaele:
     handle: "@amsMoove"
     sprache: de
     land: DE
-    art: medienhaus
+    art: privat
     lager: mitte
     spektrum: unklar
 
@@ -600,7 +604,7 @@ kanaele:
     handle: "@ServusTV"
     sprache: de
     land: AT
-    art: medienhaus
+    art: privat
     lager: rechts
     spektrum: mitte-rechts
 
@@ -654,7 +658,7 @@ kanaele:
     handle: "@EzraKleinShow"
     sprache: en
     land: US
-    art: medienhaus   # New York Times
+    art: privat   # New York Times
     lager: links
     spektrum: mitte-links
 
@@ -708,7 +712,7 @@ kanaele:
     handle: "@GZT"
     sprache: tr
     land: TR
-    art: medienhaus
+    art: privat
     lager: mitte
     spektrum: unklar
     aktiv: false   # 24.11.2026: türkisch, passt in keine Sprachauswahl

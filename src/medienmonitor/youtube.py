@@ -26,7 +26,7 @@ TIMEOUT_S = 20.0
 WINDOW_DAYS = 10
 TOP_N = 30
 MAX_PER_CHANNEL = 3  # per list, so that a few busy channels do not fill it
-MIN_DURATION_S = 10 * 60  # interviews and documentaries, no news clips or Shorts
+MIN_DURATION_S = 8 * 60  # interviews, talks and documentaries, no news clips or Shorts
 SCHEMA = 2
 LANGUAGES = ("de", "en")  # choices of the chart; "alle" = both
 LISTS = ("de", "en", "alle")

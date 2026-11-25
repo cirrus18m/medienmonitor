@@ -64,12 +64,14 @@ der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` und dere
 Abonnenten ab und schreibt:
 
 * `youtube.json` – je Sprachauswahl (`de`, `en`, `alle`) die 30 meistgesehenen Videos der
-  letzten 10 Tage, die länger als 10 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
+  letzten 10 Tage, die länger als 8 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
   und Nachrichtensendungen (Titelmuster in `youtube.py` und je Kanal im Feld
   `ausschliessen`), dazu die Kanalliste.
 * `youtube.html` – Aufrufe (logarithmisch) über „Tage online“ und die Top-Liste, mit
   Umschalter Deutsch / Englisch / Deutsch & Englisch.
-* `kanaele.html` – Kanalübersicht nach Sprache mit Abonnenten und Zahl der Videos.
+* `kanaele.html` – Kanalübersicht mit demselben Sprach-Umschalter, je Gruppe (staatliche und
+  private Medienhäuser; unabhängige Kanäle, Organisationen und neue Medien) eine Tabelle
+  mit Abonnenten und Zahl der Videos.
 
 Die Sprache kommt aus `youtube.yaml` (`sprache`: de, en, mehrsprachig); nur bei
 mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert wird nur der aktuelle

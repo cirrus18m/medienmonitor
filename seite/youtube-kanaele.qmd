@@ -32,12 +32,14 @@ keine Empfehlung seiner Inhalte.
 
 ## Einordnung
 
-* **Sprache:** Deutsch, Englisch oder mehrsprachig. Bei mehrsprachigen Kanälen zählt die
-  Sprache, die für das Video angegeben ist.
-* **Art:** Medienhaus, unabhängiger Kanal oder Organisation. „Neue Medien“ positionieren
+* **Sprache:** Deutsch, Englisch oder mehrsprachig. Mehrsprachige Kanäle stehen in jeder
+  Auswahl; bei ihnen zählt die Sprache, die für das Video angegeben ist.
+* **Gruppen:** „Staatliche und private Medienhäuser“ sind öffentlich-rechtliche Sender
+  (einschließlich funk) und private Verlage und Sender. Alle übrigen – unabhängige Kanäle,
+  Organisationen und „neue Medien“ – bilden die zweite Gruppe. „Neue Medien“ positionieren
   sich ausdrücklich gegen etablierte Medien.
 * **Spektrum:** eine eigene, grobe Einschätzung; „–“ heißt, der Kanal lässt sich nicht
   sinnvoll einordnen.
 * **Abonnenten** und **Videos** kommen von YouTube (Data API). Gezählt werden Videos der
-  letzten 10 Tage, die länger als 10 Minuten sind – ohne Livestreams und regelmäßige
+  letzten 10 Tage, die länger als 8 Minuten sind – ohne Livestreams und regelmäßige
   Nachrichtensendungen.

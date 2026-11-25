@@ -8,7 +8,7 @@ lädt sie per SFTP hoch; diese Seite bettet sie nur ein. -->
 
 Welche längeren Videos werden gerade am meisten gesehen? Die Grafik zeigt die 30
 meistgesehenen Videos der letzten 10 Tage aus rund 90 [YouTube-Kanälen](youtube-kanaele.qmd),
-die länger als 10 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides. Je
+die länger als 8 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides. Je
 Kanal erscheinen höchstens drei Videos. Fährt man über einen Punkt, erscheinen Titel,
 Kanal und Aufrufe; ein Klick markiert das Video in der Liste darunter. Die Grafik wird
 alle 3 Stunden erneuert.
@@ -30,10 +30,11 @@ alle 3 Stunden erneuert.
 
 ## So entsteht die Grafik
 
-* **Kanäle:** rund 90 Kanäle von Medienhäusern, unabhängigen Kanälen, Organisationen und
-  neuen Medien, auf Deutsch und auf Englisch. Die Liste mit Einordnung steht unter
+* **Kanäle:** rund 90 Kanäle auf Deutsch und auf Englisch in zwei Gruppen: staatliche
+  (öffentlich-rechtliche) und private Medienhäuser sowie unabhängige Kanäle,
+  Organisationen und neue Medien. Die Liste mit Einordnung steht unter
   [YouTube-Kanäle](youtube-kanaele.qmd).
-* **Auswahl:** Gezählt werden Videos der letzten 10 Tage, die länger als 10 Minuten sind –
+* **Auswahl:** Gezählt werden Videos der letzten 10 Tage, die länger als 8 Minuten sind –
   ohne Livestreams und regelmäßige Nachrichtensendungen. So bleiben vor allem Interviews,
   Gespräche und Dokumentationen.
 * **Sprache:** Es zählt die Sprache des Kanals; nur bei mehrsprachigen Kanälen die
