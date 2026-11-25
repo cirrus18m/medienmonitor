@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 547,
+ "naechste_nr": 559,
  "themen": {
   "T1": {
    "name": "Angriff auf Grünen-Sitzung Schwerte",
@@ -44,8 +44,8 @@
    "name": "Nvidia-Affäre um Jensen Huang",
    "beschreibung": "Die Rückkehr von Jensen Huang an die Nvidia-Spitze, auch mit Einfluss Trumps, bewegt die Märkte.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 152,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 155,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -71,8 +71,8 @@
    "name": "Fraktionsausschluss Vanessa Emde",
    "beschreibung": "Die Berliner Linksfraktion stimmt über den Ausschluss der Abgeordneten Vanessa Emde ab.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 97,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 98,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -89,8 +89,8 @@
    "name": "Haushaltswoche Bundestag 2027",
    "beschreibung": "Der Bundestag berät den Etat 2027 und entscheidet am Freitag.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 26,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 27,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -108,8 +108,8 @@
    "name": "Russische Atomwaffen im Weltraum",
    "beschreibung": "Warnungen vor möglicher Stationierung russischer Atomwaffen im Weltall.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T00:20:29+00:00",
-   "anzahl": 34,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 35,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -190,8 +190,8 @@
    "name": "Krieg in der Ukraine",
    "beschreibung": "Aktuelle Entwicklungen im russischen Krieg gegen die Ukraine und seine Folgen.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 126,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 129,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -652,8 +652,8 @@
    "name": "Hackerangriffe auf IT-Systeme",
    "beschreibung": "Warnung vor IT-Sicherheitslücken nach Hackerangriffen auf die USA.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 11,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 14,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
   },
@@ -670,8 +670,8 @@
    "name": "Regierungsbildung Sachsen-Anhalt",
    "beschreibung": "Minderheitsregierung, AfD-Opposition und Debatte um Zusammenarbeit.",
    "erstellt": "2026-11-24T06:41:49+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 16,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 18,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -1010,10 +1010,11 @@
    "name": "Tarifkonflikte Metall und Banken",
    "beschreibung": "Warnstreiks in der Metall- und Elektroindustrie sowie Tarifkonflikt bei privaten Banken.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
-   "ressort": "wirtschaft"
+   "ressort": "wirtschaft",
+   "gegengeprueft": "2026-11-25T03:04:42+00:00"
   },
   "T113": {
    "name": "Lage der Autoindustrie",
@@ -1081,8 +1082,8 @@
    "name": "Champions-League-Spieltag",
    "beschreibung": "Spiele deutscher Klubs in der Champions League.",
    "erstellt": "2026-11-24T06:58:57+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 94,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 97,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -1098,8 +1099,8 @@
    "name": "Gewalt gegen Frauen",
    "beschreibung": "Zahlen und Forderungen zu Gewaltschutz und fehlenden Frauenhausplätzen.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 60,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 61,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -1171,8 +1172,8 @@
    "name": "Afghanen arbeiten für Taliban",
    "beschreibung": "Geflohene Afghanen arbeiten in Bonn für die Taliban.",
    "erstellt": "2026-11-24T08:28:30+00:00",
-   "zuletzt": "2026-11-24T18:57:24+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -1500,8 +1501,8 @@
    "name": "Konflikte im Jemen",
    "beschreibung": "Angriffe und Machtverschiebungen im Jemen.",
    "erstellt": "2026-11-24T08:35:03+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "politik",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -2287,8 +2288,8 @@
    "name": "Ansah Dopingrechtsstreit",
    "beschreibung": "Owen Ansah sammelt Spenden für seinen Rechtsstreit.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "sport"
   },
@@ -2663,8 +2664,8 @@
    "name": "GTA VI",
    "beschreibung": "GTA 6 erzielt einen Rekordstart.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-25T00:09:01+00:00",
-   "anzahl": 13,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 14,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -3195,8 +3196,8 @@
    "name": "Treffen Magyar und Selenskyj",
    "beschreibung": "Ungarns Regierungschef Magyar trifft Selenskyj in Transkarpatien.",
    "erstellt": "2026-11-24T16:17:33+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "politik",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -3366,8 +3367,8 @@
    "name": "Bundesversammlung Bundespräsidentenwahl Bayern",
    "beschreibung": "Bayerische Vertreter bei der Bundesversammlung zur Bundespräsidentenwahl.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -3474,10 +3475,11 @@
    "name": "Neue US-Zölle Überkapazitäten",
    "beschreibung": "Die USA planen neue Zölle wegen Überkapazitäten.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T17:48:11+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
-   "ressort": "wirtschaft"
+   "ressort": "wirtschaft",
+   "gegengeprueft": "2026-11-25T03:04:42+00:00"
   },
   "T387": {
    "name": "Hackerangriff auf Banken",
@@ -3537,8 +3539,8 @@
    "name": "Verkehrsunfälle Regionalmeldungen",
    "beschreibung": "Unfälle mit Verletzten nach Frontalcrash und Abbiegefehler.",
    "erstellt": "2026-11-24T17:48:11+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 8,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -4076,8 +4078,8 @@
    "name": "Giuliani erhält Freiheitsmedaille",
    "beschreibung": "Trump verleiht Rudy Giuliani die höchste zivile Auszeichnung der USA.",
    "erstellt": "2026-11-24T18:57:24+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik",
    "gegengeprueft": "2026-11-24T22:06:56+00:00"
@@ -4129,8 +4131,8 @@
    "name": "Digitalisierung der Finanzämter",
    "beschreibung": "Die EU-Kommission kritisiert die schleppende digitale Vernetzung der deutschen Finanzämter.",
    "erstellt": "2026-11-24T18:57:24+00:00",
-   "zuletzt": "2026-11-24T18:57:24+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -4552,8 +4554,8 @@
    "name": "Katz zu iranischen Chemiewaffen",
    "beschreibung": "Israels Verteidigungsminister behauptet, der Iran entwickle Chemiewaffen.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -4561,8 +4563,8 @@
    "name": "US-Blockade gegen Kuba",
    "beschreibung": "Die WHO warnt vor den Folgen der US-Treibstoffblockade gegen Kuba.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-25T00:20:29+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -4570,8 +4572,8 @@
    "name": "Huawei-Schuldspruch",
    "beschreibung": "Ein US-Gericht spricht Huawei wegen Betrugs schuldig.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T23:27:20+00:00",
-   "anzahl": 10,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 11,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft",
    "gegengeprueft": "2026-11-24T22:49:56+00:00"
@@ -4589,8 +4591,8 @@
    "name": "Satellitenfabrik in Belgien",
    "beschreibung": "Europas größte Satellitenfabrik wird eröffnet.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "wirtschaft"
   },
@@ -4598,8 +4600,8 @@
    "name": "Hubschrauberabsturz Türkei",
    "beschreibung": "Fünf Tote bei Absturz eines Armeehubschraubers.",
    "erstellt": "2026-11-24T21:59:36+00:00",
-   "zuletzt": "2026-11-24T21:59:36+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -4778,8 +4780,8 @@
    "name": "Von-Hindenburg-Allee Berchtesgaden",
    "beschreibung": "Berchtesgaden behält trotz Kritik den Straßennamen Von-Hindenburg-Allee bei.",
    "erstellt": "2026-11-24T22:06:56+00:00",
-   "zuletzt": "2026-11-24T22:06:56+00:00",
-   "anzahl": 1,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 2,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -4787,8 +4789,8 @@
    "name": "Kanzler ehrt Heino",
    "beschreibung": "Der Kanzler ehrt den Volkssänger Heino.",
    "erstellt": "2026-11-24T22:06:56+00:00",
-   "zuletzt": "2026-11-24T22:49:56+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -4917,6 +4919,114 @@
    "anzahl": 1,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
+  },
+  "T547": {
+   "name": "Anklage gegen Thomas Markle",
+   "beschreibung": "Die US-Justiz erhebt Anklage gegen Meghans Vater Thomas Markle wegen mutmaßlicher Missbrauchsdateien.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 6,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T548": {
+   "name": "Prozess um tote Ziegen",
+   "beschreibung": "Prozess gegen einen Halter wegen 92 toter vernachlässigter Ziegen.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T549": {
+   "name": "Urteil im Doppelmord-Prozess",
+   "beschreibung": "Ein Urteil im Prozess um einen mutmaßlichen Doppelmord wird erwartet.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T550": {
+   "name": "Autobombe in Kolumbien",
+   "beschreibung": "Eine Autobombe verletzt in Kolumbien mindestens 25 Menschen.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T551": {
+   "name": "Ausländischer Astronaut auf Tiangong",
+   "beschreibung": "China startet erstmals mit einem ausländischen Astronauten zur Raumstation.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T552": {
+   "name": "Schutz von Prostituierten Kommission",
+   "beschreibung": "Eine Expertenkommission legt Empfehlungen für besseren Schutz von Prostituierten vor.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T553": {
+   "name": "Hochwasserwarnung Kalifornien",
+   "beschreibung": "Experten warnen vor Extrem-Hochwasser in Kalifornien.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T554": {
+   "name": "Probleme in Großstädten Städtetag",
+   "beschreibung": "Städtetagspräsident sieht wachsende Probleme durch Vermüllung, Kriminalität und Drogen.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T555": {
+   "name": "Rettung von Dorfkneipen",
+   "beschreibung": "Grüne fordern ein Sofortprogramm für Dorfkneipen.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T556": {
+   "name": "Frankfurter Stadionneubau",
+   "beschreibung": "Pläne für einen Stadionneubau in Frankfurt.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T557": {
+   "name": "Trittin Bushido-Vergleich bei Lanz",
+   "beschreibung": "Trittin greift bei Lanz die CDU mit einem Bushido-Vergleich an.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T558": {
+   "name": "Gasspeicher Füllstand Deutschland",
+   "beschreibung": "Deutschlands Gasspeicher sind sehr niedrig gefüllt.",
+   "erstellt": "2026-11-25T03:04:42+00:00",
+   "zuletzt": "2026-11-25T03:04:42+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
   }
  }
 }
