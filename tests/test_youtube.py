@@ -99,20 +99,77 @@ def test_video_from_api_marks_recorded_livestreams():
 
 
 def test_build_payload_top_and_per_day():
-    channels = [channel(name=f"K{n % 13}") for n in range(40)]
-    videos = [(video(video_id=f"v{n}", aufrufe=1000 * n), channels[n]) for n in range(1, 40)]
+    channels = [channel(name=f"K{n % 20:02d}") for n in range(80)]
+    videos = [(video(video_id=f"v{n}", aufrufe=1000 * n), channels[n]) for n in range(1, 80)]
     videos.append((video(video_id="kurz", dauer_s=60, aufrufe=10**9), channels[0]))
     payload = youtube.build_payload(videos, NOW)
-    top = payload["listen"]["de"]
+    top = payload["listen"]["de"]["aufrufe"]
     assert len(top) == youtube.TOP_N
-    assert top[0]["video_id"] == "v39"
-    assert top[0]["aufrufe_je_tag"] == 19_500  # 39.000 in 2 days
-    assert payload["listen"]["en"] == []
+    assert top[0]["video_id"] == "v79"
+    assert top[0]["aufrufe_je_tag"] == 39_500  # 79.000 in 2 days
+    assert payload["listen"]["en"] == {metric: [] for metric in youtube.METRICS}
     assert max(Counter(v["kanal"] for v in top).values()) == youtube.MAX_PER_CHANNEL
-    first = payload["kanaele"][0]  # K0: v13, v26, v39 and the short video
-    assert (first["name"], first["videos"], first["gezaehlt"]) == ("K0", 4, 3)
+    first = payload["kanaele"][0]  # K00: v20, v40, v60 and the short video
+    assert (first["name"], first["videos"], first["gezaehlt"]) == ("K00", 4, 3)
     assert payload["ausgeschlossen"] == {"kurz": 1}
-    assert payload["videos_gezaehlt"] == 39
+    assert payload["videos_gezaehlt"] == 79
+    assert payload["listen"]["de"]["aufrufe_erster_tag"] == []  # no snapshots
+
+
+def test_lists_per_metric():
+    young = video(video_id="jung", aufrufe=40_000, veroeffentlicht=NOW - timedelta(hours=12))
+    old = video(video_id="alt", aufrufe=100_000, veroeffentlicht=NOW - timedelta(days=5))
+    first = video(video_id="erster", aufrufe=60_000)  # 2 days online
+    videos = [(young, channel(name="A")), (old, channel(name="B")), (first, channel(name="C"))]
+    snapshots = {"erster": {"veroeffentlicht": "x", "vor": [22, 30_000], "nach": [25, 33_000]}}
+    lists = youtube.build_payload(videos, NOW, snapshots=snapshots)["listen"]["de"]
+    order = {metric: [v["video_id"] for v in lists[metric]] for metric in youtube.METRICS}
+    assert order == {
+        "aufrufe": ["alt", "erster", "jung"],
+        "aufrufe_je_tag": ["jung", "erster", "alt"],  # 80.000, 30.000, 20.000 per day
+        "aufrufe_erster_tag": ["erster"],
+    }
+    assert lists["aufrufe_erster_tag"][0]["aufrufe_erster_tag"] == 32_000
+
+
+def test_snapshots_before_and_after_first_day():
+    c = channel()
+    published = NOW - timedelta(hours=21)
+    snapshots = youtube.update_snapshots({}, [(video(veroeffentlicht=published), c)], NOW)
+    assert snapshots["v1"]["vor"] == [21.0, 50_000] and snapshots["v1"]["nach"] is None
+    assert youtube.first_day_views(snapshots["v1"]) is None
+    later = NOW + timedelta(hours=6)  # 27 hours online
+    snapshots = youtube.update_snapshots(
+        snapshots, [(video(veroeffentlicht=published, aufrufe=56_000), c)], later
+    )
+    assert snapshots["v1"]["nach"] == [27.0, 56_000]
+    assert youtube.first_day_views(snapshots["v1"]) == 53_000
+    # the value after the first day stays; excluded videos are not kept
+    snapshots = youtube.update_snapshots(
+        snapshots,
+        [
+            (video(veroeffentlicht=published, aufrufe=90_000), c),
+            (video(video_id="kurz", dauer_s=60, veroeffentlicht=published), c),
+        ],
+        later + timedelta(hours=3),
+    )
+    assert snapshots["v1"]["nach"] == [27.0, 56_000] and "kurz" not in snapshots
+    # after WINDOW_DAYS + 1 days the entry leaves
+    gone = NOW + timedelta(days=youtube.WINDOW_DAYS + 1)
+    assert youtube.update_snapshots(snapshots, [], gone) == {}
+
+
+@pytest.mark.parametrize(
+    ("entry", "expected"),
+    [
+        (None, None),
+        ({"vor": None, "nach": [30, 100]}, None),  # first seen after its first day
+        ({"vor": [6, 10], "nach": [30, 100]}, None),  # counts too far apart
+        ({"vor": [23, 100], "nach": [25, 200]}, 150),
+    ],
+)
+def test_first_day_views(entry, expected):
+    assert youtube.first_day_views(entry) == expected
 
 
 def fake_api(handler):
@@ -179,7 +236,7 @@ def test_languages_per_list():
         (video(video_id="tr", sprache="tr"), multi),
     ]
     lists = youtube.build_payload(videos, NOW)["listen"]
-    ids = {key: sorted(v["video_id"] for v in lists[key]) for key in lists}
+    ids = {key: sorted(v["video_id"] for v in lists[key]["aufrufe"]) for key in lists}
     assert ids == {
         "de": ["de", "de-falsch"],
         "en": ["en", "en-video"],
@@ -199,10 +256,15 @@ def test_render_escapes_titles_and_groups(tmp_path):
     html = youtube_render.render_html(payload)
     assert "<script>alert(1)" not in html
     data = json.loads(html.split("const DATA = ", 1)[1].split(";\n", 1)[0])
-    rows = data["views"]["de"]["rows"]
+    rows = data["views"]["de"]["aufrufe"]["rows"]
     assert [row[1] for row in rows] == ["unabhaengig", "medienhaus"]
-    assert rows[0][9] == "2,14 Mio."
-    assert data["views"]["de"]["figure"]["layout"]["yaxis"]["type"] == "log"
+    assert rows[0][9] == "2,14 Mio." and rows[0][11] == "–"  # no first-day value
+    assert data["metrics"] == list(youtube.METRICS)
+    for metric, label, _, _ in youtube_render.METRICS:
+        figure = data["views"]["de"][metric]["figure"]
+        assert figure["layout"]["yaxis"]["type"] == "log"
+        assert figure["layout"]["yaxis"]["title"]["text"] == f"{label} (logarithmisch)"
+    assert data["views"]["de"]["aufrufe_erster_tag"]["rows"] == []
     channels = youtube_render.render_channels_html(payload)
     assert "&lt;b&gt;Mitte&lt;/b&gt;" in channels and "<b>Mitte</b>" not in channels
     assert channels.count('class="ansicht"') == 3  # Deutsch, Englisch, Deutsch & Englisch

@@ -6,3 +6,5 @@ daten/
 ausgabe/
 # local plan, not published
 PLAN.md
+# Aufrufe junger Videos für „Aufrufe am ersten Tag“ (lokal, im Workflow im Actions-Cache)
+youtube-zwischenstand.json

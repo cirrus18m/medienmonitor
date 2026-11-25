@@ -6,10 +6,11 @@ title: "Medienmonitor: Video-Medien"
 (medienmonitor/youtube.html) erzeugt das Repo cirrus18m/medienmonitor alle 3 Stunden und
 lädt sie per SFTP hoch; diese Seite bettet sie nur ein. -->
 
-Welche längeren Videos werden gerade am meisten gesehen? Die Grafik zeigt die 30
-meistgesehenen Videos der letzten 10 Tage aus rund 90 [YouTube-Kanälen](youtube-kanaele.qmd),
-die länger als 8 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides. Je
-Kanal erscheinen höchstens drei Videos. Fährt man über einen Punkt, erscheinen Titel,
+Welche längeren Videos werden gerade am meisten gesehen? Die Grafik zeigt die ersten 50
+Videos der letzten 10 Tage aus rund 90 [YouTube-Kanälen](youtube-kanaele.qmd), die länger
+als 8 Minuten sind – wahlweise auf Deutsch, auf Englisch oder beides, sortiert nach
+Aufrufen, nach Aufrufen je Tag oder nach Aufrufen am ersten Tag. Je Kanal erscheinen
+höchstens drei Videos. Fährt man über einen Punkt, erscheinen Titel,
 Kanal und Aufrufe; ein Klick markiert das Video in der Liste darunter. Die Grafik wird
 alle 3 Stunden erneuert.
 
@@ -40,7 +41,11 @@ alle 3 Stunden erneuert.
 * **Sprache:** Es zählt die Sprache des Kanals; nur bei mehrsprachigen Kanälen die
   Sprache, die für das Video angegeben ist.
 * **Aufrufe:** Ältere Videos hatten mehr Zeit, Aufrufe zu sammeln; vergleichbarer sind die
-  Aufrufe je Tag. Aufrufe und Abonnenten kommen von YouTube (Data API); YouTube rundet die
-  Abonnenten.
+  Aufrufe je Tag oder am ersten Tag. Aufrufe und Abonnenten kommen von YouTube (Data API);
+  YouTube rundet die Abonnenten.
+* **Aufrufe am ersten Tag:** YouTube nennt nur den aktuellen Stand. Die Zahl nach 24 Stunden
+  wird aus den Abfragen alle 3 Stunden geschätzt (linear zwischen der letzten Abfrage vor
+  und der ersten nach 24 Stunden). Sie fehlt („–“) bei Videos, die bei der ersten Abfrage
+  schon älter als einen Tag waren. Die Zwischenstände werden nach 11 Tagen gelöscht.
 * **Datenschutz:** Die Seite lädt nichts von YouTube, keine Videos und keine Vorschaubilder.
   Erst ein Klick auf einen Titel führt zu YouTube.

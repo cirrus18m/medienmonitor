@@ -30,21 +30,29 @@
   .medienhaus { background: #0077BB; border-radius: 50%; }
   .unabhaengig { background: #EE7733; transform: rotate(45deg) scale(0.85); }
   .fehler { color: #B2182B; }
+  .leer { color: #555; padding: 2rem 0; }
+  .schalter-zeile { display: flex; flex-wrap: wrap; gap: 0 1rem; align-items: center; }
+  th.sortiert { text-decoration: underline; text-underline-offset: 0.2em; }
+  td.sortiert { font-weight: 600; }
 </style>
 </head>
 <body>
 <p class="stand" id="stand"></p>
+<div class="schalter-zeile">
 <div class="schalter" role="group" aria-label="Sprache">{{BUTTONS}}</div>
-<p class="hinweis">Die 30 meistgesehenen Videos der letzten Tage, die länger als 8 Minuten
-sind – ohne Livestreams und regelmäßige Nachrichtensendungen. Ältere Videos hatten mehr Zeit,
-Aufrufe zu sammeln; vergleichbarer sind die Aufrufe je Tag.</p>
+<div class="schalter" role="group" aria-label="Sortierung">{{METRIC_BUTTONS}}</div>
+</div>
+<p class="hinweis" id="hinweis"></p>
 <div id="grafik"></div>
+<p class="leer" id="leer" hidden>Noch keine Werte: Die Aufrufe am ersten Tag werden erst seit
+Kurzem erfasst.</p>
 <p class="quelle">{{SOURCE}}.</p>
 <div class="scroll">
 <table>
   <thead><tr><th class="zahl">Rang</th><th>Kanal</th><th class="zahl">Abonnenten</th>
-    <th>Titel</th><th class="zahl">Dauer</th><th class="zahl">Aufrufe</th>
-    <th class="zahl">Tage online</th><th class="zahl">Aufrufe je Tag</th></tr></thead>
+    <th>Titel</th><th class="zahl">Dauer</th><th class="zahl" data-metric="aufrufe">Aufrufe</th>
+    <th class="zahl">Tage online</th><th class="zahl" data-metric="aufrufe_je_tag">Aufrufe je Tag</th>
+    <th class="zahl" data-metric="aufrufe_erster_tag">Aufrufe am ersten Tag</th></tr></thead>
   <tbody id="liste"></tbody>
 </table>
 </div>
@@ -57,8 +65,12 @@ const DATA = {{DATA}};
   const chart = document.getElementById("grafik");
   const body = document.getElementById("liste");
   const stand = document.getElementById("stand");
-  const buttons = [...document.querySelectorAll(".schalter button")];
-  const state = {view: buttons[0]?.dataset.view, marked: null};
+  const hint = document.getElementById("hinweis");
+  const buttons = [...document.querySelectorAll(".schalter button[data-view]")];
+  const metricButtons = [...document.querySelectorAll(".schalter button[data-metric]")];
+  const heads = [...document.querySelectorAll("th[data-metric]")];
+  const state = {view: buttons[0]?.dataset.view, metric: DATA.metrics[0], marked: null};
+  const current = () => DATA.views[state.view][state.metric];
 
   function el(tag, props = {}, ...children) {
     const node = document.createElement(tag);
@@ -88,8 +100,9 @@ const DATA = {{DATA}};
   function table() {
     const both = state.view === "alle";
     body.replaceChildren();
+    const sorted = metric => (state.metric === metric ? "zahl sortiert" : "zahl");
     for (const [rank, group, channel, title, url, duration, views, days, perDay, subscribers,
-      language] of DATA.views[state.view].rows) {
+      language, firstDay] of current().rows) {
       const safe = safeUrl(url);
       const row = el("tr", {id: `rang-${rank}`},
         el("td", {class: "zahl", text: String(rank)}),
@@ -102,9 +115,10 @@ const DATA = {{DATA}};
             text: title})
           : el("span", {text: title})),
         el("td", {class: "zahl", text: duration}),
-        el("td", {class: "zahl", text: views}),
+        el("td", {class: sorted("aufrufe"), text: views}),
         el("td", {class: "zahl", text: days}),
-        el("td", {class: "zahl", text: perDay}));
+        el("td", {class: sorted("aufrufe_je_tag"), text: perDay}),
+        el("td", {class: sorted("aufrufe_erster_tag"), text: firstDay}));
       if (rank === state.marked) row.classList.add("markiert");
       body.append(row);
     }
@@ -114,9 +128,17 @@ const DATA = {{DATA}};
     for (const button of buttons) {
       button.setAttribute("aria-pressed", String(button.dataset.view === state.view));
     }
-    const view = DATA.views[state.view];
+    for (const button of metricButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.metric === state.metric));
+    }
+    for (const head of heads) head.classList.toggle("sortiert", head.dataset.metric === state.metric);
+    const view = current();
     stand.textContent = view.stand;
-    if (window.Plotly) {
+    hint.textContent = view.hinweis;
+    const empty = !view.rows.length;
+    document.getElementById("leer").hidden = !empty;
+    if (window.Plotly) chart.hidden = empty;
+    if (window.Plotly && !empty) {
       const layout = {...view.figure.layout, width: document.body.clientWidth - 16};
       const narrow = document.body.clientWidth < 640;
       const data = view.figure.data.map(trace => ({
@@ -147,6 +169,13 @@ const DATA = {{DATA}};
   for (const button of buttons) {
     button.addEventListener("click", () => {
       state.view = button.dataset.view;
+      state.marked = null;
+      draw();
+    });
+  }
+  for (const button of metricButtons) {
+    button.addEventListener("click", () => {
+      state.metric = button.dataset.metric;
       state.marked = null;
       draw();
     });

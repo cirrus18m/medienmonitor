@@ -17,6 +17,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 
 from medienmonitor.render import PLOTLY_SRC, _json, _layout
+from medienmonitor.youtube import TOP_N
 
 # Groups: color AND symbol differ (readable without colors), colors of deutschlandmonitor.
 GROUPS = (
@@ -26,6 +27,30 @@ GROUPS = (
 )
 MEDIA_HOUSES = ("oeffentlich", "privat")  # values of "art" in youtube.yaml
 VIEWS = (("de", "Deutsch"), ("en", "Englisch"), ("alle", "Deutsch & Englisch"))
+# sort keys: key in youtube.json, button, axis title, hint over the chart
+METRICS = (
+    (
+        "aufrufe",
+        "Aufrufe",
+        "Aufrufe",
+        "Die {n} meistgesehenen Videos der letzten Tage. Ältere Videos hatten mehr Zeit, "
+        "Aufrufe zu sammeln; vergleichbarer sind die Aufrufe je Tag.",
+    ),
+    (
+        "aufrufe_je_tag",
+        "Aufrufe je Tag",
+        "Aufrufe je Tag",
+        "Die {n} Videos der letzten Tage mit den meisten Aufrufen je Tag online.",
+    ),
+    (
+        "aufrufe_erster_tag",
+        "Aufrufe am ersten Tag",
+        "Aufrufe am ersten Tag",
+        "Die {n} Videos der letzten Tage mit den meisten Aufrufen in den ersten 24 Stunden. "
+        "Den Wert gibt YouTube nicht an: Er wird aus den Abfragen alle 3 Stunden geschätzt "
+        "und fehlt bei Videos, die bei der ersten Abfrage schon älter als einen Tag waren.",
+    ),
+)
 LANGUAGE_LABELS = {"de": "Deutsch", "en": "Englisch", "mehrsprachig": "mehrsprachig"}
 ART_LABELS = {
     "oeffentlich": "öffentlich-rechtlich",
@@ -65,6 +90,10 @@ def number(value: int) -> str:
     return f"{value:,}".replace(",", ".")
 
 
+def first_day_text(value: int | None) -> str:
+    return "–" if value is None else number(value)
+
+
 def subscribers_text(value: int | None) -> str:
     """German short form: 396.000, 2,14 Mio.; empty if hidden."""
     if value is None:
@@ -74,7 +103,7 @@ def subscribers_text(value: int | None) -> str:
     return number(value)
 
 
-def figure(videos: list[dict], days: int) -> go.Figure:
+def figure(videos: list[dict], days: int, metric: str = "aufrufe", title: str = "Aufrufe"):
     fig = go.Figure()
     for key, label, color, symbol in GROUPS:
         chosen = [v for v in videos if group(v) == key]
@@ -84,7 +113,7 @@ def figure(videos: list[dict], days: int) -> go.Figure:
             go.Scatter(
                 name=label,
                 x=[v["tage_online"] for v in chosen],
-                y=[v["aufrufe"] for v in chosen],
+                y=[v[metric] for v in chosen],
                 mode="markers+text",
                 text=[str(v["rang"]) for v in chosen],
                 textposition="middle right",
@@ -104,13 +133,15 @@ def figure(videos: list[dict], days: int) -> go.Figure:
                         number(v["aufrufe"]),
                         number(v["aufrufe_je_tag"]),
                         subscribers_text(v["abonnenten"]) or "verborgen",
+                        first_day_text(v["aufrufe_erster_tag"]),
                     ]
                     for v in chosen
                 ],
                 hovertemplate=(
                     "<b>%{customdata[0]}. %{customdata[1]}</b><br>%{customdata[2]} "
                     "(%{customdata[6]} Abonnenten) · %{customdata[3]}<br>%{customdata[4]} "
-                    "Aufrufe, %{customdata[5]} je Tag<extra></extra>"
+                    "Aufrufe, %{customdata[5]} je Tag, %{customdata[7]} am ersten Tag"
+                    "<extra></extra>"
                 ),
             )
         )
@@ -127,7 +158,7 @@ def figure(videos: list[dict], days: int) -> go.Figure:
                 "automargin": True,
             },
             yaxis={
-                "title": {"text": "Aufrufe (logarithmisch)"},
+                "title": {"text": f"{title} (logarithmisch)"},
                 "type": "log",
                 # 1-2-5 steps, labels in German format (10.000, 20.000, 50.000 …)
                 "tickvals": TICKS,
@@ -154,6 +185,7 @@ def _rows(videos: list[dict]) -> list[list]:
             number(v["aufrufe_je_tag"]),
             subscribers_text(v["abonnenten"]),
             v["sprache"].upper(),
+            first_day_text(v["aufrufe_erster_tag"]),
         ]
         for v in videos
     ]
@@ -167,26 +199,41 @@ def _stand(payload: dict) -> str:
 def render_html(payload: dict) -> str:
     days = payload["fenster_tage"]
     lists = payload["listen"]
-    views = {
-        key: {
-            "figure": figure(lists[key], days).to_plotly_json(),
-            "rows": _rows(lists[key]),
-            "stand": (
-                f"{_stand(payload)} · letzte {days} Tage · "
-                f"{number(payload['gezaehlt_je_liste'][key])} Videos länger als "
-                f"{payload['mindestdauer_min']} Minuten"
-            ),
+    views = {}
+    for key, _ in VIEWS:
+        stand = (
+            f"{_stand(payload)} · letzte {days} Tage · "
+            f"{number(payload['gezaehlt_je_liste'][key])} Videos länger als "
+            f"{payload['mindestdauer_min']} Minuten"
+        )
+        views[key] = {
+            metric: {
+                "figure": figure(lists[key][metric], days, metric, title).to_plotly_json(),
+                "rows": _rows(lists[key][metric]),
+                "stand": stand,
+                "hinweis": hint.format(n=len(lists[key][metric]) or TOP_N)
+                + f" Nur Videos länger als {payload['mindestdauer_min']} Minuten, ohne "
+                "Livestreams und regelmäßige Nachrichtensendungen.",
+            }
+            for metric, _, title, hint in METRICS
         }
-        for key, _ in VIEWS
-    }
-    buttons = "".join(
+    language_buttons = "".join(
         f'<button type="button" data-view="{key}">{escape(label)}</button>' for key, label in VIEWS
     )
-    data = {"views": views, "groups": {key: label for key, label, _, _ in GROUPS}}
+    metric_buttons = "".join(
+        f'<button type="button" data-metric="{key}">{escape(label)}</button>'
+        for key, label, _, _ in METRICS
+    )
+    data = {
+        "views": views,
+        "groups": {key: label for key, label, _, _ in GROUPS},
+        "metrics": [key for key, _, _, _ in METRICS],
+    }
     template = (Path(__file__).parent / "youtube_template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{PLOTLY_SRC}}", PLOTLY_SRC)
-        .replace("{{BUTTONS}}", buttons)
+        .replace("{{BUTTONS}}", language_buttons)
+        .replace("{{METRIC_BUTTONS}}", metric_buttons)
         .replace("{{SOURCE}}", escape(SOURCE))
         .replace("{{DATA}}", _json(data))
     )

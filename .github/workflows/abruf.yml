@@ -69,23 +69,49 @@ jobs:
           uv run --no-dev scripts/run_hourly.py --data-dir daten ${DISSOLVE:+--neu-zuordnen "$DISSOLVE"}
 
       # YouTube every 3 hours (and on manual start): youtube.html and kanaele.html for the
-      # pages "Video-Medien" and "YouTube-Kanäle". Only the current state, no history
-      # (YouTube API terms); nothing goes to the branch daten. About 200 of the 10,000
-      # free quota units per run. Secret YOUTUBE_API_KEY; skipped while it is missing.
-      - name: YouTube abrufen
+      # pages "Video-Medien" and "YouTube-Kanäle". About 200 of the 10,000 free quota units
+      # per run. Secret YOUTUBE_API_KEY; skipped while it is missing.
+      # For "Aufrufe am ersten Tag" each run keeps the views of young videos in
+      # youtube-zwischenstand.json. It lives in the Actions cache, not in the public branch
+      # daten: entries leave after 11 days, unused caches after 7 (YouTube API terms allow
+      # keeping API data for at most 30 days).
+      - name: YouTube fällig?
+        id: youtube
         if: ${{ !cancelled() }}
-        continue-on-error: true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           EVENT: ${{ github.event_name }}
         run: |
           if [ -z "$YOUTUBE_API_KEY" ]; then
-            echo "YOUTUBE_API_KEY fehlt, YouTube übersprungen."; exit 0
+            echo "YOUTUBE_API_KEY fehlt, YouTube übersprungen."
+          elif [ "$EVENT" != "workflow_dispatch" ] && (( 10#$(date -u +%H) % 3 != 0 )); then
+            echo "YouTube nur alle 3 Stunden."
+          else
+            echo "faellig=true" >> "$GITHUB_OUTPUT"
           fi
-          if [ "$EVENT" != "workflow_dispatch" ] && (( 10#$(date -u +%H) % 3 != 0 )); then
-            echo "YouTube nur alle 3 Stunden."; exit 0
-          fi
-          uv run --no-dev scripts/run_youtube.py --out youtube-ausgabe
+
+      - name: YouTube-Zwischenstand laden
+        if: ${{ !cancelled() && steps.youtube.outputs.faellig == 'true' }}
+        uses: actions/cache/restore@v6
+        with:
+          path: youtube-zwischenstand.json
+          key: youtube-zwischenstand-${{ github.run_id }}
+          restore-keys: youtube-zwischenstand-
+
+      - name: YouTube abrufen
+        id: youtube_abruf
+        if: ${{ !cancelled() && steps.youtube.outputs.faellig == 'true' }}
+        continue-on-error: true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: uv run --no-dev scripts/run_youtube.py --out youtube-ausgabe
+
+      - name: YouTube-Zwischenstand sichern
+        if: ${{ !cancelled() && steps.youtube_abruf.outcome == 'success' }}
+        uses: actions/cache/save@v6
+        with:
+          path: youtube-zwischenstand.json
+          key: youtube-zwischenstand-${{ github.run_id }}
 
       - name: Neue Schlagzeilen und Themen committen
         if: ${{ !cancelled() }}

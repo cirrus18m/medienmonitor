@@ -63,19 +63,25 @@ direkt verlinken: `medienmonitor.html#thema=T5`.
 der Umgebung oder in `.env`) die Uploads der Kanäle aus `youtube.yaml` und deren
 Abonnenten ab und schreibt:
 
-* `youtube.json` – je Sprachauswahl (`de`, `en`, `alle`) die 30 meistgesehenen Videos der
-  letzten 10 Tage, die länger als 8 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
+* `youtube.json` – je Sprachauswahl (`de`, `en`, `alle`) und Sortierung (`aufrufe`,
+  `aufrufe_je_tag`, `aufrufe_erster_tag`) die 50 ersten Videos der letzten 10 Tage, die länger als 8 Minuten sind, höchstens 3 je Kanal; ohne Livestreams
   und Nachrichtensendungen (Titelmuster in `youtube.py` und je Kanal im Feld
   `ausschliessen`), dazu die Kanalliste.
-* `youtube.html` – Aufrufe (logarithmisch) über „Tage online“ und die Top-Liste, mit
-  Umschalter Deutsch / Englisch / Deutsch & Englisch.
+* `youtube.html` – Aufrufe, Aufrufe je Tag oder Aufrufe am ersten Tag (logarithmisch) über
+  „Tage online“ und die Top-Liste, mit Umschaltern für Sprache und Sortierung.
+
+„Aufrufe am ersten Tag“ gibt YouTube nicht an: Jeder Lauf merkt sich in
+`youtube-zwischenstand.json` (Workflow: Actions-Cache, nicht im Branch `daten`) die
+Aufrufe der Videos zuletzt vor und zuerst nach 24 Stunden online; `first_day_views`
+interpoliert linear. Einträge fallen nach 11 Tagen heraus (API-Bedingungen: höchstens
+30 Tage speichern).
 * `kanaele.html` – Kanalübersicht mit demselben Sprach-Umschalter, je Gruppe (staatliche und
   private Medienhäuser; unabhängige Kanäle, Organisationen und neue Medien) eine Tabelle
   mit Abonnenten und Zahl der Videos.
 
 Die Sprache kommt aus `youtube.yaml` (`sprache`: de, en, mehrsprachig); nur bei
-mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert wird nur der aktuelle
-Stand, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Der Workflow „Abruf“
+mehrsprachigen Kanälen zählt die Sprache des Videos. Gespeichert werden nur der aktuelle
+Stand und die Zwischenstände für den ersten Tag, keine Historie. Ohne Schlüssel: `--beispiel` (erfundene Videos). Der Workflow „Abruf“
 führt das alle 3 Stunden aus (Secret `YOUTUBE_API_KEY`) und lädt `youtube.html` und
 `kanaele.html` mit hoch. Vorlagen für die deutschlandmonitor-Seiten (Menü „Medienmonitor“:
 Text-Medien, Video-Medien, YouTube-Kanäle): `seite/medienmonitor.qmd`,

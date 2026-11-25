@@ -24,12 +24,16 @@ import yaml
 API = "https://www.googleapis.com/youtube/v3"
 TIMEOUT_S = 20.0
 WINDOW_DAYS = 10
-TOP_N = 30
+TOP_N = 50
 MAX_PER_CHANNEL = 3  # per list, so that a few busy channels do not fill it
 MIN_DURATION_S = 8 * 60  # interviews, talks and documentaries, no news clips or Shorts
-SCHEMA = 2
+SCHEMA = 3
 LANGUAGES = ("de", "en")  # choices of the chart; "alle" = both
 LISTS = ("de", "en", "alle")
+# sort keys of the lists (fields of a list entry)
+METRICS = ("aufrufe", "aufrufe_je_tag", "aufrufe_erster_tag")
+FIRST_DAY_H = 24
+MAX_GAP_H = 12  # snapshots around 24 h further apart give no first-day value
 
 # Titles of regular news programs and live broadcasts (all channels); per channel more
 # patterns in youtube.yaml (field "ausschliessen").
@@ -172,6 +176,46 @@ def exclusion_reason(video: Video, channel: Channel, now: datetime) -> str | Non
     return None
 
 
+def update_snapshots(snapshots: dict, videos: list[tuple[Video, Channel]], now: datetime) -> dict:
+    """Remember the views of counting videos shortly before and after their first day.
+
+    YouTube only reports the current view count. Runs every 3 hours keep per video the last
+    count before 24 hours online ("vor") and the first one after ("nach", [hours, views]);
+    ``first_day_views`` interpolates between them. Entries leave after WINDOW_DAYS + 1 days,
+    so nothing is kept longer than the API terms allow (30 days).
+    """
+    limit = now - timedelta(days=WINDOW_DAYS + 1)
+    kept = {
+        video_id: entry
+        for video_id, entry in snapshots.items()
+        if parse_time(entry["veroeffentlicht"]) > limit
+    }
+    for video, channel in videos:
+        if exclusion_reason(video, channel, now):
+            continue
+        hours = round((now - video.veroeffentlicht).total_seconds() / 3600, 2)
+        entry = kept.setdefault(
+            video.video_id,
+            {"veroeffentlicht": video.veroeffentlicht.isoformat(), "vor": None, "nach": None},
+        )
+        if hours < FIRST_DAY_H:
+            entry["vor"] = [hours, video.aufrufe]
+        elif entry["nach"] is None:
+            entry["nach"] = [hours, video.aufrufe]
+    return kept
+
+
+def first_day_views(entry: dict | None) -> int | None:
+    """Views after 24 hours, linear between the counts before and after; None if unknown
+    (video first seen after its first day, or the counts are too far apart)."""
+    if not entry or not entry.get("vor") or not entry.get("nach"):
+        return None
+    (h1, v1), (h2, v2) = entry["vor"], entry["nach"]
+    if h2 - h1 > MAX_GAP_H or h2 <= h1:
+        return None
+    return round(v1 + (v2 - v1) * (FIRST_DAY_H - h1) / (h2 - h1))
+
+
 class YouTubeApi:
     """The two API calls needed; ``key`` is never logged."""
 
@@ -248,7 +292,9 @@ class YouTubeApi:
         return items
 
 
-def _entry(video: Video, channel: Channel, language, subscribers, now: datetime) -> dict:
+def _entry(
+    video: Video, channel: Channel, language, subscribers, now: datetime, first_day=None
+) -> dict:
     days = max((now - video.veroeffentlicht).total_seconds() / 86400, 1 / 24)
     return {
         "video_id": video.video_id,
@@ -265,6 +311,7 @@ def _entry(video: Video, channel: Channel, language, subscribers, now: datetime)
         "dauer_s": video.dauer_s,
         "aufrufe": video.aufrufe,
         "aufrufe_je_tag": round(video.aufrufe / days),
+        "aufrufe_erster_tag": first_day,
         "url": f"https://www.youtube.com/watch?v={video.video_id}",
     }
 
@@ -275,10 +322,13 @@ def build_payload(
     errors: list[str] | None = None,
     channels: list[Channel] | None = None,
     subscribers: dict[str, int | None] | None = None,
+    snapshots: dict | None = None,
 ) -> dict:
-    """youtube.json: per language choice the TOP_N most watched counting videos of the
-    last WINDOW_DAYS (at most MAX_PER_CHANNEL per channel), and the list of channels."""
+    """youtube.json: per language choice and per metric (METRICS) the TOP_N counting
+    videos of the last WINDOW_DAYS (at most MAX_PER_CHANNEL per channel), and the list of
+    channels. ``snapshots`` (update_snapshots) give the views on the first day."""
     subscribers = subscribers or {}
+    snapshots = snapshots or {}
     channels = channels if channels is not None else list({c.name: c for _, c in videos}.values())
     counting = []
     reasons: dict[str, int] = {}
@@ -293,21 +343,40 @@ def build_payload(
         else:
             seen[1] += 1
             counting.append((video, channel, video_language(video, channel)))
-    counting.sort(key=lambda item: item[0].aufrufe or 0, reverse=True)
+    entries = [
+        (
+            _entry(
+                video,
+                channel,
+                language,
+                subscribers,
+                now,
+                first_day_views(snapshots.get(video.video_id)),
+            ),
+            language,
+        )
+        for video, channel, language in counting
+    ]
     lists = {}
     for key in LISTS:
-        chosen, per_list = [], {}
-        for item in counting:
-            name = item[1].name
-            if in_list(item[2], key) and per_list.get(name, 0) < MAX_PER_CHANNEL:
-                per_list[name] = per_list.get(name, 0) + 1
-                chosen.append(item)
-            if len(chosen) == TOP_N:
-                break
-        lists[key] = [
-            {"rang": rank, **_entry(video, channel, language, subscribers, now)}
-            for rank, (video, channel, language) in enumerate(chosen, start=1)
-        ]
+        lists[key] = {}
+        for metric in METRICS:
+            ranked = sorted(
+                (item for item in entries if item[0][metric] is not None),
+                key=lambda item: item[0][metric],
+                reverse=True,
+            )
+            chosen, per_list = [], {}
+            for entry, language in ranked:
+                name = entry["kanal"]
+                if in_list(language, key) and per_list.get(name, 0) < MAX_PER_CHANNEL:
+                    per_list[name] = per_list.get(name, 0) + 1
+                    chosen.append(entry)
+                if len(chosen) == TOP_N:
+                    break
+            lists[key][metric] = [
+                {"rang": rank, **entry} for rank, entry in enumerate(chosen, start=1)
+            ]
     return {
         "schema": SCHEMA,
         "stand": now.isoformat(timespec="minutes"),
@@ -316,6 +385,7 @@ def build_payload(
         "videos_geprueft": len(videos),
         "videos_gezaehlt": len(counting),
         "gezaehlt_je_liste": {key: sum(in_list(i[2], key) for i in counting) for key in LISTS},
+        "mit_erstem_tag": sum(e["aufrufe_erster_tag"] is not None for e, _ in entries),
         "ausgeschlossen": dict(sorted(reasons.items())),
         "fehler": errors or [],
         "listen": lists,
