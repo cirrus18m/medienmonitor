@@ -107,6 +107,22 @@ def main() -> int:
             )
             for line in classified["fehler"] + checked["fehler"]:
                 print(f"  Fehler – {line}")
+            # Separate clustering of the new media alone (filter "nur neue Medien").
+            new_result = topics.assign_new(args.data_dir, model, now, topics.NEW_MEDIA)
+            print(
+                f"Themen neue Medien: {new_result['zugeordnet']} von {new_result['offen']} "
+                "Schlagzeilen zugeordnet."
+            )
+            if args.consolidate == "ja" or (args.consolidate == "auto" and now.hour % 6 == 0):
+                new_merged = topics.consolidate(args.data_dir, model, now, topics.NEW_MEDIA)
+                print(f"Zusammengelegt (neue Medien): {new_merged['zusammengelegt']} Themen.")
+                new_result["fehler"] += new_merged["fehler"]
+            new_list = topics.TopicList.load(args.data_dir, topics.NEW_MEDIA)
+            new_classified = topics.classify_missing(new_list, model, now)
+            new_list.save(args.data_dir, topics.NEW_MEDIA)
+            for line in new_result["fehler"] + new_classified["fehler"]:
+                print(f"  Fehler – {line}")
+            failed = failed or bool(new_result["fehler"])
 
     domains = {f.name: f.domain for f in feeds.load_feeds(args.feeds, only_active=False)}
     payload = publish.build_payload(args.data_dir, now, domains)

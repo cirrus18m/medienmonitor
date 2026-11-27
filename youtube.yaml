@@ -13,6 +13,9 @@
 #             und neue Medien“
 #   lager     wie in feeds.yaml: links | mitte | rechts | alternativ
 #   spektrum  links | mitte-links | mitte | mitte-rechts | rechts | unklar
+#   themen    Liste aus Technik, Politik, Gesellschaft, Finanzen, Natur (mehrere möglich);
+#             Filter der YouTube-Seiten. Am 28.11.2026 nach Kanalbeschreibung und den
+#             letzten Videotiteln eingeordnet (Vorschlag, bitte bei Bedarf anpassen)
 #   aktiv     false = wird nicht abgerufen (Grund als Kommentar)
 #
 #   ausschliessen  reguläre Ausdrücke auf den Titel (Groß-/Kleinschreibung egal) für
@@ -33,6 +36,7 @@ kanaele:
     art: oeffentlich
     lager: mitte
     spektrum: mitte
+    themen: [Politik, Gesellschaft]
     ausschliessen:
       - '^[^|]+ / [^|]+ / '
 
@@ -44,6 +48,7 @@ kanaele:
     art: oeffentlich
     lager: mitte
     spektrum: mitte
+    themen: [Politik, Gesellschaft]
 
   - name: phoenix
     kanal_id: UCwyiPnNlT8UABRmGmU0T9jg
@@ -53,6 +58,7 @@ kanaele:
     art: oeffentlich
     lager: mitte
     spektrum: mitte
+    themen: [Politik]
 
   - name: DER SPIEGEL
     kanal_id: UC1w6pNGiiLdZgyNpXUnA4Zw
@@ -62,6 +68,7 @@ kanaele:
     art: privat
     lager: links
     spektrum: mitte-links
+    themen: [Politik, Gesellschaft]
 
   - name: WELT Nachrichtensender
     kanal_id: UCZMsvbAhhRblVGXmEXW8TSA
@@ -71,6 +78,7 @@ kanaele:
     art: privat
     lager: rechts
     spektrum: mitte-rechts
+    themen: [Politik, Gesellschaft]
 
   - name: BILD
     kanal_id: UC4zcMHyrT_xyWlgy5WGpFFQ
@@ -80,6 +88,7 @@ kanaele:
     art: privat
     lager: rechts
     spektrum: mitte-rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Ronzheimer
     kanal_id: UC4QT_F-kQYGcxccNzU2jUMw
@@ -89,6 +98,7 @@ kanaele:
     art: privat   # Podcast von Paul Ronzheimer (BILD)
     lager: rechts
     spektrum: mitte-rechts
+    themen: [Politik]
 
   - name: Markus Lanz
     kanal_id: ""
@@ -119,6 +129,7 @@ kanaele:
     art: oeffentlich   # funk (öffentlich-rechtlich finanziert)
     lager: mitte
     spektrum: mitte
+    themen: [Politik, Gesellschaft]
 
   - name: Die Da Oben!
     kanal_id: UCfb7LAYCeJJiT3gyquv7V5Q
@@ -128,6 +139,7 @@ kanaele:
     art: oeffentlich   # funk (öffentlich-rechtlich finanziert)
     lager: links
     spektrum: mitte-links
+    themen: [Politik]
 
   - name: Simplicissimus
     kanal_id: UCKGMHVipEvuZudhHD05FOYA
@@ -137,6 +149,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: mitte
+    themen: [Gesellschaft]
 
   - name: Rezo
     kanal_id: UCvU1c8D5n1Rue3NFRu0pJSw
@@ -146,6 +159,7 @@ kanaele:
     art: unabhaengig
     lager: links
     spektrum: mitte-links
+    themen: [Gesellschaft]
     aktiv: false   # 24.11.2026: neuestes Video vom 04.01.2024
 
   - name: Jung & Naiv
@@ -156,6 +170,7 @@ kanaele:
     art: unabhaengig
     lager: links
     spektrum: links
+    themen: [Politik]
 
   - name: Wohlstand für Alle
     kanal_id: UCRprqV4FxwrWQJbZ0VLFS_g
@@ -165,6 +180,7 @@ kanaele:
     art: unabhaengig
     lager: links
     spektrum: links
+    themen: [Finanzen, Politik]
 
   - name: '{ungeskriptet} by Ben'
     kanal_id: UCjkSqbf8E4MybdYmfhlW10A
@@ -174,6 +190,7 @@ kanaele:
     art: unabhaengig   # Interview-Podcast von Ben Berndt; Gäste aus allen Lagern
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   # ---------- neue Medien: links ----------
   - name: NachDenkSeiten
@@ -184,6 +201,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: acTVism Munich
     kanal_id: UCe5hl70Es-VQ4OWvxssFH4A
@@ -193,6 +211,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   # ---------- neue Medien: rechts ----------
   - name: NIUS
@@ -203,6 +222,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Tichys Einblick
     kanal_id: UCB37CFICVTUlewYdbMSChIA
@@ -212,6 +232,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Finanzen]
     ausschliessen:
       - 'TE Wecker'
 
@@ -223,6 +244,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Boris Reitschuster
     kanal_id: UCkSEq4JuI5VxqWIrRY2-pew
@@ -232,6 +254,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Punkt.PRERADOVIC
     kanal_id: UC-q8URCNmX5Wg4R9kXtW4tg
@@ -241,6 +264,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Hallo Meinung
     kanal_id: UCbanHTRuGv2Fi7flpO735yw
@@ -250,6 +274,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik]
 
   - name: Clownswelt
     kanal_id: UCB0H51gtgcpgYGI7LgflNJw
@@ -259,6 +284,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik, Gesellschaft]
 
   - name: Die Weltwoche
     kanal_id: UCq-b0dwW97YRZWgSCikWQRA
@@ -268,6 +294,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik]
     ausschliessen:
       - 'Weltwoche Daily'
 
@@ -279,6 +306,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Finanzen, Politik]
 
   - name: AUF1
     kanal_id: UChkELlk5GBaUCVx8-94IK_Q
@@ -288,6 +316,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik]
 
   - name: COMPACT-TV
     kanal_id: UCgvFsn6bRKqND1cW3HpzDrA
@@ -297,6 +326,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Politik]
 
   # ---------- Grenzfälle (Wirtschaft/Finanzen mit viel Politik) ----------
   - name: Kettner Edelmetalle
@@ -307,6 +337,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: rechts
+    themen: [Finanzen]
 
   - name: Hoss & Hopf
     kanal_id: UC8PeBxhbnTqKQ6P161s3_Jw
@@ -316,6 +347,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Gesellschaft, Finanzen]
     aktiv: false   # 24.11.2026: neuestes Video vom 05.12.2025
 
   - name: Daniele Ganser
@@ -326,6 +358,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: apolut
     kanal_id: UCDEgEWPYLGJjFleQCsm7M_A
@@ -335,6 +368,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   # ---------- ergänzt am 24.11.2026 (Einordnung: VORSCHLAG, bitte prüfen) ----------
 
@@ -346,6 +380,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Jasmin Kosubek'
     kanal_id: UCuXKxMi1MAxPVZVT0bc976Q
@@ -355,6 +390,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'Syriana Analysis'
     kanal_id: UClvD6c1VI75QZWJjA_yiWhg
@@ -364,6 +400,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Prof. Dr. Christian Rieck'
     kanal_id: UCSExr_QUT6h-4sGW5hGjrCA
@@ -373,6 +410,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'Vermietertagebuch (Alexander Raue)'
     kanal_id: UCiTJladOHCMkKndVBsn23VQ
@@ -382,6 +420,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Finanzen]
 
   - name: 'Salim Samatou'
     kanal_id: UCs05VH8MBAaX_cNXlrYIZkA
@@ -391,6 +430,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'Hania'
     kanal_id: UC0tDu72Mbzs7t3kAeSC-PLA
@@ -400,6 +440,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft, Politik]
 
   - name: 'John Mearsheimer'
     kanal_id: UCEaoODAZJF5w20lzcX1v03w
@@ -409,6 +450,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'India Global Review'
     kanal_id: UC83iGbaOhZR8AWNYYNzSNjg
@@ -418,6 +460,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'The Peacemonger (Ian Proud)'
     kanal_id: UCItXrWfhxRmaQuOunGfm-7w
@@ -427,6 +470,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'The Diary Of A CEO'
     kanal_id: UCGq-a57w-aPwyi3pW7XLiHw
@@ -436,6 +480,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft, Finanzen]
 
   - name: 'INDUSTRIEMAGAZIN'
     kanal_id: UCO7kohVnA8VzILzsnagXDHw
@@ -445,6 +490,7 @@ kanaele:
     art: privat
     lager: mitte
     spektrum: mitte
+    themen: [Technik, Finanzen]
 
   - name: 'Michael Lüders'
     kanal_id: UCOpHmpW57dYcY8-4pj5-Zpw
@@ -454,6 +500,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Moove (auto motor und sport)'
     kanal_id: UC3sFnml7fpaVkaVp1G6aOlg
@@ -463,6 +510,7 @@ kanaele:
     art: privat
     lager: mitte
     spektrum: unklar
+    themen: [Technik]
 
   - name: 'Breaking Points'
     kanal_id: UCDRIjKy6eZOvKtOELtTdeUA
@@ -472,6 +520,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'nextmove'
     kanal_id: UCgmB8S3f8-9dR8alVUZuZxQ
@@ -481,6 +530,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Technik]
 
   - name: 'NuoViso'
     kanal_id: UCgJ0yIYRJT13BPtQdagWORA
@@ -490,6 +540,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'Neutrality Studies'
     kanal_id: UCHdLVKdAeG6zAeZMGZh91bg
@@ -499,6 +550,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Neutrality Studies Deutsch'
     kanal_id: UCgvmynBTfETXqInYcss5qcQ
@@ -508,6 +560,7 @@ kanaele:
     art: unabhaengig   # deutsche Fassung (synchronisiert)
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Agitator live'
     kanal_id: UCvzYj53DsZxNSJhCqd2Yr3g
@@ -517,6 +570,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Ulrike Guérot'
     kanal_id: UCZXCfY_O6gj2trJ3EQuzlmA
@@ -526,6 +580,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'AKTUALITUM'
     kanal_id: UC0ju8JqCWCs9hO77SnUCmeA
@@ -535,6 +590,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'mym by Simo'
     kanal_id: UCxOGWb_OYoaz2V3QclJT3YA
@@ -544,6 +600,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen, Gesellschaft]
 
   - name: 'Cashkurs.com (Dirk Müller)'
     kanal_id: UCeKWO9gvmAyoPiEuaIwnGHQ
@@ -553,6 +610,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'Lex Fridman'
     kanal_id: UCSHZKyawb77ixDdsGog4iWA
@@ -562,6 +620,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Technik, Gesellschaft]
 
   - name: 'Schuler! Fragen, was ist'
     kanal_id: UC_3M2qj2haMDhrPobUBx1Fw
@@ -571,6 +630,7 @@ kanaele:
     art: unabhaengig   # Ralf Schuler, NIUS
     lager: alternativ
     spektrum: rechts
+    themen: [Politik]
 
   - name: 'Principles by Ray Dalio'
     kanal_id: UCqvaXJ1K3HheTPNjH-KpwXQ
@@ -580,6 +640,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'Glenn Diesen'
     kanal_id: UCZFCDIHTe9HGxtIuVDpBz7g
@@ -589,6 +650,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Glenn Diesen Deutsch'
     kanal_id: UC4k3xTKOrVWGJ4kakK6dLuA
@@ -598,6 +660,7 @@ kanaele:
     art: unabhaengig   # deutsche Fassung (synchronisiert)
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'ServusTV On'
     kanal_id: UC-7qscJH_SncZvCm9Ty014Q
@@ -607,6 +670,7 @@ kanaele:
     art: privat
     lager: rechts
     spektrum: mitte-rechts
+    themen: [Politik, Gesellschaft]
 
   - name: 'Geladen – Batteriepodcast'
     kanal_id: UCjlQUYxw7yjLuq5wTcJE-yA
@@ -616,6 +680,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Technik]
 
   - name: 'Marc Friedrich'
     kanal_id: UCSiFC1DCXr3p1YDzyu9rogA
@@ -625,6 +690,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'Flavio von Witzleben'
     kanal_id: UCOnyot4cXF5C7OmNXL_kbeA
@@ -634,6 +700,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Asian Boss'
     kanal_id: UC2-_WWPT_124iN6jiym4fOw
@@ -643,6 +710,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft]
 
   - name: 'Overton Magazin'
     kanal_id: UCeP57zCgmlMrEGBrYJhZUlA
@@ -652,6 +720,7 @@ kanaele:
     art: unabhaengig   # wie in feeds.yaml
     lager: alternativ
     spektrum: links
+    themen: [Politik, Gesellschaft]
 
   - name: 'The Ezra Klein Show'
     kanal_id: UCnxuOd8obvLLtf5_-YKFbiQ
@@ -661,6 +730,7 @@ kanaele:
     art: privat   # New York Times
     lager: links
     spektrum: mitte-links
+    themen: [Politik, Gesellschaft]
 
   - name: 'Prof. Stefan Homburg'
     kanal_id: UCDG7fluFPCLOmFz_Rhc3cXw
@@ -670,6 +740,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Finanzen, Politik]
 
   - name: 'Patrik Baab'
     kanal_id: UCHy1O_b9DSGDrlTSg5ZnSaw
@@ -679,6 +750,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Predictive History'
     kanal_id: UC11aHtNnc5bEPLI4jf6mnYg
@@ -688,6 +760,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
 
   - name: 'Kissler Kompakt'
     kanal_id: UC6RYT0kcxYh_u8OJoAaF1Pg
@@ -697,6 +770,7 @@ kanaele:
     art: unabhaengig
     lager: rechts
     spektrum: mitte-rechts
+    themen: [Politik, Gesellschaft]
 
   - name: 'Cyrus Janssen'
     kanal_id: UCxEQsjgRRfGWiJJu_PDygxw
@@ -706,6 +780,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik, Finanzen]
 
   - name: 'GZT'
     kanal_id: UClWewRX7n_IY3mBbxmttR5Q
@@ -715,6 +790,7 @@ kanaele:
     art: privat
     lager: mitte
     spektrum: unklar
+    themen: [Politik, Gesellschaft]
     aktiv: false   # 24.11.2026: türkisch, passt in keine Sprachauswahl
 
   - name: 'Anti-Spiegel (Thomas Röper)'
@@ -725,6 +801,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Reason2Resist (Dimitri Lascaris)'
     kanal_id: UCcLnmCiZ691HyvB6UvZq69A
@@ -734,6 +811,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: 'Apolut Mirror'
     kanal_id: UCZx1PN9lK5-8wWGfL3PsGCQ
@@ -743,6 +821,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
     aktiv: false   # 24.11.2026: Spiegel von apolut, doppelte Videos
 
   - name: 'TEDx Talks'
@@ -753,6 +832,7 @@ kanaele:
     art: organisation
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft, Technik, Natur]
 
   - name: 'Hotel Matze'
     kanal_id: UCjRo7YkneL44wPDUW-aQoww
@@ -762,6 +842,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft]
 
   - name: 'HKCM'
     kanal_id: UC3AdN1bEmEonuSwXNS8LixQ
@@ -771,6 +852,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'Mario Lochner'
     kanal_id: UCWFnsgnkOAc0D7OweruB3hA
@@ -780,6 +862,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'The Duran'
     kanal_id: UCdeMVChrumySxV9N1w0Au-w
@@ -789,6 +872,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Geld für die Welt (Maurice Höfgen)'
     kanal_id: UCqLv2nTsMB_FXtQRFNXjWhA
@@ -798,6 +882,7 @@ kanaele:
     art: unabhaengig
     lager: links
     spektrum: links
+    themen: [Finanzen, Politik]
 
   - name: 'The Grayzone Deutsch'
     kanal_id: UCO5rJweBuv70ZFmnGDb8_OA
@@ -807,6 +892,7 @@ kanaele:
     art: unabhaengig   # deutsche Fassung (synchronisiert)
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: 'Wall Street Truthbombs'
     kanal_id: UCTK_cv-y88CScoudcXnS1Ew
@@ -816,6 +902,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Finanzen]
 
   - name: 'Geopolitical Economy Report'
     kanal_id: UCwlvSJdcMc7iGdR-aducSog
@@ -825,6 +912,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik, Finanzen]
 
   - name: 'Ärzte ohne Grenzen'
     kanal_id: UCATiQARrE7ft2iI0wMafVjw
@@ -834,6 +922,7 @@ kanaele:
     art: organisation
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft]
 
   - name: 'The Grayzone'
     kanal_id: UCEXR8pRTkE2vFeJePNe9UcQ
@@ -843,6 +932,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: 'The Cradle'
     kanal_id: UC2liaNc5y50YBVjgXiQxdHQ
@@ -852,6 +942,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'Double Down News'
     kanal_id: UCeRYN0tYBQVrC2cKsxJjdow
@@ -861,6 +952,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: 'Asianometry'
     kanal_id: UC1LpsuAUaKoMzzJSEt5WImw
@@ -870,6 +962,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Technik, Finanzen]
 
   - name: 'Johnny Harris'
     kanal_id: UCmGSJVG3mCRXVOP4yZrU1Dw
@@ -879,6 +972,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft, Natur]
 
   - name: 'Sachlich richtig (Medien-Podcast)'
     kanal_id: UC1kcTyykNZVYE9LajEA8eLw
@@ -888,6 +982,7 @@ kanaele:
     art: unabhaengig
     lager: mitte
     spektrum: unklar
+    themen: [Gesellschaft]
 
   - name: 'India & Global Left'
     kanal_id: UCBqd_VSxqDngXahpcRp7daA
@@ -897,6 +992,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: links
+    themen: [Politik]
 
   - name: 'RethinkX'
     kanal_id: UCBQAC69i3HBvraOMvJEj58g
@@ -906,6 +1002,7 @@ kanaele:
     art: organisation
     lager: mitte
     spektrum: unklar
+    themen: [Technik]
 
   - name: 'Gabriele Krone-Schmalz'
     kanal_id: UC9bIzo1UsNGjAIiwtAcGLYg
@@ -915,6 +1012,7 @@ kanaele:
     art: unabhaengig
     lager: alternativ
     spektrum: unklar
+    themen: [Politik]
 
   - name: 'media.ccc.de (Chaos Computer Club)'
     kanal_id: UC2TXq_t06Hjdr2g_KdKpHQg
@@ -924,3 +1022,4 @@ kanaele:
     art: organisation
     lager: mitte
     spektrum: unklar
+    themen: [Technik, Gesellschaft]

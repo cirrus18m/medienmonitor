@@ -23,6 +23,7 @@ from medienmonitor import store
 from medienmonitor.labeler import Labeler
 
 TOPICS_FILE = "themen.json"
+NEW_TOPICS_FILE = "themen_neu.json"
 OTHER = "sonstiges"  # no news topic (service, sports results, horoscope, ads …)
 ACTIVE_HOURS = 48
 MAX_ACTIVE_TOPICS = 400
@@ -184,6 +185,25 @@ def _iso(moment: datetime) -> str:
     return moment.astimezone(UTC).isoformat(timespec="seconds")
 
 
+@dataclass(frozen=True)
+class Scope:
+    """One clustering: its topic file, the field of the headline that holds the topic and
+    the camp (``lager``) whose headlines it covers (None: all headlines)."""
+
+    file: str
+    field: str
+    camp: str | None = None
+
+    def covers(self, row: dict) -> bool:
+        return self.camp is None or row.get("lager") == self.camp
+
+
+# All media together, and the new media on their own (filter "nur neue Medien"): their
+# topics come out differently when the many headlines of the old media do not set them.
+ALL_MEDIA = Scope(TOPICS_FILE, "thema_id")
+NEW_MEDIA = Scope(NEW_TOPICS_FILE, "thema_neu_id", "alternativ")
+
+
 @dataclass
 class TopicList:
     themen: dict[str, dict] = field(default_factory=dict)
@@ -191,17 +211,17 @@ class TopicList:
 
     # -- file --------------------------------------------------------------------
     @classmethod
-    def load(cls, data_dir: Path) -> TopicList:
-        path = data_dir / TOPICS_FILE
+    def load(cls, data_dir: Path, scope: Scope = ALL_MEDIA) -> TopicList:
+        path = data_dir / scope.file
         if not path.exists():
             return cls()
         data = json.loads(path.read_text(encoding="utf-8"))
         return cls(themen=data["themen"], naechste_nr=data["naechste_nr"])
 
-    def save(self, data_dir: Path) -> None:
+    def save(self, data_dir: Path, scope: Scope = ALL_MEDIA) -> None:
         data = {"schema": 1, "naechste_nr": self.naechste_nr, "themen": self.themen}
         text = json.dumps(data, ensure_ascii=False, indent=1, sort_keys=False) + "\n"
-        (data_dir / TOPICS_FILE).write_text(text, encoding="utf-8")
+        (data_dir / scope.file).write_text(text, encoding="utf-8")
 
     # -- topics ------------------------------------------------------------------
     def add(self, name: str, description: str, now: datetime, ressort: str | None = None) -> str:
@@ -323,21 +343,23 @@ def apply_assignment(
     return result
 
 
-def unassigned(data_dir: Path, now: datetime) -> list[dict]:
+def unassigned(data_dir: Path, now: datetime, scope: Scope = ALL_MEDIA) -> list[dict]:
     rows = [
         row
         for row in store.read_days(data_dir, now.date(), LOOKBACK_DAYS)
-        if not row.get("thema_id")
+        if scope.covers(row) and not row.get(scope.field)
     ]
     rows.sort(key=lambda r: r["abgerufen"], reverse=True)
     return rows[:MAX_PER_RUN]
 
 
-def assign_new(data_dir: Path, labeler: Labeler, now: datetime | None = None) -> dict:
-    """Assign topics to headlines without one; saves themen.json and the day files."""
+def assign_new(
+    data_dir: Path, labeler: Labeler, now: datetime | None = None, scope: Scope = ALL_MEDIA
+) -> dict:
+    """Assign topics to headlines without one; saves the topic file and the day files."""
     now = now or datetime.now(UTC)
-    topics = TopicList.load(data_dir)
-    rows = unassigned(data_dir, now)
+    topics = TopicList.load(data_dir, scope)
+    rows = unassigned(data_dir, now, scope)
     assigned: dict[str, str] = {}
     errors: list[str] = []
     for start in range(0, len(rows), BATCH_SIZE):
@@ -350,8 +372,8 @@ def assign_new(data_dir: Path, labeler: Labeler, now: datetime | None = None) ->
             errors.append(str(exc))
             break
         assigned |= apply_assignment(topics, answer, batch, active, now)
-    topics.save(data_dir)
-    store.set_topics(data_dir, now.date(), LOOKBACK_DAYS, assigned)
+    topics.save(data_dir, scope)
+    store.set_topics(data_dir, now.date(), LOOKBACK_DAYS, assigned, scope.field)
     return {"offen": len(rows), "zugeordnet": len(assigned), "fehler": errors}
 
 
@@ -414,11 +436,13 @@ def classify_missing(topics: TopicList, labeler: Labeler, now: datetime, hours: 
 # -- consolidation ----------------------------------------------------------------
 
 
-def build_consolidate_prompt(topics: TopicList, active: list[str], rows: list[dict]) -> str:
+def build_consolidate_prompt(
+    topics: TopicList, active: list[str], rows: list[dict], field: str = ALL_MEDIA.field
+) -> str:
     counts: Counter[str] = Counter()
     examples: dict[str, list[str]] = defaultdict(list)
     for row in rows:
-        tid = topics.resolve(row.get("thema_id"))
+        tid = topics.resolve(row.get(field))
         if tid in active:
             counts[tid] += 1
             if len(examples[tid]) < 3:
@@ -430,14 +454,16 @@ def build_consolidate_prompt(topics: TopicList, active: list[str], rows: list[di
     return "\n".join(lines)
 
 
-def consolidate(data_dir: Path, labeler: Labeler, now: datetime | None = None) -> dict:
+def consolidate(
+    data_dir: Path, labeler: Labeler, now: datetime | None = None, scope: Scope = ALL_MEDIA
+) -> dict:
     now = now or datetime.now(UTC)
-    topics = TopicList.load(data_dir)
+    topics = TopicList.load(data_dir, scope)
     active = topics.active(now)
     if len(active) < 2:
         return {"zusammengelegt": 0, "fehler": []}
-    rows = list(store.read_days(data_dir, now.date(), LOOKBACK_DAYS))
-    prompt = build_consolidate_prompt(topics, active, rows)
+    rows = [r for r in store.read_days(data_dir, now.date(), LOOKBACK_DAYS) if scope.covers(r)]
+    prompt = build_consolidate_prompt(topics, active, rows, scope.field)
     try:
         answer = labeler.complete_json(CONSOLIDATE_SYSTEM, prompt, CONSOLIDATE_SCHEMA)
     except Exception as exc:
@@ -449,5 +475,5 @@ def consolidate(data_dir: Path, labeler: Labeler, now: datetime | None = None) -
             continue
         sources = [s for s in entry["von"] if s in allowed]
         merged += topics.merge(sources, entry["nach"], entry.get("neuer_name"))
-    topics.save(data_dir)
+    topics.save(data_dir, scope)
     return {"zusammengelegt": merged, "fehler": []}

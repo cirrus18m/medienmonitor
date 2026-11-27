@@ -256,19 +256,19 @@ def test_render_escapes_titles_and_groups(tmp_path):
     html = youtube_render.render_html(payload)
     assert "<script>alert(1)" not in html
     data = json.loads(html.split("const DATA = ", 1)[1].split(";\n", 1)[0])
-    rows = data["views"]["de"]["aufrufe"]["rows"]
+    rows = data["views"]["de"]["alle"]["aufrufe"]["rows"]
     assert [row[1] for row in rows] == ["unabhaengig", "medienhaus"]
     assert rows[0][9] == "2,14 Mio." and rows[0][11] == "–"  # no first-day value
     assert data["metrics"] == list(youtube.METRICS)
     for metric, label, _, _ in youtube_render.METRICS:
-        figure = data["views"]["de"][metric]["figure"]
+        figure = data["views"]["de"]["alle"][metric]["figure"]
         assert figure["layout"]["yaxis"]["type"] == "log"
         assert figure["layout"]["yaxis"]["title"]["text"] == f"{label} (logarithmisch)"
-    assert data["views"]["de"]["aufrufe_erster_tag"]["rows"] == []
+    assert data["views"]["de"]["alle"]["aufrufe_erster_tag"]["rows"] == []
     channels = youtube_render.render_channels_html(payload)
     assert "&lt;b&gt;Mitte&lt;/b&gt;" in channels and "<b>Mitte</b>" not in channels
     assert channels.count('class="ansicht"') == 3  # Deutsch, Englisch, Deutsch & Englisch
-    assert "Staatliche und private Medienhäuser (1)" in channels
+    assert "Staatliche und private Medienhäuser (<span class=\"anzahl\">1</span>)" in channels
     assert "öffentlich-rechtlich" in channels
     youtube_render.write_html(payload, tmp_path)
     assert {p.name for p in tmp_path.iterdir()} == {"youtube.html", "kanaele.html"}
@@ -358,3 +358,55 @@ def test_channel_page_shows_change_and_sort_buttons():
     assert "Alphabetisch" in html and "Veränderung" in html and "+10,0 %" in html
     assert html.index("Kanal B") < html.index("Kanal A")  # stronger growth first
     assert "documentElement.scrollHeight" not in html
+
+
+def test_theme_labels_from_yaml(tmp_path):
+    path = tmp_path / "youtube.yaml"
+    path.write_text(
+        "kanaele:\n"
+        "  - {name: A, kanal_id: UC1, land: DE, art: x, lager: mitte, spektrum: mitte,"
+        " themen: [Politik, Finanzen]}\n",
+        encoding="utf-8",
+    )
+    assert youtube.load_channels(path)[0].themen == ("Politik", "Finanzen")
+    path.write_text(
+        "kanaele:\n"
+        "  - {name: A, kanal_id: UC1, land: DE, art: x, lager: mitte, spektrum: mitte,"
+        " themen: [Sport]}\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="Sport"):
+        youtube.load_channels(path)
+
+
+def test_real_channel_list_has_valid_themes():
+    from pathlib import Path
+
+    channels = youtube.load_channels(Path(__file__).resolve().parents[1] / "youtube.yaml")
+    assert channels and all(c.themen for c in channels), [c.name for c in channels if not c.themen]
+    used = {theme for c in channels for theme in c.themen}
+    assert used == set(youtube.THEMES)
+
+
+def test_theme_lists_are_own_top_lists():
+    """Per label a top list of its own: a finance video ranks 1 there although it is far
+    down in the list of all videos."""
+    politics = channel(name="P", kanal_id="UCp", themen=("Politik",))
+    money = channel(name="F", kanal_id="UCf", themen=("Finanzen", "Gesellschaft"))
+    videos = [(video(video_id=f"p{n}", aufrufe=100_000 + n), politics) for n in range(3)]
+    videos.append((video(video_id="f1", aufrufe=1_000), money))
+    payload = youtube.build_payload(videos, NOW, channels=[politics, money])
+    assert payload["listen"]["de"]["aufrufe"][-1]["video_id"] == "f1"
+    finance = payload["listen_themen"]["Finanzen"]["de"]["aufrufe"]
+    assert [(v["rang"], v["video_id"]) for v in finance] == [(1, "f1")]
+    assert payload["listen_themen"]["Natur"]["de"]["aufrufe"] == []
+    assert payload["listen_themen"]["Politik"]["de"]["aufrufe"][0]["themen"] == ["Politik"]
+    html = youtube_render.render_html(payload)
+    data = json.loads(html.split("const DATA = ", 1)[1].split(";\n", 1)[0])
+    assert set(data["views"]["de"]) == {"alle", *youtube.THEMES}
+    assert data["views"]["de"]["Finanzen"]["aufrufe"]["rows"][0][3] == "Gespräch über die Rente"
+    assert 'data-theme="Finanzen"' in html
+    channels_html = youtube_render.render_channels_html(payload)
+    assert 'data-themen="Finanzen|Gesellschaft"' in channels_html
+    assert "<td>Finanzen, Gesellschaft</td>" in channels_html
+    assert 'data-thema="Natur"' in channels_html

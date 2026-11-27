@@ -31,7 +31,10 @@ WINDOW_DAYS = 10
 TOP_N = 50
 MAX_PER_CHANNEL = 3  # per list, so that a few busy channels do not fill it
 MIN_DURATION_S = 8 * 60  # interviews, talks and documentaries, no news clips or Shorts
-SCHEMA = 3
+SCHEMA = 4
+# Topic labels of the channels (field "themen" in youtube.yaml, several possible).
+THEMES = ("Technik", "Politik", "Gesellschaft", "Finanzen", "Natur")
+ALL_THEMES = "alle"
 LANGUAGES = ("de", "en")  # choices of the chart; "alle" = both
 LISTS = ("de", "en", "alle")
 # sort keys of the lists (fields of a list entry)
@@ -79,6 +82,7 @@ class Channel:
     sprache: str = "de"  # de | en | mehrsprachig
     aktiv: bool = True
     ausschliessen: tuple[str, ...] = field(default_factory=tuple)
+    themen: tuple[str, ...] = field(default_factory=tuple)
 
     @property
     def uploads_playlist(self) -> str:
@@ -97,6 +101,10 @@ def load_channels(path: Path) -> list[Channel]:
     for entry in data.get("kanaele", []):
         entry = {k: v for k, v in entry.items() if k in Channel.__dataclass_fields__}
         entry["ausschliessen"] = tuple(entry.get("ausschliessen") or ())
+        entry["themen"] = tuple(entry.get("themen") or ())
+        unknown = set(entry["themen"]) - set(THEMES)
+        if unknown:
+            raise ValueError(f"{entry['name']}: unbekannte Themen {sorted(unknown)}")
         entry["lager"] = entry.get("lager") or ""
         # YAML reads some codes as other types (land: NO -> False)
         for key in ("land", "sprache", "art", "spektrum"):
@@ -348,6 +356,7 @@ def _entry(
         "art": channel.art,
         "lager": channel.lager,
         "spektrum": channel.spektrum,
+        "themen": list(channel.themen),
         "veroeffentlicht": video.veroeffentlicht.isoformat(),
         "tage_online": round(days, 2),
         "dauer_s": video.dauer_s,
@@ -402,26 +411,31 @@ def build_payload(
         )
         for video, channel, language in counting
     ]
-    lists = {}
-    for key in LISTS:
-        lists[key] = {}
-        for metric in METRICS:
-            ranked = sorted(
-                (item for item in entries if item[0][metric] is not None),
-                key=lambda item: item[0][metric],
-                reverse=True,
-            )
-            chosen, per_list = [], {}
-            for entry, language in ranked:
-                name = entry["kanal"]
-                if in_list(language, key) and per_list.get(name, 0) < MAX_PER_CHANNEL:
-                    per_list[name] = per_list.get(name, 0) + 1
-                    chosen.append(entry)
-                if len(chosen) == TOP_N:
-                    break
-            lists[key][metric] = [
-                {"rang": rank, **entry} for rank, entry in enumerate(chosen, start=1)
-            ]
+
+    def ranking(key: str, metric: str, theme: str | None = None) -> list[dict]:
+        ranked = sorted(
+            (item for item in entries if item[0][metric] is not None),
+            key=lambda item: item[0][metric],
+            reverse=True,
+        )
+        chosen, per_list = [], {}
+        for entry, language in ranked:
+            name = entry["kanal"]
+            if theme and theme not in entry["themen"]:
+                continue
+            if in_list(language, key) and per_list.get(name, 0) < MAX_PER_CHANNEL:
+                per_list[name] = per_list.get(name, 0) + 1
+                chosen.append(entry)
+            if len(chosen) == TOP_N:
+                break
+        return [{"rang": rank, **entry} for rank, entry in enumerate(chosen, start=1)]
+
+    lists = {key: {metric: ranking(key, metric) for metric in METRICS} for key in LISTS}
+    # the same per topic label: its own top list, not a cut-out of the one above
+    theme_lists = {
+        theme: {key: {metric: ranking(key, metric, theme) for metric in METRICS} for key in LISTS}
+        for theme in THEMES
+    }
     return {
         "schema": SCHEMA,
         "stand": now.isoformat(timespec="minutes"),
@@ -435,6 +449,8 @@ def build_payload(
         "ausgeschlossen": dict(sorted(reasons.items())),
         "fehler": errors or [],
         "listen": lists,
+        "themen": list(THEMES),
+        "listen_themen": theme_lists,
         "kanaele": [
             {
                 "name": c.name,
@@ -445,6 +461,7 @@ def build_payload(
                 "art": c.art,
                 "lager": c.lager,
                 "spektrum": c.spektrum,
+                "themen": list(c.themen),
                 "abonnenten": subscribers.get(c.kanal_id),
                 "abo_veraenderung": subscriber_change(subscriber_history.get(c.kanal_id), now),
                 "videos": per_channel.get(c.name, [0, 0])[0],

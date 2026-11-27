@@ -17,7 +17,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 
 from medienmonitor.render import PLOTLY_SRC, _json, _layout
-from medienmonitor.youtube import TOP_N
+from medienmonitor.youtube import ALL_THEMES, THEMES, TOP_N
 
 # Groups: color AND symbol differ (readable without colors), colors of deutschlandmonitor.
 GROUPS = (
@@ -191,6 +191,11 @@ def _rows(videos: list[dict]) -> list[list]:
     ]
 
 
+def theme_choices(available) -> list[tuple[str, str]]:
+    """Buttons of the topic filter: "Alle Themen" and each label that has data."""
+    return [(ALL_THEMES, "Alle Themen")] + [(t, t) for t in THEMES if t in available]
+
+
 def _stand(payload: dict) -> str:
     stand = datetime.fromisoformat(payload["stand"])
     return f"Stand: {stand:%d.%m.%Y, %H:%M} Uhr"
@@ -198,7 +203,7 @@ def _stand(payload: dict) -> str:
 
 def render_html(payload: dict) -> str:
     days = payload["fenster_tage"]
-    lists = payload["listen"]
+    by_theme = {ALL_THEMES: payload["listen"], **payload.get("listen_themen", {})}
     views = {}
     for key, _ in VIEWS:
         stand = (
@@ -206,17 +211,25 @@ def render_html(payload: dict) -> str:
             f"{number(payload['gezaehlt_je_liste'][key])} Videos länger als "
             f"{payload['mindestdauer_min']} Minuten"
         )
-        views[key] = {
-            metric: {
-                "figure": figure(lists[key][metric], days, metric, title).to_plotly_json(),
-                "rows": _rows(lists[key][metric]),
-                "stand": stand,
-                "hinweis": hint.format(n=len(lists[key][metric]) or TOP_N)
-                + f" Nur Videos länger als {payload['mindestdauer_min']} Minuten, ohne "
-                "Livestreams und regelmäßige Nachrichtensendungen.",
+        views[key] = {}
+        for theme, lists in by_theme.items():
+            label = "" if theme == ALL_THEMES else f" Nur Kanäle mit dem Thema {theme}."
+            views[key][theme] = {
+                metric: {
+                    "figure": figure(lists[key][metric], days, metric, title).to_plotly_json(),
+                    "rows": _rows(lists[key][metric]),
+                    "stand": stand,
+                    "hinweis": hint.format(n=len(lists[key][metric]) or TOP_N)
+                    + label
+                    + f" Nur Videos länger als {payload['mindestdauer_min']} Minuten, ohne "
+                    "Livestreams und regelmäßige Nachrichtensendungen.",
+                }
+                for metric, _, title, hint in METRICS
             }
-            for metric, _, title, hint in METRICS
-        }
+    theme_buttons = "".join(
+        f'<button type="button" data-theme="{escape(key)}">{escape(label)}</button>'
+        for key, label in theme_choices(by_theme)
+    )
     language_buttons = "".join(
         f'<button type="button" data-view="{key}">{escape(label)}</button>' for key, label in VIEWS
     )
@@ -234,6 +247,7 @@ def render_html(payload: dict) -> str:
         template.replace("{{PLOTLY_SRC}}", PLOTLY_SRC)
         .replace("{{BUTTONS}}", language_buttons)
         .replace("{{METRIC_BUTTONS}}", metric_buttons)
+        .replace("{{THEME_BUTTONS}}", theme_buttons)
         .replace("{{SOURCE}}", escape(SOURCE))
         .replace("{{DATA}}", _json(data))
     )
@@ -283,9 +297,11 @@ def _channel_table(channels: list[dict], both: bool) -> str:
             key: "" if change.get(field) is None else change[field]
             for key, field in (("absolut", "absolut"), ("relativ", "relativ_pct"))
         }
+        themes = c.get("themen") or []
         data = (
             f' data-name="{escape(c["name"].casefold())}"'
             f' data-absolut="{raw["absolut"]}" data-relativ="{raw["relativ"]}"'
+            f' data-themen="{escape("|".join(themes))}"'
         )
         handle = f' <span class="grau">{escape(c["handle"])}</span>' if c["handle"] else ""
         language = c["sprache"].upper() if c["sprache"] in ("de", "en") else "mehrspr."
@@ -298,6 +314,7 @@ def _channel_table(channels: list[dict], both: bool) -> str:
             f"<td>{escape(c['land'])}</td>"
             f"<td>{escape(kind)}</td>"
             f"<td>{escape(SPECTRUM_LABELS.get(c['spektrum'], c['spektrum']))}</td>"
+            f"<td>{escape(', '.join(themes)) or '–'}</td>"
             f'<td class="zahl">{subscribers_text(c["abonnenten"])}</td>'
             f'<td class="zahl"{title}>{absolute}</td>'
             f'<td class="zahl"{title}>{relative}</td>'
@@ -307,7 +324,7 @@ def _channel_table(channels: list[dict], both: bool) -> str:
         )
     return (
         '<div class="scroll"><table><thead><tr><th>Kanal</th><th>Land</th><th>Art</th>'
-        '<th>Spektrum</th><th class="zahl">Abonnenten</th>'
+        '<th>Spektrum</th><th>Themen</th><th class="zahl">Abonnenten</th>'
         '<th class="zahl">Veränderung</th><th class="zahl">in %</th>'
         '<th class="zahl">Videos</th>'
         '<th class="zahl">davon gezählt</th></tr></thead><tbody>'
@@ -331,12 +348,15 @@ def render_channels_html(payload: dict) -> str:
             if chosen:
                 sections.append(
                     f'<h2><span class="zeichen {key}"></span>{escape(label)} '
-                    f"({len(chosen)})</h2>" + _channel_table(chosen, view == "alle")
+                    f'(<span class="anzahl">{len(chosen)}</span>)</h2>'
+                    + _channel_table(chosen, view == "alle")
                 )
         hidden = "" if view == VIEWS[0][0] else " hidden"
         views.append(
             f'<div class="ansicht" data-view="{view}"{hidden}>'
-            f"<p>{len(in_view)} Kanäle</p>" + "\n".join(sections) + "</div>"
+            f'<p><span class="anzahl-gesamt">{len(in_view)}</span> Kanäle</p>'
+            + "\n".join(sections)
+            + "</div>"
         )
     buttons = "".join(
         f'<button type="button" data-view="{key}" aria-pressed="{str(i == 0).lower()}">'
@@ -365,9 +385,15 @@ def render_channels_html(payload: dict) -> str:
         f"{payload['mindestdauer_min']} Minuten, ohne Livestreams und Nachrichtensendungen. "
         "Mehrsprachige Kanäle stehen in jeder Auswahl." + change_note
     )
+    theme_buttons = "".join(
+        f'<button type="button" data-thema="{escape(theme)}" aria-pressed="false">'
+        f"{escape(theme)}</button>"
+        for theme in THEMES
+    )
     template = (Path(__file__).parent / "kanaele_template.html").read_text(encoding="utf-8")
     return (
         template.replace("{{STAND}}", escape(numbers))
+        .replace("{{THEME_BUTTONS}}", theme_buttons)
         .replace("{{BUTTONS}}", buttons)
         .replace("{{SORT_BUTTONS}}", sort_buttons)
         .replace("{{SECTIONS}}", "\n".join(views))

@@ -35,11 +35,15 @@
 <p class="stand">{{STAND}}</p>
 <div class="schalter" role="group" aria-label="Sprache">{{BUTTONS}}</div>
 <div class="schalter sortierung" role="group" aria-label="Sortierung">{{SORT_BUTTONS}}</div>
+<div class="schalter themen" role="group" aria-label="Themen">{{THEME_BUTTONS}}</div>
+<p class="stand" id="themen-hinweis">Themen: mehrere wählbar; gezeigt werden Kanäle mit
+mindestens einem der gewählten Themen. Ohne Auswahl alle Kanäle.</p>
 {{SECTIONS}}
 <p class="quelle">{{SOURCE}}.</p>
 <script>
   // Language choice: show one of the prepared views.
-  const buttons = [...document.querySelectorAll(".schalter:not(.sortierung) button")];
+  const buttons = [...document.querySelectorAll(".schalter:not(.sortierung):not(.themen) button")];
+  const themeButtons = [...document.querySelectorAll(".themen button")];
   const sortButtons = [...document.querySelectorAll(".sortierung button")];
   const views = [...document.querySelectorAll(".ansicht")];
   // Tell the embedding page (same domain) how tall the content is. Measured from the
@@ -77,6 +81,36 @@
       for (const body of document.querySelectorAll("tbody")) {
         body.append(...[...body.rows].sort(compare(button.dataset.sort)));
       }
+    });
+  }
+  // Topic filter: several labels at once; a channel shows if it has one of them.
+  const filterThemes = () => {
+    const chosen = themeButtons.filter(b => b.getAttribute("aria-pressed") === "true")
+      .map(b => b.dataset.thema);
+    for (const view of views) {
+      let total = 0;
+      for (const table of view.querySelectorAll("table")) {
+        let shown = 0;
+        for (const row of table.tBodies[0].rows) {
+          const own = row.dataset.themen ? row.dataset.themen.split("|") : [];
+          const visible = !chosen.length || chosen.some(theme => own.includes(theme));
+          row.hidden = !visible;
+          shown += visible;
+        }
+        const count = table.closest(".scroll").previousElementSibling?.querySelector(".anzahl");
+        if (count) count.textContent = String(shown);
+        total += shown;
+      }
+      const all = view.querySelector(".anzahl-gesamt");
+      if (all) all.textContent = String(total);
+    }
+    report();
+  };
+  for (const button of themeButtons) {
+    button.addEventListener("click", () => {
+      const on = button.getAttribute("aria-pressed") !== "true";
+      button.setAttribute("aria-pressed", String(on));
+      filterThemes();
     });
   }
   window.addEventListener("load", report);

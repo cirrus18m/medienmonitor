@@ -16,7 +16,8 @@ der heutige Tag. Kennzeichen an den Themen zeigen, ob ein Thema neu ist (erste S
 vor höchstens 6 Stunden), häufiger (↑) oder seltener (↓) wird als in den 6 Stunden davor
 oder ruht; ein Filter zeigt nur die neuen Themen. Mit „nur neue Medien“ zählen allein
 deren Schlagzeilen: Die alten Medien veröffentlichen ein Vielfaches an Meldungen, sodass
-die Themen der neuen Medien in der Auswertung aller Medien kaum ins Gewicht fallen. Die
+die Themen der neuen Medien in der Auswertung aller Medien kaum ins Gewicht fallen.
+Deshalb bildet die KI für die neuen Medien eigene Themen, nur aus deren Schlagzeilen. Die
 Grafik wird stündlich erneuert.
 
 ```{=html}

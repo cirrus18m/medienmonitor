@@ -44,8 +44,11 @@ def write_day(data_dir: Path, day: date, rows: list[dict]) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def set_topics(data_dir: Path, end: date, days: int, topic_of: dict[str, str]) -> int:
-    """Write ``thema_id`` for the given headline ids into the day files; returns count."""
+def set_topics(
+    data_dir: Path, end: date, days: int, topic_of: dict[str, str], field: str = "thema_id"
+) -> int:
+    """Write ``field`` (``thema_id`` or ``thema_neu_id``) for the given headline ids into the
+    day files; returns the count."""
     changed = 0
     for offset in range(days):
         day = end - timedelta(days=offset)
@@ -53,8 +56,8 @@ def set_topics(data_dir: Path, end: date, days: int, topic_of: dict[str, str]) -
         dirty = False
         for row in rows:
             topic = topic_of.get(row["id"])
-            if topic and row.get("thema_id") != topic:
-                row["thema_id"] = topic
+            if topic and row.get(field) != topic:
+                row[field] = topic
                 dirty = True
                 changed += 1
         if dirty:

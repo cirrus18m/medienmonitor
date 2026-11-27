@@ -189,6 +189,7 @@ def test_payload_only_new_media(tmp_path):
     items += [headline(10 + i, f"Haushalt alt {i}", "Welt", "rechts") for i in range(5)]
     store.append_new(tmp_path, items, NOW)
     topics.assign_new(tmp_path, FakeLabeler(), NOW)
+    topics.assign_new(tmp_path, FakeLabeler(), NOW, topics.NEW_MEDIA)
     payload = publish.build_payload(tmp_path, NOW, only_new=True, categories=False)
     assert payload["nur_neue_medien"] and payload["min_artikel"] == publish.MIN_ARTICLES_NEW
     assert payload["artikel_gesamt"] == 3 and {m["name"] for m in payload["medien"]} == {
@@ -197,3 +198,27 @@ def test_payload_only_new_media(tmp_path):
     }
     [topic] = payload["themen"]
     assert topic["anzahl_gesamt"] == 3 and topic["trend"]["letzte_6h"] == 3
+
+
+def test_new_media_are_clustered_on_their_own(tmp_path):
+    """The filter "nur neue Medien" uses its own topic list (themen_neu.json, thema_neu_id):
+    the model sees only headlines of the new media, the list of all media stays as it is."""
+    items = [headline(i, f"Haushalt {i}", f"Neu{i % 2}", "alternativ") for i in range(3)]
+    items += [headline(10 + i, f"Haushalt alt {i}", "Welt", "rechts") for i in range(5)]
+    store.append_new(tmp_path, items, NOW)
+    model = FakeLabeler()
+    result = topics.assign_new(tmp_path, model, NOW, topics.NEW_MEDIA)
+    assert result["offen"] == 3 and result["zugeordnet"] == 3
+    assert "Haushalt alt" not in model.prompts[0]
+    assert (tmp_path / topics.NEW_TOPICS_FILE).exists()
+    assert not (tmp_path / topics.TOPICS_FILE).exists()
+    rows = store.read_day(tmp_path, NOW.date())
+    assert {r["id"] for r in rows if r.get("thema_neu_id")} == {"h0", "h1", "h2"}
+    assert not any(r.get("thema_id") for r in rows)
+    # the clustering of all media does not see the new topic list and starts on its own
+    topics.assign_new(tmp_path, FakeLabeler(), NOW)
+    rows = store.read_day(tmp_path, NOW.date())
+    assert all(r.get("thema_id") for r in rows)
+    assert topics.TopicList.load(tmp_path, topics.NEW_MEDIA).themen.keys() == {"T1"}
+    payload = publish.build_payload(tmp_path, NOW, only_new=True, categories=False)
+    assert payload["artikel_zugeordnet"] == 3

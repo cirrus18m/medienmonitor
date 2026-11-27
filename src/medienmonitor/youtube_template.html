@@ -41,11 +41,12 @@
 <div class="schalter-zeile">
 <div class="schalter" role="group" aria-label="Sprache">{{BUTTONS}}</div>
 <div class="schalter" role="group" aria-label="Sortierung">{{METRIC_BUTTONS}}</div>
+<div class="schalter" role="group" aria-label="Thema">{{THEME_BUTTONS}}</div>
 </div>
 <p class="hinweis" id="hinweis"></p>
 <div id="grafik"></div>
-<p class="leer" id="leer" hidden>Noch keine Werte: Die Aufrufe am ersten Tag werden erst seit
-Kurzem erfasst.</p>
+<p class="leer" id="leer" hidden>Keine Videos in dieser Auswahl. Die Aufrufe am ersten Tag
+werden erst seit Kurzem erfasst.</p>
 <p class="quelle">{{SOURCE}}.</p>
 <div class="scroll">
 <table>
@@ -68,9 +69,11 @@ const DATA = {{DATA}};
   const hint = document.getElementById("hinweis");
   const buttons = [...document.querySelectorAll(".schalter button[data-view]")];
   const metricButtons = [...document.querySelectorAll(".schalter button[data-metric]")];
+  const themeButtons = [...document.querySelectorAll(".schalter button[data-theme]")];
   const heads = [...document.querySelectorAll("th[data-metric]")];
-  const state = {view: buttons[0]?.dataset.view, metric: DATA.metrics[0], marked: null};
-  const current = () => DATA.views[state.view][state.metric];
+  const state = {view: buttons[0]?.dataset.view, metric: DATA.metrics[0],
+    theme: themeButtons[0]?.dataset.theme, marked: null};
+  const current = () => DATA.views[state.view][state.theme][state.metric];
 
   function el(tag, props = {}, ...children) {
     const node = document.createElement(tag);
@@ -135,6 +138,9 @@ const DATA = {{DATA}};
     for (const button of metricButtons) {
       button.setAttribute("aria-pressed", String(button.dataset.metric === state.metric));
     }
+    for (const button of themeButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.theme === state.theme));
+    }
     for (const head of heads) head.classList.toggle("sortiert", head.dataset.metric === state.metric);
     const view = current();
     stand.textContent = view.stand;
@@ -173,6 +179,13 @@ const DATA = {{DATA}};
   for (const button of buttons) {
     button.addEventListener("click", () => {
       state.view = button.dataset.view;
+      state.marked = null;
+      draw();
+    });
+  }
+  for (const button of themeButtons) {
+    button.addEventListener("click", () => {
+      state.theme = button.dataset.theme;
       state.marked = null;
       draw();
     });

@@ -17,7 +17,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from medienmonitor import bubbles, store
-from medienmonitor.topics import OTHER, TopicList
+from medienmonitor.topics import ALL_MEDIA, NEW_MEDIA, OTHER, TopicList
 
 SCHEMA = 1
 WINDOW_HOURS = 24
@@ -64,8 +64,8 @@ def _topic_name(topics: TopicList, topic_id: str | None) -> str | None:
     return topics.themen[topic_id]["name"]
 
 
-def _valid_topic(topics: TopicList, row: dict) -> str | None:
-    topic_id = topics.resolve(row.get("thema_id"))
+def _valid_topic(topics: TopicList, row: dict, field: str = ALL_MEDIA.field) -> str | None:
+    topic_id = topics.resolve(row.get(field))
     if (
         topic_id
         and topic_id != OTHER
@@ -76,14 +76,16 @@ def _valid_topic(topics: TopicList, row: dict) -> str | None:
     return None
 
 
-def topic_trends(rows: list[dict], topics: TopicList, now: datetime) -> dict[str, dict]:
+def topic_trends(
+    rows: list[dict], topics: TopicList, now: datetime, field: str = ALL_MEDIA.field
+) -> dict[str, dict]:
     """Per topic: headlines in the last TREND_HOURS and in the TREND_HOURS before, and the
     first and last headline in ``rows`` (the last FIRST_SEEN_HOURS hours)."""
     recent = (now - timedelta(hours=TREND_HOURS)).astimezone(UTC).isoformat(timespec="seconds")
     before = (now - timedelta(hours=2 * TREND_HOURS)).astimezone(UTC).isoformat(timespec="seconds")
     result: dict[str, dict] = {}
     for row in rows:
-        topic_id = _valid_topic(topics, row)
+        topic_id = _valid_topic(topics, row, field)
         if not topic_id:
             continue
         moment = _time(row)
@@ -112,11 +114,13 @@ def build_payload(
     ``domains``: medium name -> home page (feeds.yaml), shown as link in the chart.
     ``categories``: add the TOP- and Blasen-Themen (bubbles.py).
     ``only_new``: only headlines of the new media (lager NEW_CAMP), so that their topics
-    are not drowned by the many headlines of the old media; lower thresholds.
+    are not drowned by the many headlines of the old media; lower thresholds. Their topics
+    come from the separate clustering of the new media (topics.NEW_MEDIA).
     """
     now = now or datetime.now(UTC)
     domains = domains or {}
-    topics = TopicList.load(data_dir)
+    scope = NEW_MEDIA if only_new else ALL_MEDIA
+    topics = TopicList.load(data_dir, scope)
     rows = window_rows(data_dir, now, start=start)
     if only_new:
         rows = [row for row in rows if row["lager"] == NEW_CAMP]
@@ -146,20 +150,20 @@ def build_payload(
                 "titel": r["titel"],
                 "url": r["url"],
                 "zeit": _time(r),
-                "thema": _topic_name(topics, r.get("thema_id")),
+                "thema": _topic_name(topics, r.get(scope.field)),
             }
             for r in latest
         ]
 
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
-        topic_id = _valid_topic(topics, row)
+        topic_id = _valid_topic(topics, row, scope.field)
         if topic_id:
             grouped[topic_id].append(row)
     recent = window_rows(data_dir, now, FIRST_SEEN_HOURS)
     if only_new:
         recent = [row for row in recent if row["lager"] == NEW_CAMP]
-    trends = topic_trends(recent, topics, now)
+    trends = topic_trends(recent, topics, now, scope.field)
 
     entries = []
     for topic_id, items in grouped.items():
@@ -196,7 +200,7 @@ def build_payload(
             }
         )
     entries.sort(key=lambda e: (e["anzahl_gesamt"], e["quellen"]), reverse=True)
-    assigned = sum(1 for r in rows if r.get("thema_id"))
+    assigned = sum(1 for r in rows if r.get(scope.field))
     return {
         "schema": SCHEMA,
         "stand": now.astimezone(BERLIN).isoformat(timespec="minutes"),
