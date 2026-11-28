@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 42,
+ "naechste_nr": 57,
  "themen": {
   "T1": {
    "name": "Bundeshaushalt 2027",
@@ -15,8 +15,8 @@
    "name": "Streit um Rente mit 63",
    "beschreibung": "Koalitionsstreit um Rentenreform und Erhalt der Rente mit 63.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -33,8 +33,8 @@
    "name": "Druckerei stoppt NIUS-Zeitung",
    "beschreibung": "Druckerei kündigt Vertrag für die NIUS-Zeitung nach SPD-Kampagne.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -51,8 +51,8 @@
    "name": "Landtagswahl Sachsen-Anhalt Siegmund",
    "beschreibung": "Streit um die Wahl Siegmunds in Magdeburg und den Umgang der CDU mit der AfD.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 9,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 11,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -69,8 +69,8 @@
    "name": "Le Pen und französischer Wahlkampf",
    "beschreibung": "Wahlkampf in Frankreich zwischen Le Pen und Mélenchon.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -78,8 +78,8 @@
    "name": "Ukraine-Krieg aktuell",
    "beschreibung": "Entwicklungen und Debatten rund um den Krieg in der Ukraine.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 10,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 13,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -96,8 +96,8 @@
    "name": "Bundeswehr und Aufrüstung",
    "beschreibung": "Rüstungsvorhaben und militärische Neuausrichtung Deutschlands.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T02:46:57+00:00",
-   "anzahl": 10,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 11,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -123,8 +123,8 @@
    "name": "Gaza und Israel",
    "beschreibung": "Berichte und Debatten zum Gazakrieg und zu Israel.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -150,8 +150,8 @@
    "name": "Kritik am öffentlich-rechtlichen Rundfunk",
    "beschreibung": "Debatte über ZDF, Deutschlandfunk und ARD.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "kultur"
   },
@@ -168,8 +168,8 @@
    "name": "EU-Russland-Sanktionen und Beziehungen",
    "beschreibung": "Sanktionen, Schröders Mandat und deutsch-russische Kontakte.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -186,8 +186,8 @@
    "name": "Linksextremismus und Polizei",
    "beschreibung": "Angriffe auf Polizisten, Rigaer 94 und Sanktionen gegen Störer.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 8,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -195,8 +195,8 @@
    "name": "AfD vor Gericht und Umfragen",
    "beschreibung": "Rechtsstreitigkeiten und Umfragewerte der AfD.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -204,8 +204,8 @@
    "name": "BSW-Streit um AfD-Kurs",
    "beschreibung": "BSW-Beschwerde und interner Streit.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 5,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -231,8 +231,8 @@
    "name": "Digitale Überwachung und Datenschutz",
    "beschreibung": "Chatkontrolle, Verschlüsselung und Grundrechte.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 4,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -240,8 +240,8 @@
    "name": "Einzelne Kriminalfälle",
    "beschreibung": "Festnahmen, Todesfall und Überfall.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 4,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "panorama"
   },
@@ -258,8 +258,8 @@
    "name": "Kritik an Kanzler Merz",
    "beschreibung": "Kommentare zur Regierung Merz.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T02:46:57+00:00",
-   "anzahl": 7,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 9,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -276,8 +276,8 @@
    "name": "Gesellschaftspolitische Debatten",
    "beschreibung": "Konversionstherapien, EKD und Kita-Essen.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 3,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 5,
    "zusammengelegt_in": null,
    "ressort": "gesellschaft"
   },
@@ -312,8 +312,8 @@
    "name": "Fraktionsausschluss Emde und Bundesversammlung",
    "beschreibung": "Parteiinterne Auseinandersetzungen und Stimmenverhältnisse vor der Bundesversammlung.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 3,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -357,8 +357,8 @@
    "name": "Jusos und SPD-Linkskurs",
    "beschreibung": "Juso-Chef Türmer fordert einen Linkskurs der SPD, der Generalsekretär wirbt bei den Jusos für Vergesellschaftung.",
    "erstellt": "2026-11-28T02:46:57+00:00",
-   "zuletzt": "2026-11-28T02:46:57+00:00",
-   "anzahl": 2,
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 6,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -367,6 +367,141 @@
    "beschreibung": "Behauptung, KI-Algorithmen benachteiligten Weiße und Christen systematisch.",
    "erstellt": "2026-11-28T02:46:57+00:00",
    "zuletzt": "2026-11-28T02:46:57+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T42": {
+   "name": "Besuch bei Stanislaw Petrow",
+   "beschreibung": "Bericht über einen Besuch bei Stanislaw Petrow.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T43": {
+   "name": "Reformschwäche und Radikalismus",
+   "beschreibung": "Essay über die politische Mitte und Reformstau.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T44": {
+   "name": "Taliban und Frauenrechte",
+   "beschreibung": "Taliban nehmen afghanischen Frauen ihre Namen.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T45": {
+   "name": "Bahn-Streckensperrungen 2027",
+   "beschreibung": "Die Bahn sperrt 2027 eine weitere Ausweichroute Berlin–Frankfurt.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T46": {
+   "name": "Energie- und Spritpreise",
+   "beschreibung": "Steigende Spritpreise und Preiserhöhungen von Versorgern.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T47": {
+   "name": "Sánchez und Mamdani-Strategie",
+   "beschreibung": "Spaniens Ministerpräsident Sánchez orientiert sich an Mamdanis Strategie.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T48": {
+   "name": "Nachkriegsmassaker an Deutschen",
+   "beschreibung": "Bauarbeiten legen ein Massengrab aus der Nachkriegszeit frei.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T49": {
+   "name": "Sicherheit auf Weihnachtsmärkten",
+   "beschreibung": "Festnahme mit Beilen und verstärkte Sicherheitsmaßnahmen auf Weihnachtsmärkten.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T50": {
+   "name": "Mercedes-Abfindungsprogramm",
+   "beschreibung": "Mercedes bietet Mitarbeitern hohe Abfindungen.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T51": {
+   "name": "Entschädigung für Terroropfer",
+   "beschreibung": "16,5 Millionen Euro für Terroropfer.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T52": {
+   "name": "Fernandes-Verschwörung",
+   "beschreibung": "Kommentar zu einer behaupteten Verschwörung um Fernandes.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T53": {
+   "name": "Nahles und Auswanderer-Rückholung",
+   "beschreibung": "Nahles will ausgewanderte Fachkräfte zurückholen.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T54": {
+   "name": "Gewalt gegen Krampusläufe",
+   "beschreibung": "Angriffe auf traditionelle Krampusläufe.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T55": {
+   "name": "Manuel Neuer Rücktritt Debatte",
+   "beschreibung": "Debatte um Neuers Abschied aus der Nationalmannschaft.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "sport"
+  },
+  "T56": {
+   "name": "E-Bus-Projekt Wien–Bratislava",
+   "beschreibung": "Dieselbusse retten ein E-Bus-Projekt.",
+   "erstellt": "2026-11-28T11:58:56+00:00",
+   "zuletzt": "2026-11-28T11:58:56+00:00",
    "anzahl": 1,
    "zusammengelegt_in": null,
    "ressort": "wissenschaft"
