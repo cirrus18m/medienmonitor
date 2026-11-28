@@ -1,0 +1,357 @@
+{
+ "schema": 1,
+ "naechste_nr": 40,
+ "themen": {
+  "T1": {
+   "name": "Bundeshaushalt 2027",
+   "beschreibung": "Bundestag beschließt den Haushalt mit hoher Neuverschuldung, Kritik auch aus der CDU.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 9,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T2": {
+   "name": "Streit um Rente mit 63",
+   "beschreibung": "Koalitionsstreit um Rentenreform und Erhalt der Rente mit 63.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T3": {
+   "name": "AfD-Verbotsverfahren und Weidel",
+   "beschreibung": "Weidel erwartet 2027 ein AfD-Verbotsverfahren.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 6,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T4": {
+   "name": "Druckerei stoppt NIUS-Zeitung",
+   "beschreibung": "Druckerei kündigt Vertrag für die NIUS-Zeitung nach SPD-Kampagne.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 7,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T5": {
+   "name": "Genderverbot im Auswärtigen Amt",
+   "beschreibung": "Außenminister Wadephul verbietet Gendersprache, Grüne kritisieren das.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T6": {
+   "name": "Landtagswahl Sachsen-Anhalt Siegmund",
+   "beschreibung": "Streit um die Wahl Siegmunds in Magdeburg und den Umgang der CDU mit der AfD.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 9,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T7": {
+   "name": "Linke in Berliner Koalition",
+   "beschreibung": "Debatte über Linke und Regierungsbeteiligung in Berlin.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T8": {
+   "name": "Le Pen und französischer Wahlkampf",
+   "beschreibung": "Wahlkampf in Frankreich zwischen Le Pen und Mélenchon.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T9": {
+   "name": "Ukraine-Krieg aktuell",
+   "beschreibung": "Entwicklungen und Debatten rund um den Krieg in der Ukraine.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 10,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T10": {
+   "name": "Nato, USA und Russland",
+   "beschreibung": "Verhandlungen und Erklärungen zur europäischen Sicherheitsordnung.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 9,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T11": {
+   "name": "Bundeswehr und Aufrüstung",
+   "beschreibung": "Rüstungsvorhaben und militärische Neuausrichtung Deutschlands.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 9,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T12": {
+   "name": "SAP-Stellenabbau",
+   "beschreibung": "SAP will rund 10.000 Stellen streichen.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T13": {
+   "name": "Schleuser-Schlauchboote aus Deutschland",
+   "beschreibung": "Deutsche Bootsfirma soll Schleuserbanden beliefert haben.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T14": {
+   "name": "Gaza und Israel",
+   "beschreibung": "Berichte und Debatten zum Gazakrieg und zu Israel.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 5,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T15": {
+   "name": "Migration und Abschiebungen",
+   "beschreibung": "Abschiebungen, Asylunterkünfte und Kriminalität im Migrationskontext.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 8,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T16": {
+   "name": "Konjunktur und Arbeitsmarkt",
+   "beschreibung": "Wirtschaftsdaten und Lage der deutschen und europäischen Wirtschaft.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 8,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T17": {
+   "name": "Kritik am öffentlich-rechtlichen Rundfunk",
+   "beschreibung": "Debatte über ZDF, Deutschlandfunk und ARD.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 5,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T18": {
+   "name": "EU-Haushalt und Kommission",
+   "beschreibung": "EU-Haushaltsgipfel, Erweiterung und Machtfragen in der Kommission.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 6,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T19": {
+   "name": "EU-Russland-Sanktionen und Beziehungen",
+   "beschreibung": "Sanktionen, Schröders Mandat und deutsch-russische Kontakte.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T20": {
+   "name": "Debatte über Sprachverbote",
+   "beschreibung": "Meinungsfreiheit und Sprachregeln, Fall Steinhöfel.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T21": {
+   "name": "Linksextremismus und Polizei",
+   "beschreibung": "Angriffe auf Polizisten, Rigaer 94 und Sanktionen gegen Störer.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 8,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T22": {
+   "name": "AfD vor Gericht und Umfragen",
+   "beschreibung": "Rechtsstreitigkeiten und Umfragewerte der AfD.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T23": {
+   "name": "BSW-Streit um AfD-Kurs",
+   "beschreibung": "BSW-Beschwerde und interner Streit.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 5,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T24": {
+   "name": "EU-Klima- und Verkehrspolitik",
+   "beschreibung": "Klimabilanz, Euro 7 und Maut-Debatte.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 8,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T25": {
+   "name": "Impfstoffe und Impfpolitik",
+   "beschreibung": "Kritik an Impfgesetz und Impfstoffforschung.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
+  },
+  "T26": {
+   "name": "Digitale Überwachung und Datenschutz",
+   "beschreibung": "Chatkontrolle, Verschlüsselung und Grundrechte.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T27": {
+   "name": "Einzelne Kriminalfälle",
+   "beschreibung": "Festnahmen, Todesfall und Überfall.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 4,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T28": {
+   "name": "Tarifkonflikt und Arbeitszeit",
+   "beschreibung": "Tarifkampf und Arbeitszeitfragen.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "wirtschaft"
+  },
+  "T29": {
+   "name": "Kritik an Kanzler Merz",
+   "beschreibung": "Kommentare zur Regierung Merz.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 6,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T30": {
+   "name": "Aiwanger-Debatte",
+   "beschreibung": "Äußerung einer Journalistin über Aiwanger.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T31": {
+   "name": "Gesellschaftspolitische Debatten",
+   "beschreibung": "Konversionstherapien, EKD und Kita-Essen.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T32": {
+   "name": "Weitere Einzelnachrichten",
+   "beschreibung": "Diverse Einzelthemen.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 16,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T33": {
+   "name": "Klöckner und Linke-Sitzblockade",
+   "beschreibung": "Bundestagspräsidentin Klöckner und Fraktionen kritisieren die Linke nach einer Blockade im Bundestag.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T34": {
+   "name": "Schroeder-Poschardt-Streit",
+   "beschreibung": "Kabarettist Florian Schroeder wirft Ulf Poschardt ein rechtsradikales Narrativ vor.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 3,
+   "zusammengelegt_in": null,
+   "ressort": "kultur"
+  },
+  "T35": {
+   "name": "Fraktionsausschluss Emde und Bundesversammlung",
+   "beschreibung": "Parteiinterne Auseinandersetzungen und Stimmenverhältnisse vor der Bundesversammlung.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T36": {
+   "name": "Angriff auf Compact-TV-Chef Klemm",
+   "beschreibung": "Berichte über einen gezielten Angriff auf Compact-Mitarbeiter.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "panorama"
+  },
+  "T37": {
+   "name": "Wahlen in Spanien und Schweden",
+   "beschreibung": "Rechte Parteien gewinnen bei Wahlen in Spanien und Schweden an Einfluss.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T38": {
+   "name": "BKA-Zahlen Gewalt gegen Frauen",
+   "beschreibung": "Neue BKA-Statistiken zu Gewalt gegen Frauen.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "gesellschaft"
+  },
+  "T39": {
+   "name": "Netanjahu-Prozess",
+   "beschreibung": "Bewertung des seit sechs Jahren laufenden Korruptionsprozesses gegen Netanjahu.",
+   "erstellt": "2026-11-28T01:20:54+00:00",
+   "zuletzt": "2026-11-28T01:20:54+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  }
+ }
+}
