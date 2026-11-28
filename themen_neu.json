@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "naechste_nr": 40,
+ "naechste_nr": 42,
  "themen": {
   "T1": {
    "name": "Bundeshaushalt 2027",
@@ -96,8 +96,8 @@
    "name": "Bundeswehr und Aufrüstung",
    "beschreibung": "Rüstungsvorhaben und militärische Neuausrichtung Deutschlands.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 9,
+   "zuletzt": "2026-11-28T02:46:57+00:00",
+   "anzahl": 10,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -258,8 +258,8 @@
    "name": "Kritik an Kanzler Merz",
    "beschreibung": "Kommentare zur Regierung Merz.",
    "erstellt": "2026-11-28T01:20:54+00:00",
-   "zuletzt": "2026-11-28T01:20:54+00:00",
-   "anzahl": 6,
+   "zuletzt": "2026-11-28T02:46:57+00:00",
+   "anzahl": 7,
    "zusammengelegt_in": null,
    "ressort": "politik"
   },
@@ -352,6 +352,24 @@
    "anzahl": 1,
    "zusammengelegt_in": null,
    "ressort": "politik"
+  },
+  "T40": {
+   "name": "Jusos und SPD-Linkskurs",
+   "beschreibung": "Juso-Chef Türmer fordert einen Linkskurs der SPD, der Generalsekretär wirbt bei den Jusos für Vergesellschaftung.",
+   "erstellt": "2026-11-28T02:46:57+00:00",
+   "zuletzt": "2026-11-28T02:46:57+00:00",
+   "anzahl": 2,
+   "zusammengelegt_in": null,
+   "ressort": "politik"
+  },
+  "T41": {
+   "name": "Vorwurf anti-weißer KI-Voreingenommenheit",
+   "beschreibung": "Behauptung, KI-Algorithmen benachteiligten Weiße und Christen systematisch.",
+   "erstellt": "2026-11-28T02:46:57+00:00",
+   "zuletzt": "2026-11-28T02:46:57+00:00",
+   "anzahl": 1,
+   "zusammengelegt_in": null,
+   "ressort": "wissenschaft"
   }
  }
 }
